@@ -5,6 +5,13 @@ import 'package:flame_rive/flame_rive.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
 
+class VacuumFactory {
+  static Future<Vacuum> create() async {
+    final artboard = await loadArtboard(RiveFile.asset('assets/animations/save_the_ocean.riv'), artboardName: 'recycler');
+    return Vacuum(artboard: artboard);
+  }
+}
+
 class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
   late StateMachineController? controller;
 
