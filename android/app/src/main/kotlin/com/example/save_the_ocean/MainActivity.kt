@@ -1,4 +1,4 @@
-package com.example.save_the_ocean
+package com.mtc.save_the_ocean
 
 import io.flutter.embedding.android.FlutterActivity
 
