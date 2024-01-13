@@ -1,8 +1,9 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:save_the_ocean/components/vacuum.dart';
-import 'package:save_the_ocean/game.dart';
 
 class VacuumRecycleButton extends HudButtonComponent {
   final Vacuum vacuum;
@@ -11,16 +12,19 @@ class VacuumRecycleButton extends HudButtonComponent {
       : super(
           button: CircleComponent(
             radius: 50,
-            // anchor: Anchor.center,
             paint: BasicPalette.red.paint(),
           ),
           buttonDown: CircleComponent(
-            radius: 45,
-            // anchor: Anchor.center,
-            paint: BasicPalette.red.paint(),
+            radius: 50,
+            paint: BasicPalette.darkRed.paint(),
           ),
-          // anchor: Anchor.center,
-          position: Vector2(screenSize.x - 120, screenSize.y - 125),
+          margin: const EdgeInsets.only(right: 48, bottom: 32),
           onPressed: () => vacuum.aspire(),
         );
+
+  @override
+  Future<void> onLoad() {
+    debugMode = kDebugMode;
+    return super.onLoad();
+  }
 }

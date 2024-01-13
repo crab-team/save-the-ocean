@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_rive/flame_rive.dart';
+import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
@@ -29,12 +30,16 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
   Future<void> onLoad() async {
     await super.onLoad();
 
+    debugMode = kDebugMode;
+
     controller = StateMachineController.fromArtboard(artboard, "state_machine");
     if (controller == null) return;
 
     artboard.addController(controller!);
     _vacuumingInput = controller?.findInput<bool>("vacuuming");
     _recyclingInput = controller?.findInput<bool>("recycling");
+
+    position = Vector2(screenSize.x / 2, 0 - size.y / 4);
   }
 
   @override
@@ -45,11 +50,11 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
     bool joystickRight = joystick.direction == JoystickDirection.right;
 
     if (joystickLeft) {
-      position.x -= 8 * joystick.intensity;
+      _moveLeft();
     }
 
     if (joystickRight) {
-      position.x += 8 * joystick.intensity;
+      _moveRight();
     }
   }
 
@@ -61,23 +66,31 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
       return;
     }
 
-     if (_isRecycling()) {
+    if (_isRecycling()) {
       Logger.log('Vacuum -> Is recycling. Wait until it finishes');
       return;
     }
 
     _vacuumingInput?.value = true;
-    await Future.delayed(Duration(milliseconds: vacuumTime), () => recycle());
-    await Future.delayed(Duration(milliseconds: recycleTime), () => idle());
+    await Future.delayed(Duration(milliseconds: vacuumTime), () => _recycle());
+    await Future.delayed(Duration(milliseconds: recycleTime), () => _idle());
   }
 
-  void recycle() {
+  void _moveLeft() {
+    position.x -= 8 * joystick.intensity;
+  }
+
+  void _moveRight() {
+    position.x += 8 * joystick.intensity;
+  }
+
+  void _recycle() {
     Logger.log('Vacuum -> Recycle');
     _vacuumingInput?.value = false;
     _recyclingInput?.value = true;
   }
 
-  void idle() {
+  void _idle() {
     Logger.log('Vacuum -> Idle');
     _vacuumingInput?.value = false;
     _recyclingInput?.value = false;
