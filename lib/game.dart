@@ -9,14 +9,15 @@ import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
 
 final screenSize = Vector2(1280, 720);
-final worldSize = Vector2(12.8, 7.2);
+const cameraZoom = 100.0;
+final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 
 class SaveTheOceanGame extends Forge2DGame {
-  late RiveVacuum riveVacuum;
+  late Vacuum riveVacuum;
 
   SaveTheOceanGame()
       : super(
-          zoom: 100,
+          zoom: cameraZoom,
           cameraComponent: CameraComponent.withFixedResolution(
             width: screenSize.x,
             height: screenSize.y,
@@ -29,7 +30,7 @@ class SaveTheOceanGame extends Forge2DGame {
     await super.onLoad();
 
     await loadAssets();
-    riveVacuum = await RiveVacuumFactory.create();
+    riveVacuum = await VacuumFactory.create();
 
     camera.moveTo(worldSize / 2);
 
@@ -46,11 +47,12 @@ class SaveTheOceanGame extends Forge2DGame {
     camera.viewport.add(FpsTextComponent());
     camera.viewport.add(joystick);
     camera.viewport.add(VaccumButton(vacuum: riveVacuum));
+    camera.viewport.add(riveVacuum);
   }
 
   void addWorldElements() async {
     world.add(Ground());
     world.add(Garbage());
-    world.add(Vacuum(vacuum: riveVacuum));
+    // world.add(riveVacuum);
   }
 }
