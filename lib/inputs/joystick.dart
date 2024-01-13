@@ -1,15 +1,15 @@
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
-import 'package:flutter/material.dart';
+import 'package:save_the_ocean/game.dart';
 
 JoystickComponent joystick = JoystickComponent(
   knob: CircleComponent(
-    radius: 50,
-    paint: BasicPalette.blue.withAlpha(200).paint(),
+    radius: 35,
+    paint: BasicPalette.black.withAlpha(200).paint(),
   ),
   background: CircleComponent(
-    radius: 100,
-    paint: BasicPalette.blue.withAlpha(200).paint(),
+    radius: 75,
+    paint: BasicPalette.gray.withAlpha(200).paint(),
   ),
-  margin: const EdgeInsets.only(left: 48, bottom: 48),
+  position: Vector2(120, screenSize.y - 100),
 );

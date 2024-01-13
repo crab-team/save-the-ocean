@@ -17,8 +17,8 @@ class VacuumFactory {
 // TODO: Tendria que ser un BodyComponent que contenga este RiveComponent para poder usarlo en el 'World' y manejar colisiones
 class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
   StateMachineController? controller;
-  SMIInput<bool>? _isVacuuming;
-  SMIInput<bool>? _isRecycling;
+  SMIInput<bool>? _vacuumingInput;
+  SMIInput<bool>? _recyclingInput;
 
   final int vacuumTime = 1500;
   final int recycleTime = 1500;
@@ -33,8 +33,8 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
     if (controller == null) return;
 
     artboard.addController(controller!);
-    _isVacuuming = controller?.findInput<bool>("vacuuming");
-    _isRecycling = controller?.findInput<bool>("recycling");
+    _vacuumingInput = controller?.findInput<bool>("vacuuming");
+    _recyclingInput = controller?.findInput<bool>("recycling");
   }
 
   @override
@@ -55,20 +55,39 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
 
   void aspire() async {
     Logger.log('Vacuum -> Aspire');
-    _isVacuuming?.value = true;
+
+    if (_isVacuuming()) {
+      Logger.log('Vacuum -> Is vacuuming. Wait until it finishes');
+      return;
+    }
+
+     if (_isRecycling()) {
+      Logger.log('Vacuum -> Is recycling. Wait until it finishes');
+      return;
+    }
+
+    _vacuumingInput?.value = true;
     await Future.delayed(Duration(milliseconds: vacuumTime), () => recycle());
     await Future.delayed(Duration(milliseconds: recycleTime), () => idle());
   }
 
   void recycle() {
     Logger.log('Vacuum -> Recycle');
-    _isVacuuming?.value = false;
-    _isRecycling?.value = true;
+    _vacuumingInput?.value = false;
+    _recyclingInput?.value = true;
   }
 
   void idle() {
     Logger.log('Vacuum -> Idle');
-    _isVacuuming?.value = false;
-    _isRecycling?.value = false;
+    _vacuumingInput?.value = false;
+    _recyclingInput?.value = false;
+  }
+
+  bool _isVacuuming() {
+    return _vacuumingInput?.value ?? false;
+  }
+
+  bool _isRecycling() {
+    return _recyclingInput?.value ?? false;
   }
 }
