@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:save_the_ocean/components/vacuum.dart';
 
 class VaccumButton extends HudButtonComponent {
-  final Vacuum vacuum;
+  final RiveVacuum vacuum;
 
   VaccumButton({required this.vacuum})
       : super(

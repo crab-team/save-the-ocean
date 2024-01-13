@@ -9,6 +9,6 @@ class Background extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    sprite = Sprite(gameRef.images.fromCache(Assets.background));
+    sprite = Sprite(gameRef.images.fromCache(ImageAssets.background));
   }
 }
