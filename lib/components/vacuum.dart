@@ -14,6 +14,7 @@ class VacuumFactory {
   }
 }
 
+// TODO: Tendria que ser un BodyComponent que contenga este RiveComponent para poder usarlo en el 'World' y manejar colisiones
 class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
   StateMachineController? controller;
   SMIInput<bool>? _isVacuuming;
