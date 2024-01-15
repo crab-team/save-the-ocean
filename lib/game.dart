@@ -1,11 +1,16 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/background.dart';
 import 'package:save_the_ocean/components/garbage.dart';
 import 'package:save_the_ocean/components/ground.dart';
+import 'package:save_the_ocean/components/right_wall.dart';
+import 'package:save_the_ocean/components/robot/robot_collisioner.dart';
 import 'package:save_the_ocean/components/robot/robot_factory.dart';
-import 'package:save_the_ocean/components/hub/robot_recycle_button.dart';
+import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
+import 'package:save_the_ocean/components/left_wall.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
 
@@ -15,6 +20,7 @@ final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 
 class SaveTheOceanGame extends Forge2DGame {
   late Robot robot;
+  late RobotCollisioner collisioner;
 
   SaveTheOceanGame()
       : super(
@@ -32,6 +38,7 @@ class SaveTheOceanGame extends Forge2DGame {
 
     await loadAssets();
     robot = await RobotFactory.create();
+    collisioner = RobotCollisioner();
 
     camera.moveTo(worldSize / 2);
 
@@ -48,15 +55,35 @@ class SaveTheOceanGame extends Forge2DGame {
     camera.viewport.addAll([
       FpsTextComponent(),
       joystick,
-      RobotRecycleButton(robot: robot),
+      RobotDeployButton(robot: robot, collisioner: collisioner),
     ]);
   }
 
   void addWorldElements() async {
+    _createGarbagesRamdomly();
+
     world.addAll([
       Ground(),
-      Garbage(),
+      LeftWall(),
+      RightWall(),
       robot,
+      collisioner,
     ]);
+  }
+
+  void _createGarbagesRamdomly() {
+    for (var i = 0; i < 25; i++) {
+      Future.delayed(Duration(seconds: i + 1), () {
+        Random random = Random.secure();
+        double randomNumber = random.nextDouble() * 6;
+
+        final garbage = Garbage(
+          initialLinearVelocityX: randomNumber +2 ,
+          initialAngularVelocity: randomNumber,
+          fromLeft: Random().nextBool(),
+        );
+        world.add(garbage);
+      });
+    }
   }
 }

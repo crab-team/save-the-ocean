@@ -3,31 +3,27 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
-import 'package:save_the_ocean/components/robot/rive_robot.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
+import 'package:save_the_ocean/utils/logger.dart';
 
-class Robot extends BodyComponent {
-  final RiveRobot riveRobot;
-
-  Robot({required this.riveRobot});
-
+class RobotCollisioner extends BodyComponent with ContactCallbacks {
   @override
   Body createBody() {
-    BodyDef bodyDef = BodyDef(
+    final bodyDef = BodyDef(
       position: Vector2(worldSize.x / 2, 1.75),
-      type: BodyType.static,
+      type: BodyType.kinematic,
     );
 
-    return world.createBody(bodyDef);
+    final shape = EdgeShape()..set(Vector2(-1, 0), Vector2(1, 0));
+    final fixtureDef = FixtureDef(shape, userData: this, restitution: 0.0, friction: 0.7, density: 0.1);
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
     debugMode = kDebugMode;
-
-    add(riveRobot);
   }
 
   @override
@@ -47,7 +43,7 @@ class Robot extends BodyComponent {
       position.x += 0.2 * joystick.intensity;
     }
 
-     if (joystickUp) {
+    if (joystickUp) {
       position.y -= 0.2 * joystick.intensity;
     }
 
@@ -56,7 +52,16 @@ class Robot extends BodyComponent {
     }
   }
 
+  @override
+  void beginContact(Object other, Contact contact) {
+    super.beginContact(other, contact);
+
+    Logger.log('Collison detected with $other');
+    body.applyLinearImpulse(Vector2(0, 0));
+  }
+
+
   void deploy() {
-    riveRobot.deploy();
+    body.applyLinearImpulse(Vector2(0, 2));
   }
 }

@@ -4,11 +4,13 @@ import 'package:flame/palette.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
+import 'package:save_the_ocean/components/robot/robot_collisioner.dart';
 
-class RobotRecycleButton extends HudButtonComponent {
+class RobotDeployButton extends HudButtonComponent {
   final Robot robot;
+  final RobotCollisioner collisioner;
 
-  RobotRecycleButton({required this.robot})
+  RobotDeployButton({required this.robot, required this.collisioner})
       : super(
           button: CircleComponent(
             radius: 50,
@@ -19,7 +21,10 @@ class RobotRecycleButton extends HudButtonComponent {
             paint: BasicPalette.darkRed.paint(),
           ),
           margin: const EdgeInsets.only(right: 48, bottom: 32),
-          onPressed: () => robot.deploy(),
+          onPressed: () {
+            robot.deploy();
+            collisioner.deploy();
+          },
         );
 
   @override

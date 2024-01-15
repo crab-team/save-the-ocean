@@ -10,7 +10,7 @@ class Ground extends BodyComponent {
     );
 
     final shape = EdgeShape()..set(Vector2.zero(), Vector2(worldSize.x, 0));
-    final fixtureDef = FixtureDef(shape);
+    final fixtureDef = FixtureDef(shape)..friction = 0.7;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }
