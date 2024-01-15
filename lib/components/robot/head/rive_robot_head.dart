@@ -5,18 +5,16 @@ import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/game.dart';
-import 'package:save_the_ocean/inputs/joystick.dart';
 import 'package:save_the_ocean/utils/logger.dart';
 
-class VacuumFactory {
-  static Future<Vacuum> create() async {
-    final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.recycler), artboardName: 'recycler');
-    return Vacuum(artboard: artboard);
+class RiveRobotHeadFactory {
+  static Future<RiveRobotHead> create() async {
+    final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.robot_body), artboardName: 'recycler');
+    return RiveRobotHead(artboard: artboard);
   }
 }
 
-// TODO: Tendria que ser un BodyComponent que contenga este RiveComponent para poder usarlo en el 'World' y manejar colisiones
-class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
+class RiveRobotHead extends RiveComponent with HasGameRef<SaveTheOceanGame> {
   StateMachineController? controller;
   SMIInput<bool>? _vacuumingInput;
   SMIInput<bool>? _recyclingInput;
@@ -24,12 +22,11 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
   final int vacuumTime = 1500;
   final int recycleTime = 1500;
 
-  Vacuum({required super.artboard}) : super(size: Vector2.all(200));
+  RiveRobotHead({required super.artboard}) : super(size: Vector2.all(2));
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-
     debugMode = kDebugMode;
 
     controller = StateMachineController.fromArtboard(artboard, "state_machine");
@@ -39,23 +36,7 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
     _vacuumingInput = controller?.findInput<bool>("vacuuming");
     _recyclingInput = controller?.findInput<bool>("recycling");
 
-    position = Vector2(screenSize.x / 2 - size.x / 2, -(size.y / 4));
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-
-    bool joystickLeft = joystick.direction == JoystickDirection.left;
-    bool joystickRight = joystick.direction == JoystickDirection.right;
-
-    if (joystickLeft) {
-      _moveLeft();
-    }
-
-    if (joystickRight) {
-      _moveRight();
-    }
+    anchor = Anchor.center;
   }
 
   void aspire() async {
@@ -74,14 +55,6 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
     _vacuumingInput?.value = true;
     await Future.delayed(Duration(milliseconds: vacuumTime), () => _recycle());
     await Future.delayed(Duration(milliseconds: recycleTime), () => _idle());
-  }
-
-  void _moveLeft() {
-    position.x -= 8 * joystick.intensity;
-  }
-
-  void _moveRight() {
-    position.x += 8 * joystick.intensity;
   }
 
   void _recycle() {

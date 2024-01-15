@@ -3,8 +3,9 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/background.dart';
 import 'package:save_the_ocean/components/garbage.dart';
 import 'package:save_the_ocean/components/ground.dart';
-import 'package:save_the_ocean/components/vacuum.dart';
-import 'package:save_the_ocean/components/vacuum_recycle_button.dart';
+import 'package:save_the_ocean/components/robot/robot_factory.dart';
+import 'package:save_the_ocean/components/robot/robot_recycle_button.dart';
+import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
 
@@ -13,7 +14,7 @@ const cameraZoom = 100.0;
 final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 
 class SaveTheOceanGame extends Forge2DGame {
-  late Vacuum vacuum;
+  late Robot robot;
 
   SaveTheOceanGame()
       : super(
@@ -30,7 +31,7 @@ class SaveTheOceanGame extends Forge2DGame {
     await super.onLoad();
 
     await loadAssets();
-    vacuum = await VacuumFactory.create();
+    robot = await RobotFactory.create();
 
     camera.moveTo(worldSize / 2);
 
@@ -47,8 +48,7 @@ class SaveTheOceanGame extends Forge2DGame {
     camera.viewport.addAll([
       FpsTextComponent(),
       joystick,
-      VacuumRecycleButton(vacuum: vacuum),
-      vacuum,
+      RobotRecycleButton(robot: robot),
     ]);
   }
 
@@ -56,7 +56,7 @@ class SaveTheOceanGame extends Forge2DGame {
     world.addAll([
       Ground(),
       Garbage(),
-      // vacuum
+      robot,
     ]);
   }
 }
