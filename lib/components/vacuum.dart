@@ -39,7 +39,7 @@ class Vacuum extends RiveComponent with HasGameRef<SaveTheOceanGame> {
     _vacuumingInput = controller?.findInput<bool>("vacuuming");
     _recyclingInput = controller?.findInput<bool>("recycling");
 
-    position = Vector2(screenSize.x / 2, 0 - size.y / 4);
+    position = Vector2(screenSize.x / 2 - size.x / 2, -(size.y / 4));
   }
 
   @override
