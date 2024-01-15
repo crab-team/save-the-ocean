@@ -4,7 +4,7 @@ import 'package:save_the_ocean/components/background.dart';
 import 'package:save_the_ocean/components/garbage.dart';
 import 'package:save_the_ocean/components/ground.dart';
 import 'package:save_the_ocean/components/robot/robot_factory.dart';
-import 'package:save_the_ocean/components/robot/robot_recycle_button.dart';
+import 'package:save_the_ocean/components/hub/robot_recycle_button.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';

@@ -19,7 +19,7 @@ class RobotRecycleButton extends HudButtonComponent {
             paint: BasicPalette.darkRed.paint(),
           ),
           margin: const EdgeInsets.only(right: 48, bottom: 32),
-          onPressed: () => robot.aspire(),
+          onPressed: () => robot.deploy(),
         );
 
   @override
