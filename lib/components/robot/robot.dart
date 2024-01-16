@@ -4,11 +4,13 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/components/robot/rive_robot.dart';
+import 'package:save_the_ocean/components/robot/robot_arm.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
 
 class Robot extends BodyComponent {
   final RiveRobot riveRobot;
+  final RobotArm robotArm = RobotArm();
 
   Robot({required this.riveRobot});
 
@@ -28,6 +30,7 @@ class Robot extends BodyComponent {
     debugMode = kDebugMode;
 
     add(riveRobot);
+    add(robotArm);
   }
 
   @override
@@ -36,8 +39,6 @@ class Robot extends BodyComponent {
 
     bool joystickLeft = joystick.direction == JoystickDirection.left;
     bool joystickRight = joystick.direction == JoystickDirection.right;
-    bool joystickUp = joystick.direction == JoystickDirection.up;
-    bool joystickDown = joystick.direction == JoystickDirection.down;
 
     if (joystickLeft) {
       position.x -= 0.2 * joystick.intensity;
@@ -46,17 +47,10 @@ class Robot extends BodyComponent {
     if (joystickRight) {
       position.x += 0.2 * joystick.intensity;
     }
-
-     if (joystickUp) {
-      position.y -= 0.2 * joystick.intensity;
-    }
-
-    if (joystickDown) {
-      position.y += 0.2 * joystick.intensity;
-    }
   }
 
   void deploy() {
     riveRobot.deploy();
+    robotArm.deploy();
   }
 }

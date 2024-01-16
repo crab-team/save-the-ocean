@@ -6,7 +6,6 @@ import 'package:save_the_ocean/components/background.dart';
 import 'package:save_the_ocean/components/garbage.dart';
 import 'package:save_the_ocean/components/ground.dart';
 import 'package:save_the_ocean/components/right_wall.dart';
-import 'package:save_the_ocean/components/robot/robot_collisioner.dart';
 import 'package:save_the_ocean/components/robot/robot_factory.dart';
 import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
@@ -20,7 +19,6 @@ final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 
 class SaveTheOceanGame extends Forge2DGame {
   late Robot robot;
-  late RobotCollisioner collisioner;
 
   SaveTheOceanGame()
       : super(
@@ -38,7 +36,6 @@ class SaveTheOceanGame extends Forge2DGame {
 
     await loadAssets();
     robot = await RobotFactory.create();
-    collisioner = RobotCollisioner();
 
     camera.moveTo(worldSize / 2);
 
@@ -55,7 +52,7 @@ class SaveTheOceanGame extends Forge2DGame {
     camera.viewport.addAll([
       FpsTextComponent(),
       joystick,
-      RobotDeployButton(robot: robot, collisioner: collisioner),
+      RobotDeployButton(robot: robot),
     ]);
   }
 
@@ -67,7 +64,6 @@ class SaveTheOceanGame extends Forge2DGame {
       LeftWall(),
       RightWall(),
       robot,
-      collisioner,
     ]);
   }
 
