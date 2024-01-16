@@ -4,13 +4,11 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/components/robot/rive_robot.dart';
-import 'package:save_the_ocean/components/robot/robot_arm.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
 
 class Robot extends BodyComponent {
   final RiveRobot riveRobot;
-  final RobotArm robotArm = RobotArm();
 
   Robot({required this.riveRobot});
 
@@ -30,7 +28,6 @@ class Robot extends BodyComponent {
     debugMode = kDebugMode;
 
     add(riveRobot);
-    add(robotArm);
   }
 
   @override
@@ -51,6 +48,5 @@ class Robot extends BodyComponent {
 
   void deploy() {
     riveRobot.deploy();
-    robotArm.deploy();
   }
 }
