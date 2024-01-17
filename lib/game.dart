@@ -5,12 +5,14 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/background.dart';
 import 'package:save_the_ocean/components/garbage.dart';
 import 'package:save_the_ocean/components/ground.dart';
+import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
+import 'package:save_the_ocean/components/hub/robot_release_button.dart';
+import 'package:save_the_ocean/components/left_wall.dart';
 import 'package:save_the_ocean/components/right_wall.dart';
+import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/components/robot/robot_factory.dart';
-import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
-import 'package:save_the_ocean/components/robot/robot.dart';
-import 'package:save_the_ocean/components/left_wall.dart';
+import 'package:save_the_ocean/components/trash/trash.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
 
@@ -58,6 +60,7 @@ class SaveTheOceanGame extends Forge2DGame {
       FpsTextComponent(),
       joystick,
       RobotDeployButton(robot: robot, leftClaw: leftClaw, rightClaw: rightClaw),
+      RobotReleaseButton(robot: robot, leftClaw: leftClaw, rightClaw: rightClaw),
     ]);
   }
 
@@ -68,9 +71,10 @@ class SaveTheOceanGame extends Forge2DGame {
       Ground(),
       LeftWall(),
       RightWall(),
-      robot,
+      // robot,
       leftClaw,
       rightClaw,
+      Trash(),
     ]);
   }
 
@@ -78,7 +82,7 @@ class SaveTheOceanGame extends Forge2DGame {
     for (var i = 0; i < 25; i++) {
       Future.delayed(Duration(seconds: i + 1), () {
         Random random = Random.secure();
-        double randomNumber = random.nextDouble() * 6;
+        double randomNumber = random.nextDouble() * 3;
 
         final garbage = Garbage(
           initialLinearVelocityX: randomNumber + 2,

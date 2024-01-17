@@ -5,6 +5,7 @@ class RightWall extends BodyComponent {
   @override
   Body createBody() {
     final bodyDef = BodyDef(
+      userData: this,
       position: Vector2(worldSize.x, 0),
       type: BodyType.static,
     );
@@ -18,7 +19,7 @@ class RightWall extends BodyComponent {
         Vector2(-0.7, worldSize.y),
         Vector2(0, worldSize.y),
       ]);
-    final fixtureDef = FixtureDef(shape, friction: 0.9);
+    final fixtureDef = FixtureDef(shape, friction: 0.9, density: 1, userData: this);
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }

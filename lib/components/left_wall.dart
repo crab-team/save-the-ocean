@@ -5,8 +5,10 @@ class LeftWall extends BodyComponent {
   @override
   Body createBody() {
     final bodyDef = BodyDef(
+      userData: this,
       position: Vector2(0, 0),
       type: BodyType.static,
+      gravityScale: Vector2(0, 0),
     );
 
     final shape = PolygonShape()
@@ -18,7 +20,7 @@ class LeftWall extends BodyComponent {
         Vector2(0.7, worldSize.y),
         Vector2(0, worldSize.y),
       ]);
-    final fixtureDef = FixtureDef(shape, friction: 0.9);
+    final fixtureDef = FixtureDef(shape, friction: 0.9, density: 1);
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 }

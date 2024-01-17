@@ -1,23 +1,34 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
+import 'package:save_the_ocean/components/robot/robot_controller.dart';
 import 'package:save_the_ocean/game.dart';
 
-class RobotClaw extends BodyComponent {
+class RobotClaw extends BodyComponent with ContactCallbacks {
   final bool isLeft;
 
   RobotClaw({required this.isLeft});
+
+  late RobotController _robotController;
+  RobotState state = RobotState.idle;
+  double initialPositionX = worldSize.x / 2;
+  double initialPositionY = 1;
 
   @override
   Body createBody() {
     final bodyDef = BodyDef(
       userData: this,
-      position: Vector2(worldSize.x / 2, 1),
+      position: Vector2(initialPositionX, initialPositionY),
       angle: _getAngle(),
+      linearDamping: 0.9,
       type: BodyType.kinematic,
     );
 
     final shape = _createShape();
-    final fixtureDef = FixtureDef(shape, friction: 0.9);
+    final fixtureDef = FixtureDef(
+      shape,
+      friction: 0.9,
+      density: 1,
+    );
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
@@ -25,71 +36,27 @@ class RobotClaw extends BodyComponent {
   Future<void> onLoad() async {
     await super.onLoad();
     debugMode = kDebugMode;
+    _robotController = RobotController(this);
   }
-
-  bool isDeploying = false;
-  bool isRefolding = false;
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    if (isDeploying && position.y >= worldSize.y - 1.5) {
-      stop();
-    }
-
-    if (isRefolding && position.y <= 1) {
-      stop();
-      isRefolding = false;
-    }
-
-    if (isLeft && body.angle <= -12.3) {
-      body.angularVelocity = 0;
-    }
-
-    if (!isLeft && body.angle >= 12.3) {
-      body.angularVelocity = 0;
-    }
+    _robotController.bounds();
+    _robotController.moveInXAxis();
+    _robotController.executeDeploy();
+    _robotController.executeOpen();
+    _robotController.executeRefold();
   }
 
-  void deploy() {
-    if (!isDeploying && !isRefolding) {
-      isDeploying = true;
-      isRefolding = false;
-
-      Vector2 deployLinearVelocity = Vector2(0, 1.5);
-      body.linearVelocity = deployLinearVelocity;
-      return;
-    }
-
-    close();
-  }
-
-  void close() {
-    stop();
-
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (isLeft && body.angle > -12.3) {
-        body.angularVelocity = _getAngularVelocity();
-      }
-
-      if (!isLeft && body.angle < 12.3) {
-        body.angularVelocity = _getAngularVelocity();
-      }
-    });
-
-    Future.delayed(const Duration(seconds: 2), () => refold());
-  }
-
-  void stop() {
-    body.linearVelocity = Vector2.zero();
-  }
-
-  void refold() {
-    isDeploying = false;
-    isRefolding = true;
-    body.linearVelocity = Vector2(0, -1.5);
-  }
+  void deploy() => state = RobotState.deploying;
+  void refold() => state = RobotState.refolding;
+  void open() => state = RobotState.opening;
+  void close() => state = RobotState.closing;
+  void idle() => state = RobotState.idle;
+  void moveLeft() => state = RobotState.movingLeft;
+  void moveRight() => state = RobotState.movingRight;
 
   double _getAngle() {
     return isLeft ? -11.4 : 11.4;
@@ -113,9 +80,5 @@ class RobotClaw extends BodyComponent {
         Vector2(0, 2.2 / 2),
         Vector2(-0.5 / 2, 2.1 / 2),
       ]);
-  }
-
-  double _getAngularVelocity() {
-    return isLeft ? -1 : 1;
   }
 }

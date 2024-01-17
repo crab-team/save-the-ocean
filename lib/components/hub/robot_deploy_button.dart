@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 
+import '../robot/robot_controller.dart';
+
 class RobotDeployButton extends HudButtonComponent {
   final Robot robot;
   final RobotClaw leftClaw;
@@ -21,9 +23,15 @@ class RobotDeployButton extends HudButtonComponent {
             radius: 50,
             paint: BasicPalette.darkRed.paint(),
           ),
-          margin: const EdgeInsets.only(right: 48, bottom: 32),
+          margin: const EdgeInsets.only(right: 140, bottom: 32),
           onPressed: () {
             robot.deploy();
+
+            if (leftClaw.state == RobotState.deployed) {
+              leftClaw.refold();
+              rightClaw.refold();
+              return;
+            }
             leftClaw.deploy();
             rightClaw.deploy();
           },
