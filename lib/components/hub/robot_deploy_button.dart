@@ -17,7 +17,7 @@ class RobotDeployButton extends HudButtonComponent {
       : super(
           button: CircleComponent(
             radius: 50,
-            paint: leftClaw.state == RobotState.deployed ? BasicPalette.red.paint() : BasicPalette.orange.paint(),
+            paint: BasicPalette.orange.paint(),
           ),
           buttonDown: CircleComponent(
             radius: 50,
@@ -42,7 +42,7 @@ class RobotDeployButton extends HudButtonComponent {
     debugMode = kDebugMode;
 
     super.onPressed = () {
-      if (leftClaw.state == RobotState.deployed) {
+      if (leftClaw.robotState == RobotState.deployed) {
         refold();
         return;
       }
@@ -51,5 +51,14 @@ class RobotDeployButton extends HudButtonComponent {
     };
 
     return super.onLoad();
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    super.button = CircleComponent(
+      radius: 50,
+      paint: leftClaw.robotState == RobotState.deployed ? BasicPalette.red.paint() : BasicPalette.orange.paint(),
+    );
   }
 }

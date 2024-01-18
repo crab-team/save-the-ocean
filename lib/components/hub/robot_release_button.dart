@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
+import 'package:save_the_ocean/components/robot/robot_controller.dart';
 
 class RobotReleaseButton extends HudButtonComponent {
   final Robot robot;
@@ -21,7 +22,7 @@ class RobotReleaseButton extends HudButtonComponent {
       : super(
           button: CircleComponent(
             radius: 40,
-            paint: BasicPalette.green.paint(),
+            paint: BasicPalette.gray.paint(),
           ),
           buttonDown: CircleComponent(
             radius: 40,
@@ -33,4 +34,15 @@ class RobotReleaseButton extends HudButtonComponent {
             rightClaw.open();
           },
         );
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    super.button = CircleComponent(
+      radius: 40,
+      paint: leftClaw.robotClawState == RobotClawState.close && leftClaw.robotState == RobotState.idle
+          ? BasicPalette.green.paint()
+          : BasicPalette.gray.paint(),
+    );
+  }
 }

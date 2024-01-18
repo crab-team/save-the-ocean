@@ -9,7 +9,8 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
   RobotClaw({required this.isLeft});
 
   late RobotController _robotController;
-  RobotState state = RobotState.idle;
+  RobotState robotState = RobotState.idle;
+  RobotClawState robotClawState = RobotClawState.open;
   double initialPositionX = worldSize.x / 2;
   double initialPositionY = 1;
 
@@ -48,15 +49,30 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     _robotController.executeDeploy();
     _robotController.executeOpen();
     _robotController.executeRefold();
+    kDebugMode ? _robotController.logger() : null;
   }
 
-  void deploy() => state = RobotState.deploying;
-  void refold() => state = RobotState.refolding;
-  void open() => state = RobotState.opening;
-  void close() => state = RobotState.closing;
-  void idle() => state = RobotState.idle;
-  void moveLeft() => state = RobotState.movingLeft;
-  void moveRight() => state = RobotState.movingRight;
+  void idle() => robotState = RobotState.idle;
+  void deploy() {
+    bool canDeploy = robotState == RobotState.idle && robotClawState == RobotClawState.open;
+    if (canDeploy) robotState = RobotState.deploying;
+  }
+
+  void refold() {
+    bool canRefold = robotState == RobotState.deployed && robotClawState == RobotClawState.open;
+    if (canRefold) robotState = RobotState.refolding;
+  }
+
+  void open() {
+    bool canOpen = robotClawState == RobotClawState.close;
+    if (canOpen) robotClawState = RobotClawState.opening;
+  }
+
+  void close() {
+    if (robotClawState == RobotClawState.open) {
+      robotClawState = RobotClawState.closing;
+    }
+  }
 
   double _getAngle() {
     return isLeft ? -11.4 : 11.4;
