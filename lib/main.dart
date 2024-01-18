@@ -1,11 +1,49 @@
-import 'package:flame/game.dart';
+import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:provider/provider.dart';
+import 'package:save_the_ocean/core/app_lifecycle.dart';
+import 'package:save_the_ocean/audio/audio_controller.dart';
+import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/core/router.dart';
+import 'package:save_the_ocean/settings/settings.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]).then(
-    (_) => runApp(GameWidget(game: SaveTheOceanGame())),
-  );
+  await Flame.device.fullScreen();
+  await Flame.device.setLandscape();
+  runApp(const MyGame());
+}
+
+class MyGame extends StatelessWidget {
+  const MyGame({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppLifecycleObserver(
+      child: MultiProvider(
+        providers: [
+          Provider(create: (context) => SettingsController()),
+          // Set up audio.
+          ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(
+            // Ensures that music starts immediately.
+            lazy: false,
+            create: (context) => AudioController(),
+            update: (context, settings, lifecycleNotifier, audio) {
+              audio!.attachDependencies(lifecycleNotifier, settings);
+              return audio;
+            },
+            dispose: (context, audio) => audio.dispose(),
+          ),
+        ],
+        child: Builder(builder: (context) {
+          return MaterialApp.router(
+            title: TextConstants.appName,
+            routeInformationProvider: router.routeInformationProvider,
+            routeInformationParser: router.routeInformationParser,
+            routerDelegate: router.routerDelegate,
+          );
+        }),
+      ),
+    );
+  }
 }
