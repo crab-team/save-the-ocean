@@ -1,5 +1,5 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:save_the_ocean/components/garbage.dart';
+import 'package:save_the_ocean/components/garbage/garbage.dart';
 import 'package:save_the_ocean/game.dart';
 
 class Trash extends BodyComponent with ContactCallbacks {
@@ -13,12 +13,13 @@ class Trash extends BodyComponent with ContactCallbacks {
 
     final shape = ChainShape()
       ..createChain([
-        Vector2(-0.4, 0),
-        Vector2(-0.4, 3),
+        Vector2(-1, 2),
+        Vector2(-1, 3),
         Vector2(0.8, 3),
-        Vector2(0.8, 1),
+        Vector2(0.8, 2),
       ]);
     final fixtureDef = FixtureDef(shape);
+
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 

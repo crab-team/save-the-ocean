@@ -10,7 +10,12 @@ class Ground extends BodyComponent {
       type: BodyType.static,
     );
 
-    final shape = EdgeShape()..set(Vector2.zero(), Vector2(worldSize.x - 2, 0));
+    final shape = ChainShape()
+      ..createChain([
+        Vector2.zero(),
+        Vector2(worldSize.x - 2, 0),
+        Vector2(worldSize.x - 2, -3),
+      ]);
     final fixtureDef = FixtureDef(shape, density: 1, friction: 0.7);
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }

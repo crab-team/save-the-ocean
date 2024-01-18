@@ -1,9 +1,7 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/background.dart';
-import 'package:save_the_ocean/components/garbage.dart';
+import 'package:save_the_ocean/components/garbage/garbage_controller.dart';
 import 'package:save_the_ocean/components/ground.dart';
 import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
 import 'package:save_the_ocean/components/hub/robot_release_button.dart';
@@ -24,6 +22,7 @@ class SaveTheOceanGame extends Forge2DGame {
   late Robot robot;
   late RobotClaw leftClaw;
   late RobotClaw rightClaw;
+  late GarbageController _garbageController;
 
   SaveTheOceanGame()
       : super(
@@ -40,6 +39,7 @@ class SaveTheOceanGame extends Forge2DGame {
     await super.onLoad();
 
     await loadAssets();
+    _garbageController = GarbageController(world);
     robot = await RobotFactory.create();
     leftClaw = RobotClaw(isLeft: true);
     rightClaw = RobotClaw(isLeft: false);
@@ -65,7 +65,7 @@ class SaveTheOceanGame extends Forge2DGame {
   }
 
   void addWorldElements() async {
-    _createGarbagesRamdomly();
+    _garbageController.createGarbagesRamdomly();
 
     world.addAll([
       Ground(),
@@ -76,21 +76,5 @@ class SaveTheOceanGame extends Forge2DGame {
       rightClaw,
       Trash(),
     ]);
-  }
-
-  void _createGarbagesRamdomly() {
-    for (var i = 0; i < 25; i++) {
-      Future.delayed(Duration(seconds: i + 1), () {
-        Random random = Random.secure();
-        double randomNumber = random.nextDouble() * 3;
-
-        final garbage = Garbage(
-          initialLinearVelocityX: randomNumber + 2,
-          initialAngularVelocity: randomNumber,
-          fromLeft: Random().nextBool(),
-        );
-        world.add(garbage);
-      });
-    }
   }
 }

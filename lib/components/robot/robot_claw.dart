@@ -1,5 +1,6 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
+import 'package:save_the_ocean/components/garbage/garbage.dart';
 import 'package:save_the_ocean/components/robot/robot_controller.dart';
 import 'package:save_the_ocean/game.dart';
 
@@ -13,6 +14,8 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
   RobotClawState robotClawState = RobotClawState.open;
   double initialPositionX = worldSize.x / 2;
   double initialPositionY = 1;
+  List<Body> garbageCollected = [];
+  double weightLoad = 0;
 
   @override
   Body createBody() {
@@ -20,7 +23,6 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
       userData: this,
       position: Vector2(initialPositionX, initialPositionY),
       angle: _getAngle(),
-      linearDamping: 0.9,
       type: BodyType.kinematic,
     );
 
@@ -43,19 +45,27 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
   @override
   void update(double dt) {
     super.update(dt);
-
+    getWeightLoad();
     _robotController.bounds();
     _robotController.moveInXAxis();
-    _robotController.executeDeploy();
+
     _robotController.executeOpen();
     _robotController.executeRefold();
-    kDebugMode ? _robotController.logger() : null;
+    // kDebugMode ? _robotController.logger() : null;
+  }
+
+  void getWeightLoad() {
+    print(garbageCollected.map((e) => e.mass));
+    weightLoad = garbageCollected.fold(0, (previousValue, element) => previousValue + element.mass);
+    print('weightLoad $weightLoad');
   }
 
   void idle() => robotState = RobotState.idle;
   void deploy() {
     bool canDeploy = robotState == RobotState.idle && robotClawState == RobotClawState.open;
-    if (canDeploy) robotState = RobotState.deploying;
+    if (canDeploy) {
+      _robotController.executeDeploy();
+    }
   }
 
   void refold() {
@@ -96,5 +106,25 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
         Vector2(0, 2.2 / 2),
         Vector2(-0.5 / 2, 2.1 / 2),
       ]);
+  }
+
+  @override
+  void beginContact(Object other, Contact contact) {
+    super.beginContact(other, contact);
+
+    if (other is Garbage) {
+      Body garbage = other.body;
+      garbageCollected.add(garbage);
+    }
+  }
+
+  @override
+  void endContact(Object other, Contact contact) {
+    super.endContact(other, contact);
+
+    if (other is Garbage) {
+      Body garbage = other.body;
+      garbageCollected.remove(garbage);
+    }
   }
 }

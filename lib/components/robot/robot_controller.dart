@@ -8,8 +8,6 @@ enum RobotState {
   deploying,
   deployed,
   refolding,
-  movingLeft,
-  movingRight,
   outOfBounds,
 }
 
@@ -40,11 +38,13 @@ class RobotController {
 
     if (joystickRight && robot.robotState == RobotState.idle) {
       robot.body.linearVelocity = Vector2(4 * joystick.intensity, 0);
+      robot.body.angularDamping = 0.5;
     }
   }
 
   void executeDeploy() {
-    if (robot.robotState == RobotState.deploying && robot.robotClawState == RobotClawState.open) {
+    if (robot.robotState == RobotState.idle && robot.robotClawState == RobotClawState.open) {
+      robot.robotState = RobotState.deploying;
       Vector2 deployLinearVelocity = Vector2(0, 1.8);
       robot.body.linearVelocity = deployLinearVelocity;
       robot.robotState = RobotState.deployed;
@@ -75,6 +75,8 @@ class RobotController {
     if (robot.robotState == RobotState.refolding) {
       _close();
       Future.delayed(const Duration(milliseconds: 900), () {
+        // double resistance = robot.weightLoad * 20;
+        // print('resistance $resistance');
         Vector2 refoldLinearVelocity = Vector2(0, -1.8);
         robot.body.linearVelocity = refoldLinearVelocity;
         if (robot.body.position.y >= robot.initialPositionY) {
@@ -96,7 +98,7 @@ class RobotController {
     }
 
     // Limite contra muro derecho
-    if (robot.body.position.x >= worldSize.x - 1.6 && robot.body.linearVelocity.x > 0) {
+    if (robot.body.position.x >= worldSize.x - 1.5 && robot.body.linearVelocity.x > 0) {
       _stop();
     }
 
