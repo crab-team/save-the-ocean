@@ -22,7 +22,7 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     final bodyDef = BodyDef(
       userData: this,
       position: Vector2(initialPositionX, initialPositionY),
-      angle: _getAngle(),
+      angle: getAngle(),
       type: BodyType.kinematic,
     );
 
@@ -48,16 +48,14 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     getWeightLoad();
     _robotController.bounds();
     _robotController.moveInXAxis();
-
-    _robotController.executeOpen();
+    _robotController.openCloseClaws();
+    // _robotController.executeOpen();
     _robotController.executeRefold();
     // kDebugMode ? _robotController.logger() : null;
   }
 
   void getWeightLoad() {
-    print(garbageCollected.map((e) => e.mass));
     weightLoad = garbageCollected.fold(0, (previousValue, element) => previousValue + element.mass);
-    print('weightLoad $weightLoad');
   }
 
   void idle() => robotState = RobotState.idle;
@@ -84,7 +82,7 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     }
   }
 
-  double _getAngle() {
+  double getAngle() {
     return isLeft ? -11.4 : 11.4;
   }
 

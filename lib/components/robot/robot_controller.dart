@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/inputs/joystick.dart';
@@ -28,6 +29,8 @@ class RobotController {
     print('Robot Claw State: ${robot.robotClawState}');
   }
 
+  double angularVelocity = 2;
+
   void moveInXAxis() {
     bool joystickLeft = joystick.direction == JoystickDirection.left;
     bool joystickRight = joystick.direction == JoystickDirection.right;
@@ -52,28 +55,27 @@ class RobotController {
     }
   }
 
-  void executeOpen() {
-    if (robot.robotClawState == RobotClawState.opening && robot.robotState == RobotState.idle) {
-      robot.body.angularVelocity = robot.isLeft ? 1 : -1;
-      Future.delayed(const Duration(milliseconds: 900), () {
-        robot.body.angularVelocity = 0;
-        robot.robotClawState = RobotClawState.open;
-      });
-      return;
-    }
-  }
+  // void executeOpen() {
+  //   if (robot.robotClawState == RobotClawState.opening && robot.robotState == RobotState.idle) {
+  //     robot.body.angularVelocity = robot.isLeft ? 1 : -1;
+  //     Future.delayed(const Duration(milliseconds: 900), () {
+  //       robot.body.angularVelocity = 0;
+  //       robot.robotClawState = RobotClawState.open;
+  //     });
+  //     return;
+  //   }
+  // }
 
-  void _close() {
-    robot.body.angularVelocity = robot.isLeft ? -1 : 1;
-    Future.delayed(const Duration(milliseconds: 900), () {
-      robot.body.angularVelocity = 0;
-      robot.robotClawState = RobotClawState.close;
-    });
-  }
+  // void _close() {
+  //   robot.body.angularVelocity = robot.isLeft ? -1 : 1;
+  //   Future.delayed(const Duration(milliseconds: 900), () {
+  //     robot.body.angularVelocity = 0;
+  //     robot.robotClawState = RobotClawState.close;
+  //   });
+  // }
 
   void executeRefold() {
     if (robot.robotState == RobotState.refolding) {
-      _close();
       Future.delayed(const Duration(milliseconds: 900), () {
         // double resistance = robot.weightLoad * 20;
         // print('resistance $resistance');
@@ -83,6 +85,42 @@ class RobotController {
           robot.robotState = RobotState.idle;
         }
       });
+      return;
+    }
+  }
+
+  void openCloseClaws() {
+    bool joystickUp = robotReleaseJoystick.direction == JoystickDirection.up;
+    bool joystickDown = robotReleaseJoystick.direction == JoystickDirection.down;
+    bool joystickIsMoving = robotReleaseJoystick.isDragged;
+
+    if (joystickUp) {
+      if (robot.body.angle < -10.5 && robot.isLeft && joystickIsMoving) {
+        robot.body.angularVelocity = angularVelocity * robotReleaseJoystick.intensity;
+        return;
+      }
+
+      if (robot.body.angle > 10.5 && !robot.isLeft && joystickIsMoving) {
+        robot.body.angularVelocity = -angularVelocity * robotReleaseJoystick.intensity;
+        return;
+      }
+
+      robot.body.angularVelocity = 0;
+      return;
+    }
+
+    if (joystickDown) {
+      if (robot.body.angle > -12.3 && robot.isLeft && joystickIsMoving) {
+        robot.body.angularVelocity = -angularVelocity * robotReleaseJoystick.intensity;
+        return;
+      }
+
+      if (robot.body.angle < 12.3 && !robot.isLeft && joystickIsMoving) {
+        robot.body.angularVelocity = angularVelocity * robotReleaseJoystick.intensity;
+        return;
+      }
+
+      robot.body.angularVelocity = 0;
       return;
     }
   }

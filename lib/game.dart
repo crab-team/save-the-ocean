@@ -4,7 +4,7 @@ import 'package:save_the_ocean/components/background.dart';
 import 'package:save_the_ocean/components/garbage/garbage_controller.dart';
 import 'package:save_the_ocean/components/ground.dart';
 import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
-import 'package:save_the_ocean/components/hub/robot_release_button.dart';
+import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
 import 'package:save_the_ocean/components/left_wall.dart';
 import 'package:save_the_ocean/components/right_wall.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
@@ -59,8 +59,8 @@ class SaveTheOceanGame extends Forge2DGame {
     camera.viewport.addAll([
       FpsTextComponent(),
       joystick,
+      robotReleaseJoystick,
       RobotDeployButton(robot: robot, leftClaw: leftClaw, rightClaw: rightClaw),
-      RobotReleaseButton(robot: robot, leftClaw: leftClaw, rightClaw: rightClaw),
     ]);
   }
 
