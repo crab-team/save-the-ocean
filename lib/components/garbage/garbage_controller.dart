@@ -17,7 +17,6 @@ class GarbageController {
         final garbage = Garbage(
           initialLinearVelocityX: randomNumber + 2,
           initialAngularVelocity: randomNumber,
-          fromLeft: true,
         );
         world.add(garbage);
       });

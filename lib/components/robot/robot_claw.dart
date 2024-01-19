@@ -49,8 +49,6 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     _robotController.bounds();
     _robotController.moveInXAxis();
     _robotController.openCloseClaws();
-    // _robotController.executeOpen();
-    _robotController.executeRefold();
     // kDebugMode ? _robotController.logger() : null;
   }
 
@@ -61,25 +59,12 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
   void idle() => robotState = RobotState.idle;
   void deploy() {
     bool canDeploy = robotState == RobotState.idle && robotClawState == RobotClawState.open;
-    if (canDeploy) {
-      _robotController.executeDeploy();
-    }
+    if (canDeploy) _robotController.executeDeploy();
   }
 
   void refold() {
     bool canRefold = robotState == RobotState.deployed && robotClawState == RobotClawState.open;
-    if (canRefold) robotState = RobotState.refolding;
-  }
-
-  void open() {
-    bool canOpen = robotClawState == RobotClawState.close;
-    if (canOpen) robotClawState = RobotClawState.opening;
-  }
-
-  void close() {
-    if (robotClawState == RobotClawState.open) {
-      robotClawState = RobotClawState.closing;
-    }
+    if (canRefold) _robotController.executeRefold();
   }
 
   double getAngle() {

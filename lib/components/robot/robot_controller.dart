@@ -29,7 +29,8 @@ class RobotController {
     print('Robot Claw State: ${robot.robotClawState}');
   }
 
-  double angularVelocity = 2;
+  double linearVelocity = 2.8;
+  double angularVelocity = 3;
 
   void moveInXAxis() {
     bool joystickLeft = joystick.direction == JoystickDirection.left;
@@ -45,47 +46,23 @@ class RobotController {
     }
   }
 
+  bool get deployLimits => robot.body.position.x >= 1.6 && robot.body.position.x <= worldSize.x - 1.5;
+
   void executeDeploy() {
-    if (robot.robotState == RobotState.idle && robot.robotClawState == RobotClawState.open) {
+    if (robot.robotState == RobotState.idle && robot.robotClawState == RobotClawState.open && deployLimits) {
       robot.robotState = RobotState.deploying;
-      Vector2 deployLinearVelocity = Vector2(0, 1.8);
+      Vector2 deployLinearVelocity = Vector2(0, linearVelocity);
       robot.body.linearVelocity = deployLinearVelocity;
       robot.robotState = RobotState.deployed;
       return;
     }
   }
 
-  // void executeOpen() {
-  //   if (robot.robotClawState == RobotClawState.opening && robot.robotState == RobotState.idle) {
-  //     robot.body.angularVelocity = robot.isLeft ? 1 : -1;
-  //     Future.delayed(const Duration(milliseconds: 900), () {
-  //       robot.body.angularVelocity = 0;
-  //       robot.robotClawState = RobotClawState.open;
-  //     });
-  //     return;
-  //   }
-  // }
-
-  // void _close() {
-  //   robot.body.angularVelocity = robot.isLeft ? -1 : 1;
-  //   Future.delayed(const Duration(milliseconds: 900), () {
-  //     robot.body.angularVelocity = 0;
-  //     robot.robotClawState = RobotClawState.close;
-  //   });
-  // }
-
   void executeRefold() {
-    if (robot.robotState == RobotState.refolding) {
-      Future.delayed(const Duration(milliseconds: 900), () {
-        // double resistance = robot.weightLoad * 20;
-        // print('resistance $resistance');
-        Vector2 refoldLinearVelocity = Vector2(0, -1.8);
-        robot.body.linearVelocity = refoldLinearVelocity;
-        if (robot.body.position.y >= robot.initialPositionY) {
-          robot.robotState = RobotState.idle;
-        }
-      });
-      return;
+    Vector2 refoldLinearVelocity = Vector2(0, -linearVelocity);
+    robot.body.linearVelocity = refoldLinearVelocity;
+    if (robot.body.position.y >= robot.initialPositionY) {
+      robot.robotState = RobotState.idle;
     }
   }
 

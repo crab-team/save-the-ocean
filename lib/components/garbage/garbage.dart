@@ -1,23 +1,23 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/game.dart';
 
 class Garbage extends BodyComponent {
   final double initialLinearVelocityX;
   final double initialAngularVelocity;
-  final bool fromLeft;
 
   Garbage({
     required this.initialLinearVelocityX,
     required this.initialAngularVelocity,
-    required this.fromLeft,
   });
 
   @override
   Body createBody() {
     final bodyDef = BodyDef(
-      position: Vector2(fromLeft ? 0.1 : worldSize.x - 0.1, 1),
+      position: Vector2(0.5, worldSize.y - 4),
       type: BodyType.dynamic,
-      linearVelocity: Vector2(fromLeft ? initialLinearVelocityX : (initialLinearVelocityX * -1) - 2, 0),
+      angle: 1,
+      linearVelocity: Vector2(initialLinearVelocityX, 0),
       angularVelocity: initialAngularVelocity,
       gravityScale: Vector2(0.5, 0.2),
     );
@@ -33,5 +33,11 @@ class Garbage extends BodyComponent {
     );
 
     return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    debugMode = kDebugMode;
   }
 }
