@@ -1,12 +1,12 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:save_the_ocean/components/background.dart';
+import 'package:save_the_ocean/components/game_scene/left_wall.dart';
+import 'package:save_the_ocean/components/game_scene/right_wall.dart';
+import 'package:save_the_ocean/components/game_scene/background.dart';
+import 'package:save_the_ocean/components/game_scene/ground.dart';
 import 'package:save_the_ocean/components/garbage/garbage_controller.dart';
-import 'package:save_the_ocean/components/ground.dart';
 import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
 import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
-import 'package:save_the_ocean/components/left_wall.dart';
-import 'package:save_the_ocean/components/right_wall.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/components/robot/robot_factory.dart';

@@ -4,7 +4,7 @@ import 'package:save_the_ocean/game.dart';
 
 JoystickComponent joystick = JoystickComponent(
   knob: CircleComponent(
-    radius: 35,
+    radius: 54,
     paint: BasicPalette.black.withAlpha(200).paint(),
   ),
   background: CircleComponent(

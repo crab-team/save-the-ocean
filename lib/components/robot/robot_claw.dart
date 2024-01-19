@@ -1,6 +1,6 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
-import 'package:save_the_ocean/components/garbage/garbage.dart';
+import 'package:save_the_ocean/components/garbage/garbage_component.dart';
 import 'package:save_the_ocean/components/robot/robot_controller.dart';
 import 'package:save_the_ocean/game.dart';
 
@@ -95,7 +95,7 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
   void beginContact(Object other, Contact contact) {
     super.beginContact(other, contact);
 
-    if (other is Garbage) {
+    if (other is GarbageComponent) {
       Body garbage = other.body;
       garbageCollected.add(garbage);
     }
@@ -105,7 +105,7 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
   void endContact(Object other, Contact contact) {
     super.endContact(other, contact);
 
-    if (other is Garbage) {
+    if (other is GarbageComponent) {
       Body garbage = other.body;
       garbageCollected.remove(garbage);
     }

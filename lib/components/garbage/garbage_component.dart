@@ -1,35 +1,30 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
+import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/game.dart';
 
-class Garbage extends BodyComponent {
-  final double initialLinearVelocityX;
-  final double initialAngularVelocity;
+class GarbageComponent extends BodyComponent {
+  final Garbage garbage;
 
-  Garbage({
-    required this.initialLinearVelocityX,
-    required this.initialAngularVelocity,
-  });
+  GarbageComponent({required this.garbage});
 
   @override
   Body createBody() {
     final bodyDef = BodyDef(
-      position: Vector2(0.5, worldSize.y - 4),
       type: BodyType.dynamic,
       angle: 1,
-      linearVelocity: Vector2(initialLinearVelocityX, 0),
-      angularVelocity: initialAngularVelocity,
+      position: Vector2(0.5, worldSize.y - 4),
       gravityScale: Vector2(0.5, 0.2),
+      linearVelocity: Vector2(garbage.initialLinearVelocityX, 0),
+      angularVelocity: garbage.initialAngularVelocity,
     );
 
-    final shape = PolygonShape()..setAsBoxXY(0.1, 0.2);
-
     final fixtureDef = FixtureDef(
-      shape,
+      garbage.shape,
       userData: this,
-      restitution: 0,
-      friction: 0.8,
-      density: 0.3,
+      restitution: garbage.restitution,
+      friction: garbage.friction,
+      density: garbage.density,
     );
 
     return world.createBody(bodyDef)..createFixture(fixtureDef);
