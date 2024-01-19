@@ -1,5 +1,7 @@
 class ImageAssets {
   static const String background = 'background.png';
+  static const String challengeLogo = 'images/challenge_logo.svg';
+  static const String mtcLogo = 'images/mtc_logo.png';
 }
 
 class AnimationAssets {

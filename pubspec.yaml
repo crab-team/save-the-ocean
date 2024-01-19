@@ -14,8 +14,10 @@ dependencies:
   flame: ^1.14.0
   flame_forge2d: ^0.16.0+4
   flame_rive: ^1.9.10
+  flame_splash_screen: ^0.2.0
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.9
   go_router: ^13.0.1
   logging: ^1.2.0
   provider: ^6.1.1
