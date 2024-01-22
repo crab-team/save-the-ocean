@@ -1,9 +1,8 @@
 import 'package:intl/intl.dart';
 
 extension ScoreX on int {
-  String toScore() {
+  String formattedScore() {
     DateTime time = DateTime.fromMillisecondsSinceEpoch(this);
-    String format = time.hour > 0 ? 'HH:mm:ss:SS' : 'mm:ss:SS';
-    return DateFormat(format).format(time);
+    return DateFormat('HH:mm:ss:SS').format(time);
   }
 }

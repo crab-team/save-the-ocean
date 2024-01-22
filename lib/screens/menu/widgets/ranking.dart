@@ -63,7 +63,7 @@ class _RankingState extends State<Ranking> {
         children: [
           Text(user.username),
           const Spacer(),
-          Text(user.time.toScore()),
+          Text(user.score.formattedScore()),
         ],
       ),
     );
