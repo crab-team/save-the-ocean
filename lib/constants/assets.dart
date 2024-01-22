@@ -5,7 +5,7 @@ class ImageAssets {
 }
 
 class AnimationAssets {
-  static const String robot = 'assets/animations/save_the_ocean.riv';
+  static const String riv = 'assets/animations/save_the_ocean.riv';
 }
 
 class AudioAssets {

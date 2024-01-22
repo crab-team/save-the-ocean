@@ -1,8 +1,13 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:save_the_ocean/components/battery_level/battery_level.dart';
 import 'package:save_the_ocean/components/garbage/garbage_component.dart';
 import 'package:save_the_ocean/game.dart';
 
 class Trash extends BodyComponent with ContactCallbacks {
+  final BatteryLevelComponent batteryLevel;
+
+  Trash({required this.batteryLevel});
+
   @override
   Body createBody() {
     final bodyDef = BodyDef(
@@ -29,6 +34,7 @@ class Trash extends BodyComponent with ContactCallbacks {
 
     if (other is GarbageComponent) {
       print('${other.garbage.type.name.toUpperCase()} was removed from the world');
+      batteryLevel.updateBatteryLevelByGarbageType(other.garbage.type);
       other.removeFromParent();
     }
   }

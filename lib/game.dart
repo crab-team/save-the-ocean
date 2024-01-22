@@ -1,9 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:save_the_ocean/components/game_scene/left_wall.dart';
-import 'package:save_the_ocean/components/game_scene/right_wall.dart';
+import 'package:save_the_ocean/components/battery_level/battery_level.dart';
 import 'package:save_the_ocean/components/game_scene/background.dart';
 import 'package:save_the_ocean/components/game_scene/ground.dart';
+import 'package:save_the_ocean/components/game_scene/left_wall.dart';
+import 'package:save_the_ocean/components/game_scene/right_wall.dart';
 import 'package:save_the_ocean/components/garbage/garbage_controller.dart';
 import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
 import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
@@ -20,6 +21,7 @@ final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 
 class SaveTheOceanGame extends Forge2DGame {
   late Robot robot;
+  late BatteryLevelComponent batteryLevel;
   late RobotClaw leftClaw;
   late RobotClaw rightClaw;
   late GarbageController _garbageController;
@@ -41,6 +43,7 @@ class SaveTheOceanGame extends Forge2DGame {
     await loadAssets();
     _garbageController = GarbageController(world);
     robot = await RobotFactory.create();
+    batteryLevel = await BatteryLevelComponentFactory.create();
     leftClaw = RobotClaw(isLeft: true);
     rightClaw = RobotClaw(isLeft: false);
 
@@ -58,6 +61,7 @@ class SaveTheOceanGame extends Forge2DGame {
     camera.backdrop.add(Background(size: screenSize));
     camera.viewport.addAll([
       FpsTextComponent(),
+      batteryLevel,
       joystick,
       robotReleaseJoystick,
       RobotDeployButton(robot: robot, leftClaw: leftClaw, rightClaw: rightClaw),
@@ -74,7 +78,7 @@ class SaveTheOceanGame extends Forge2DGame {
       // robot,
       leftClaw,
       rightClaw,
-      Trash(),
+      Trash(batteryLevel: batteryLevel),
     ]);
   }
 }

@@ -9,7 +9,7 @@ import 'package:save_the_ocean/utils/logger.dart';
 
 class RiveRobotFactory {
   static Future<RiveRobot> create() async {
-    final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.robot), artboardName: 'robot');
+    final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.riv), artboardName: 'robot');
     return RiveRobot(artboard: artboard);
   }
 }
