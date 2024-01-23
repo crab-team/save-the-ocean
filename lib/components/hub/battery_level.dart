@@ -3,26 +3,22 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/foundation.dart';
-import 'package:save_the_ocean/components/battery_level/battery_level_controller.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/domain/entities/garbage.dart';
+import 'package:save_the_ocean/main.dart';
 
 class BatteryLevelComponentFactory {
-  static Future<BatteryLevelComponent> create(BatteryLevelController batteryLevelController) async {
+  static Future<BatteryLevelComponent> create() async {
     final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.riv), artboardName: 'battery_level');
-    return BatteryLevelComponent(artboard: artboard, batteryLevelController: batteryLevelController);
+    return BatteryLevelComponent(artboard: artboard);
   }
 }
 
 class BatteryLevelComponent extends RiveComponent {
-  final BatteryLevelController batteryLevelController;
-
   StateMachineController? controller;
 
-  double level = 0;
   late SMINumber? levelInput;
 
-  BatteryLevelComponent({required super.artboard, required this.batteryLevelController});
+  BatteryLevelComponent({required super.artboard});
 
   @override
   Future<void> onLoad() async {
@@ -36,11 +32,12 @@ class BatteryLevelComponent extends RiveComponent {
     anchor = Anchor.topLeft;
     position = Vector2(3, 3);
     size = Vector2(artboard.width / 2, artboard.height / 2);
-
-    levelInput?.value = level;
+    listenBatteryLevel();
   }
 
-  void updateBatteryLevelByGarbageType(GarbageType type) {
-    batteryLevelController.updateBatteryLevelByGarbageType(type);
+  void listenBatteryLevel() {
+    batteryLevelNotifier.addListener(() {
+      levelInput?.value = batteryLevelNotifier.level;
+    });
   }
 }

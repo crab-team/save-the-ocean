@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:save_the_ocean/components/battery_level/battery_level.dart';
-import 'package:save_the_ocean/components/battery_level/battery_level_controller.dart';
+import 'package:save_the_ocean/components/hub/battery_level.dart';
 import 'package:save_the_ocean/components/game_scene/background.dart';
 import 'package:save_the_ocean/components/game_scene/ground.dart';
 import 'package:save_the_ocean/components/game_scene/left_wall.dart';
@@ -26,7 +25,6 @@ class SaveTheOceanGame extends Forge2DGame {
   late RobotClaw leftClaw;
   late RobotClaw rightClaw;
   late GarbageController _garbageController;
-  late BatteryLevelController _batteryLevelController;
 
   SaveTheOceanGame()
       : super(
@@ -44,8 +42,7 @@ class SaveTheOceanGame extends Forge2DGame {
 
     await loadAssets();
     _garbageController = GarbageController(world);
-    batteryLevel = await BatteryLevelComponentFactory.create(_batteryLevelController);
-    _batteryLevelController = BatteryLevelController(batteryLevel);
+    batteryLevel = await BatteryLevelComponentFactory.create();
     robot = await RobotFactory.create();
     leftClaw = RobotClaw(isLeft: true);
     rightClaw = RobotClaw(isLeft: false);
@@ -73,7 +70,6 @@ class SaveTheOceanGame extends Forge2DGame {
 
   void addWorldElements() async {
     _garbageController.createGarbagesRamdomly();
-    _batteryLevelController.decrementBatteryLevel();
 
     world.addAll([
       Ground(),
@@ -82,7 +78,7 @@ class SaveTheOceanGame extends Forge2DGame {
       // robot,
       leftClaw,
       rightClaw,
-      Trash(batteryLevelController: _batteryLevelController),
+      Trash(),
     ]);
   }
 }

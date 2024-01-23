@@ -1,13 +1,11 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:save_the_ocean/components/battery_level/battery_level_controller.dart';
 import 'package:save_the_ocean/components/garbage/garbage_component.dart';
+import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/main.dart';
+import 'package:save_the_ocean/providers/battery_level_providers.dart';
 
 class Trash extends BodyComponent with ContactCallbacks {
-  final BatteryLevelController batteryLevelController;
-
-  Trash({required this.batteryLevelController});
-
   @override
   Body createBody() {
     final bodyDef = BodyDef(
@@ -34,8 +32,24 @@ class Trash extends BodyComponent with ContactCallbacks {
 
     if (other is GarbageComponent) {
       print('${other.garbage.type.name.toUpperCase()} was removed from the world');
-      batteryLevelController.updateBatteryLevelByGarbageType(other.garbage.type);
+      updateBatteryLevelByGarbageType(other.garbage.type);
       other.removeFromParent();
     }
+  }
+
+  void updateBatteryLevel(double level) {
+    batteryLevelNotifier.level += level;
+  }
+
+  void updateBatteryLevelByGarbageType(GarbageType garbageType) {
+    double levelToIncrease = garbageTypeToBatteryLevel[garbageType]!;
+    print('Battery level increased by $levelToIncrease');
+    updateBatteryLevel(levelToIncrease);
+  }
+
+  void decrementBatteryLevel() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      updateBatteryLevel(-1);
+    });
   }
 }
