@@ -8,27 +8,26 @@ import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 
 class BatteryLevelComponentFactory {
-  static Future<BatteryLevelComponent> create() async {
+  static Future<BatteryLevelComponent> create(BatteryLevelController batteryLevelController) async {
     final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.riv), artboardName: 'battery_level');
-    return BatteryLevelComponent(artboard: artboard);
+    return BatteryLevelComponent(artboard: artboard, batteryLevelController: batteryLevelController);
   }
 }
 
 class BatteryLevelComponent extends RiveComponent {
-  late BatteryLevelController _batteryLevelController;
+  final BatteryLevelController batteryLevelController;
+
   StateMachineController? controller;
 
   double level = 0;
   late SMINumber? levelInput;
-  final countdown = Timer(2);
 
-  BatteryLevelComponent({required super.artboard});
+  BatteryLevelComponent({required super.artboard, required this.batteryLevelController});
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
     debugMode = kDebugMode;
-    _batteryLevelController = BatteryLevelController(this);
     controller = StateMachineController.fromArtboard(artboard, "state_machine");
     if (controller == null) return;
 
@@ -41,16 +40,7 @@ class BatteryLevelComponent extends RiveComponent {
     levelInput?.value = level;
   }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    countdown.update(dt);
-    if (countdown.finished) {
-      // _batteryLevelController.updateBatteryLevel(-1);
-    }
-  }
-
   void updateBatteryLevelByGarbageType(GarbageType type) {
-    _batteryLevelController.updateBatteryLevelByGarbageType(type);
+    batteryLevelController.updateBatteryLevelByGarbageType(type);
   }
 }

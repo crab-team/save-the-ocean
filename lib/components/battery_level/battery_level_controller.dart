@@ -1,6 +1,5 @@
 import 'package:save_the_ocean/components/battery_level/battery_level.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
-import 'package:flame/timer.dart';
 
 Map<GarbageType, double> garbageTypeToBatteryLevel = {
   GarbageType.plasticBag: 10.0,
@@ -15,8 +14,6 @@ class BatteryLevelController {
 
   BatteryLevelController(this.batteryLevel);
 
-  final countdown = Timer(2);
-
   void updateBatteryLevel(double level) {
     batteryLevel.levelInput?.value += level;
   }
@@ -25,5 +22,11 @@ class BatteryLevelController {
     double levelToIncrease = garbageTypeToBatteryLevel[garbageType]!;
     print('Battery level increased by $levelToIncrease');
     updateBatteryLevel(levelToIncrease);
+  }
+
+  void decrementBatteryLevel() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      updateBatteryLevel(-1);
+    });
   }
 }
