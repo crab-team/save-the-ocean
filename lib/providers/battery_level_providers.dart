@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 
-Map<GarbageType, double> garbageTypeToBatteryLevel = {
+Map<GarbageType, double> garbageTypeToLevel = {
   GarbageType.plasticBag: 3.5,
   GarbageType.bottle: 2.5,
   GarbageType.tire: 6.0,
