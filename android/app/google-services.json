@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "93565432753",
+    "project_id": "save-the-ocean-4672e",
+    "storage_bucket": "save-the-ocean-4672e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93565432753:android:1100767621607033b24390",
+        "android_client_info": {
+          "package_name": "com.mtc.save_the_ocean"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFOAW5OB1lBOZUCZ3_kjCPJnuhrvywX94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
