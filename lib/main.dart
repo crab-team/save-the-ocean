@@ -14,6 +14,8 @@ import 'package:save_the_ocean/firebase_options.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
 import 'package:save_the_ocean/settings/settings.dart';
 
+late BatteryLevelNotifier batteryLevelNotifier;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -23,6 +25,8 @@ void main() async {
 
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
+
+  batteryLevelNotifier = BatteryLevelNotifier();
   
   runApp(const MyGame());
 }
@@ -41,7 +45,6 @@ class MyGame extends StatelessWidget {
           Provider(create: (context) => SettingsController()),
           Provider(create: (context) => BatteryLevelNotifier()),
           ChangeNotifierProvider(create: (context) => RankingController(getRanking: getRanking)),
-          ChangeNotifierProvider(create: (context) => BatteryLevelNotifier()),
           // Set up audio.
           ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(
             // Ensures that music starts immediately.
