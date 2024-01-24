@@ -23,7 +23,7 @@ class FirestoreRankingRepository implements RankingRepository {
 
   @override
   Future<void> setScore(String username, int score) async {
-    await _usersCollection().doc(username).update({'score': score});
+    await _usersCollection().doc(username).set({'username': username, 'score': score}, SetOptions(merge: true));
   }
 
   CollectionReference _usersCollection() {
