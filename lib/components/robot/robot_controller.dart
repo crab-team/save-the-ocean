@@ -2,7 +2,6 @@ import 'package:flame/components.dart';
 import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/game.dart';
-import 'package:save_the_ocean/inputs/joystick.dart';
 
 enum RobotState {
   idle,
@@ -33,17 +32,9 @@ class RobotController {
   double angularVelocity = 3;
 
   void moveInXAxis() {
-    bool joystickLeft = joystick.direction == JoystickDirection.left;
-    bool joystickRight = joystick.direction == JoystickDirection.right;
-
-    if (joystickLeft && robot.robotState == RobotState.idle) {
-      robot.body.linearVelocity = Vector2(-4 * joystick.intensity, 0);
-    }
-
-    if (joystickRight && robot.robotState == RobotState.idle) {
-      robot.body.linearVelocity = Vector2(4 * joystick.intensity, 0);
-      robot.body.angularDamping = 0.5;
-    }
+    robotNotifier.addListener(() {
+      robot.body.linearVelocity = Vector2(robotNotifier.velocity, 0);
+    });
   }
 
   bool get deployLimits => robot.body.position.x >= 1.6 && robot.body.position.x <= worldSize.x - 1.5;

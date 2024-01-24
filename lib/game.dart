@@ -13,15 +13,16 @@ import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/components/robot/robot_factory.dart';
 import 'package:save_the_ocean/components/trash/trash.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/inputs/joystick.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
 import 'package:save_the_ocean/providers/pollution_level_providers.dart';
+import 'package:save_the_ocean/providers/robot_provider.dart';
 
 final screenSize = Vector2(1280, 720);
 const cameraZoom = 100.0;
 final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 final batteryLevelNotifier = BatteryLevelNotifier();
 final pollutionLevelNotifier = PollutionLevelNotifier();
+final robotNotifier = RobotNotifier();
 
 class SaveTheOceanGame extends Forge2DGame {
   late Robot robot;
@@ -66,7 +67,6 @@ class SaveTheOceanGame extends Forge2DGame {
     camera.viewport.addAll([
       Hub(),
       FpsTextComponent(),
-      joystick,
       robotReleaseJoystick,
       RobotDeployButton(robot: robot, leftClaw: leftClaw, rightClaw: rightClaw),
     ]);

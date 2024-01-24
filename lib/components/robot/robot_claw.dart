@@ -40,6 +40,7 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     await super.onLoad();
     debugMode = kDebugMode;
     _robotController = RobotController(this);
+    _robotController.moveInXAxis();
   }
 
   @override
@@ -47,7 +48,6 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     super.update(dt);
     getWeightLoad();
     _robotController.bounds();
-    _robotController.moveInXAxis();
     _robotController.openCloseClaws();
     // kDebugMode ? _robotController.logger() : null;
   }

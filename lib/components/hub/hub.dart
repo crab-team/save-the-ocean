@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:save_the_ocean/components/hub/battery_level_rive_component.dart';
 import 'package:save_the_ocean/components/hub/pollution_level_rive_component.dart';
+import 'package:save_the_ocean/components/hub/rudder_joystick/rudder_joystick.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/game.dart';
 
@@ -20,6 +21,7 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
     sprite = Sprite(gameRef.images.fromCache(ImageAssets.controlPanel));
     await initBatteryLevel();
     await initPollutionLevel();
+    initRudderJoystick();
   }
 
   Future<void> initBatteryLevel() async {
@@ -34,5 +36,12 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
     pollutionLevelComponent.size = Vector2(size.x / 4, size.y / 4);
     pollutionLevelComponent.position = Vector2(size.x / 11, size.y / 2);
     add(pollutionLevelComponent);
+  }
+
+  void initRudderJoystick() {
+    final rudderJoystick = RudderJoystick();
+    rudderJoystick.size = Vector2(size.x / 5, size.y);
+    rudderJoystick.position = Vector2(0, size.y - rudderJoystick.size.y);
+    add(rudderJoystick);
   }
 }
