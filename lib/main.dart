@@ -6,15 +6,12 @@ import 'package:save_the_ocean/audio/audio_controller.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/app_lifecycle.dart';
 import 'package:save_the_ocean/core/router.dart';
-import 'package:save_the_ocean/providers/battery_level_providers.dart';
 import 'package:save_the_ocean/data/repository_provider.dart';
 import 'package:save_the_ocean/domain/repositories/ranking_repository.dart';
 import 'package:save_the_ocean/domain/use_cases/ranking/get_ranking.dart';
 import 'package:save_the_ocean/firebase_options.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
 import 'package:save_the_ocean/settings/settings.dart';
-
-late BatteryLevelNotifier batteryLevelNotifier;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,9 +22,6 @@ void main() async {
 
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
-
-  batteryLevelNotifier = BatteryLevelNotifier();
-  
   runApp(const MyGame());
 }
 
@@ -43,7 +37,6 @@ class MyGame extends StatelessWidget {
       child: MultiProvider(
         providers: [
           Provider(create: (context) => SettingsController()),
-          Provider(create: (context) => BatteryLevelNotifier()),
           ChangeNotifierProvider(create: (context) => RankingController(getRanking: getRanking)),
           // Set up audio.
           ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(
