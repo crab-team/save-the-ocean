@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,8 @@ void main() async {
 
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
+  
+  runApp(const MyGame());
 }
 
 class MyGame extends StatelessWidget {
