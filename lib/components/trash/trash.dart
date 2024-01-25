@@ -29,7 +29,6 @@ class Trash extends BodyComponent with ContactCallbacks {
     super.beginContact(other, contact);
 
     if (other is GarbageComponent) {
-      print('${other.garbage.type.name.toUpperCase()} was removed from the world');
       double garbageToLevel = garbageTypeToLevel[other.garbage.type]!;
       incrementBatteryLevel(garbageToLevel);
       decrementPollutionLevel(garbageToLevel);

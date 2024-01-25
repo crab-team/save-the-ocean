@@ -15,7 +15,7 @@ class GarbageComponent extends BodyComponent {
       angle: 1,
       position: Vector2(0.5, worldSize.y - 4),
       gravityScale: Vector2(0.5, 0.2),
-      linearVelocity: Vector2(garbage.initialLinearVelocityX, 0),
+      linearVelocity: Vector2(garbage.initialLinearVelocityX * 1.5, 0),
       angularVelocity: garbage.initialAngularVelocity,
     );
 

@@ -66,8 +66,6 @@ class SaveTheOceanGame extends Forge2DGame {
   }
 
   void addWorldElements() async {
-    _garbageController.createGarbagesRamdomly();
-
     world.addAll([
       GroundBodyComponentFactory.create(),
       WallComponentFactory.create(true),
@@ -79,7 +77,7 @@ class SaveTheOceanGame extends Forge2DGame {
           autoStart: true,
           repeat: true,
           onTick: () {
-            print('timer tick');
+            _garbageController.createGarbagesRamdomly();
             if (batteryLevelNotifier.level > 0) batteryLevelNotifier.level -= 2;
           })
     ]);

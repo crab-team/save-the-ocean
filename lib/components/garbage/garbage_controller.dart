@@ -20,18 +20,14 @@ class GarbageController {
       Garbage.tire(),
     ];
 
-    for (var i = 0; i < 25; i++) {
-      Future.delayed(Duration(seconds: i + 1), () {
-        Random random = Random.secure();
-        Garbage garbage = garbages[random.nextInt(garbages.length)];
-        final garbageComponent = GarbageComponent(garbage: garbage);
-        world.add(garbageComponent);
-        incrementPollutionLevel(garbage.type);
-      });
-    }
+    Random random = Random.secure();
+    Garbage garbage = garbages[random.nextInt(garbages.length)];
+    final garbageComponent = GarbageComponent(garbage: garbage);
+    world.add(garbageComponent);
+    incrementPollutionLevel(garbage.type);
   }
 
   void incrementPollutionLevel(GarbageType garbageType) {
-    pollutionLevelNotifier.level += garbageTypeToLevel[garbageType]!;
+    pollutionLevelNotifier.level += garbageTypeToLevel[garbageType]! / 2;
   }
 }
