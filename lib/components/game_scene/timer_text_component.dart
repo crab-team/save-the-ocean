@@ -27,12 +27,22 @@ class TimerTextComponent extends PositionComponent {
       position: Vector2.zero(),
       anchor: Anchor.topCenter,
     );
+
+    gameListener();
     add(_textComponent);
   }
 
   @override
   void update(double dt) {
     interval.update(dt);
+  }
+
+  void gameListener() {
+    gameNotifier.addListener(() {
+      if (gameNotifier.isGameOver) {
+        interval.stop();
+      }
+    });
   }
 
   String getTimeFormatByDt(double dt) {

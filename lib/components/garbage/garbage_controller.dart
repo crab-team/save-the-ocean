@@ -11,7 +11,7 @@ class GarbageController {
 
   GarbageController(this.world);
 
-  void createGarbagesRamdomly() {
+  void spawnGarbage() {
     List<Garbage> garbages = [
       Garbage.banana(),
       Garbage.bottle(),
@@ -25,9 +25,16 @@ class GarbageController {
     final garbageComponent = GarbageComponent(garbage: garbage);
     world.add(garbageComponent);
     incrementPollutionLevel(garbage.type);
+    decrementBatteryLevel();
   }
 
   void incrementPollutionLevel(GarbageType garbageType) {
     pollutionLevelNotifier.level += garbageTypeToLevel[garbageType]! / 2;
+  }
+
+  void decrementBatteryLevel() {
+    if (batteryLevelNotifier.level > 0) {
+      batteryLevelNotifier.level -= 4;
+    }
   }
 }

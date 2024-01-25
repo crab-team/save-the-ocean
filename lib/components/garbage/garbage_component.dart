@@ -1,9 +1,10 @@
+import 'package:flame/effects.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/game.dart';
 
-class GarbageComponent extends BodyComponent {
+class GarbageComponent extends BodyComponent implements PositionProvider {
   final Garbage garbage;
 
   GarbageComponent({required this.garbage});
@@ -34,5 +35,10 @@ class GarbageComponent extends BodyComponent {
   Future<void> onLoad() async {
     await super.onLoad();
     debugMode = kDebugMode;
+  }
+
+  @override
+  set position(Vector2 value) {
+    body.setTransform(value, angle);
   }
 }
