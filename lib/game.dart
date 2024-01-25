@@ -46,7 +46,7 @@ class SaveTheOceanGame extends Forge2DGame {
     await super.onLoad();
     await loadAssets();
     initTimer();
-    gameOverListener();
+    gameListeners();
 
     _garbageController = GarbageController(world);
     robot = await RobotFactory.create();
@@ -98,7 +98,7 @@ class SaveTheOceanGame extends Forge2DGame {
     ]);
   }
 
-  void gameOverListener() {
+  void gameListeners() {
     batteryLevelNotifier.addListener(() {
       if (batteryLevelNotifier.level <= 0) {
         gameNotifier.gameOver();
