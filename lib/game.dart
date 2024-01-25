@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:save_the_ocean/components/game_scene/background.dart';
 import 'package:save_the_ocean/components/game_scene/ground_component.dart';
 import 'package:save_the_ocean/components/game_scene/timer_text_component.dart';
@@ -29,7 +29,7 @@ final gameNotifier = GameNotifier();
 class SaveTheOceanGame extends Forge2DGame {
   late Robot robot;
   late GarbageController _garbageController;
-  late TimerComponent timer;
+  late Timer timer;
 
   SaveTheOceanGame()
       : super(
@@ -45,12 +45,32 @@ class SaveTheOceanGame extends Forge2DGame {
   Future<void> onLoad() async {
     await super.onLoad();
     await loadAssets();
+    initTimer();
+    gameOverListener();
+
     _garbageController = GarbageController(world);
     robot = await RobotFactory.create();
     camera.moveTo(worldSize / 2);
 
     addCameraElements();
     addWorldElements();
+  }
+
+  initTimer() {
+    timer = Timer(
+      1,
+      onTick: () {
+        print('spawn garbage');
+        _garbageController.spawnGarbage();
+      },
+      repeat: true,
+    );
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    timer.update(dt);
   }
 
   Future<void> loadAssets() async {
@@ -75,14 +95,26 @@ class SaveTheOceanGame extends Forge2DGame {
       WallComponentFactory.create(false),
       robot,
       Trash(),
-      TimerComponent(
-          period: 1,
-          autoStart: true,
-          repeat: true,
-          onTick: () {
-            // _garbageController.createGarbagesRamdomly();
-            if (batteryLevelNotifier.level > 0) batteryLevelNotifier.level -= 2;
-          })
     ]);
+  }
+
+  void gameOverListener() {
+    batteryLevelNotifier.addListener(() {
+      if (batteryLevelNotifier.level <= 0) {
+        gameNotifier.gameOver();
+      }
+    });
+
+    pollutionLevelNotifier.addListener(() {
+      if (pollutionLevelNotifier.level >= 100) {
+        gameNotifier.gameOver();
+      }
+    });
+
+    gameNotifier.addListener(() {
+      if (gameNotifier.isGameOver) {
+        timer.stop();
+      }
+    });
   }
 }
