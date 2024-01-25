@@ -3,14 +3,6 @@ import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/game.dart';
 
-enum RobotState {
-  idle,
-  deploying,
-  deployed,
-  refolding,
-  outOfBounds,
-}
-
 enum RobotClawState {
   opening,
   open,
@@ -23,28 +15,27 @@ class RobotController {
 
   final RobotClaw robot;
 
-  void logger() {
-    print('Robot State: ${robot.robotState}');
-    print('Robot Claw State: ${robot.robotClawState}');
-  }
-
   double linearVelocity = 2.8;
   double angularVelocity = 3;
 
   void moveInXAxis() {
-    robotNotifier.addListener(() {
-      robot.body.linearVelocity = Vector2(robotNotifier.velocity, 0);
+    robotPositionNotifier.addListener(() {
+      robot.body.linearVelocity = Vector2(robotPositionNotifier.velocity, 0);
+    });
+  }
+
+  void deployListener() {
+    robotDeployNotifier.addListener(() {
+      robotDeployNotifier.deploy ? executeDeploy() : executeRefold();
     });
   }
 
   bool get deployLimits => robot.body.position.x >= 1.6 && robot.body.position.x <= worldSize.x - 1.5;
 
   void executeDeploy() {
-    if (robot.robotState == RobotState.idle && robot.robotClawState == RobotClawState.open && deployLimits) {
-      robot.robotState = RobotState.deploying;
+    if (deployLimits) {
       Vector2 deployLinearVelocity = Vector2(0, linearVelocity);
       robot.body.linearVelocity = deployLinearVelocity;
-      robot.robotState = RobotState.deployed;
       return;
     }
   }
@@ -52,9 +43,6 @@ class RobotController {
   void executeRefold() {
     Vector2 refoldLinearVelocity = Vector2(0, -linearVelocity);
     robot.body.linearVelocity = refoldLinearVelocity;
-    if (robot.body.position.y >= robot.initialPositionY) {
-      robot.robotState = RobotState.idle;
-    }
   }
 
   void openCloseClaws() {

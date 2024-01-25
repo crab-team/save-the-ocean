@@ -6,28 +6,26 @@ import 'package:save_the_ocean/components/game_scene/left_wall.dart';
 import 'package:save_the_ocean/components/game_scene/right_wall.dart';
 import 'package:save_the_ocean/components/garbage/garbage_controller.dart';
 import 'package:save_the_ocean/components/hub/hub.dart';
-import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
 import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
-import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/components/robot/robot_factory.dart';
 import 'package:save_the_ocean/components/trash/trash.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
 import 'package:save_the_ocean/providers/pollution_level_providers.dart';
-import 'package:save_the_ocean/providers/robot_provider.dart';
+import 'package:save_the_ocean/providers/robot_deploy_provider.dart';
+import 'package:save_the_ocean/providers/robot_position_provider.dart';
 
 final screenSize = Vector2(1280, 720);
 const cameraZoom = 100.0;
 final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 final batteryLevelNotifier = BatteryLevelNotifier();
 final pollutionLevelNotifier = PollutionLevelNotifier();
-final robotNotifier = RobotNotifier();
+final robotPositionNotifier = RobotPositionNotifier();
+final robotDeployNotifier = RobotDeployNotifier();
 
 class SaveTheOceanGame extends Forge2DGame {
   late Robot robot;
-  late RobotClaw leftClaw;
-  late RobotClaw rightClaw;
   late GarbageController _garbageController;
   late TimerComponent timer;
   final TextBoxConfig textConfig = TextBoxConfig();
@@ -48,9 +46,6 @@ class SaveTheOceanGame extends Forge2DGame {
     await loadAssets();
     _garbageController = GarbageController(world);
     robot = await RobotFactory.create();
-    leftClaw = RobotClaw(isLeft: true);
-    rightClaw = RobotClaw(isLeft: false);
-
     camera.moveTo(worldSize / 2);
 
     addCameraElements();
@@ -65,10 +60,9 @@ class SaveTheOceanGame extends Forge2DGame {
   void addCameraElements() {
     camera.backdrop.add(Background(size: screenSize));
     camera.viewport.addAll([
-      Hub(),
+      HubFactory.create(),
       FpsTextComponent(),
       robotReleaseJoystick,
-      RobotDeployButton(robot: robot, leftClaw: leftClaw, rightClaw: rightClaw),
     ]);
   }
 
@@ -79,9 +73,7 @@ class SaveTheOceanGame extends Forge2DGame {
       Ground(),
       LeftWall(),
       RightWall(),
-      // robot,
-      leftClaw,
-      rightClaw,
+      robot,
       Trash(),
       TimerComponent(
           period: 1,

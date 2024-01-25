@@ -2,7 +2,6 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
-import 'package:flame/src/events/messages/tap_down_event.dart';
 import 'package:save_the_ocean/game.dart';
 
 class RudderJoystickButton extends ButtonComponent {
@@ -25,21 +24,21 @@ class RudderJoystickButton extends ButtonComponent {
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
     if (isLeft) {
-      robotNotifier.moveLeft();
+      robotPositionNotifier.moveLeft();
     } else {
-      robotNotifier.moveRight();
+      robotPositionNotifier.moveRight();
     }
   }
 
   @override
   void onTapUp(TapUpEvent event) {
     super.onTapUp(event);
-    robotNotifier.stop();
+    robotPositionNotifier.stop();
   }
 
   @override
   void onTapCancel(TapCancelEvent event) {
     super.onTapCancel(event);
-    robotNotifier.stop();
+    robotPositionNotifier.stop();
   }
 }

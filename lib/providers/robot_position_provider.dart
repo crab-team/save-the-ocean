@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RobotNotifier extends ChangeNotifier {
+class RobotPositionNotifier extends ChangeNotifier {
   double _velocity = 0;
 
   double get velocity => _velocity;
