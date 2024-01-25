@@ -27,8 +27,6 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
           position: Vector2(0, screenSize.y + screenSize.y / 5),
         );
 
-  late BatteryLevelRiveComponent _batteryLevelComponent;
-
   @override
   Future<void> onLoad() async {
     await super.onLoad();
@@ -41,10 +39,10 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   }
 
   Future<void> initBatteryLevel() async {
-    _batteryLevelComponent = await BatteryLevelRiveComponentFactory.create();
-    _batteryLevelComponent.size = Vector2(size.x / 4, size.y / 4);
-    _batteryLevelComponent.position = Vector2(200, 10);
-    add(_batteryLevelComponent);
+    final batteryLevelComponent = await BatteryLevelRiveComponentFactory.create();
+    batteryLevelComponent.size = Vector2(size.x / 4, size.y / 4);
+    batteryLevelComponent.position = Vector2(200, 10);
+    add(batteryLevelComponent);
   }
 
   Future<void> initPollutionLevel() async {
