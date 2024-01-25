@@ -1,9 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/background.dart';
-import 'package:save_the_ocean/components/game_scene/ground.dart';
-import 'package:save_the_ocean/components/game_scene/left_wall.dart';
-import 'package:save_the_ocean/components/game_scene/right_wall.dart';
+import 'package:save_the_ocean/components/game_scene/ground_component.dart';
+import 'package:save_the_ocean/components/game_scene/wall_component.dart';
 import 'package:save_the_ocean/components/garbage/garbage_controller.dart';
 import 'package:save_the_ocean/components/hub/hub.dart';
 import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
@@ -70,9 +69,9 @@ class SaveTheOceanGame extends Forge2DGame {
     _garbageController.createGarbagesRamdomly();
 
     world.addAll([
-      Ground(),
-      LeftWall(),
-      RightWall(),
+      GroundBodyComponentFactory.create(),
+      WallComponentFactory.create(true),
+      WallComponentFactory.create(false),
       robot,
       Trash(),
       TimerComponent(
