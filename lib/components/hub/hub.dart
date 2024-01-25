@@ -43,14 +43,14 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   Future<void> initBatteryLevel() async {
     _batteryLevelComponent = await BatteryLevelRiveComponentFactory.create();
     _batteryLevelComponent.size = Vector2(size.x / 4, size.y / 4);
-    _batteryLevelComponent.position = Vector2(size.x / 11, 10);
+    _batteryLevelComponent.position = Vector2(200, 10);
     add(_batteryLevelComponent);
   }
 
   Future<void> initPollutionLevel() async {
     final pollutionLevelComponent = await PollutionLevelRiveComponentFactory.create();
     pollutionLevelComponent.size = Vector2(size.x / 4, size.y / 4);
-    pollutionLevelComponent.position = Vector2(size.x / 11, size.y / 2);
+    pollutionLevelComponent.position = Vector2(200, size.y / 2);
     add(pollutionLevelComponent);
   }
 
