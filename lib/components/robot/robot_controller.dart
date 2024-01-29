@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:save_the_ocean/components/hub/robot_release_joystick.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/game.dart';
 
@@ -17,6 +16,7 @@ class RobotController {
 
   double linearVelocity = 2.8;
   double angularVelocity = 3;
+  bool release = false;
 
   void moveInXAxis() {
     robotPositionNotifier.addListener(() {
@@ -27,6 +27,12 @@ class RobotController {
   void deployListener() {
     robotDeployNotifier.addListener(() {
       robotDeployNotifier.deploy ? executeDeploy() : executeRefold();
+    });
+  }
+
+  void releaseListener() {
+    robotReleaseTrashNotifier.addListener(() {
+      release = robotReleaseTrashNotifier.released;
     });
   }
 
@@ -45,34 +51,32 @@ class RobotController {
     robot.body.linearVelocity = refoldLinearVelocity;
   }
 
-  void openCloseClaws() {
-    bool joystickUp = robotReleaseJoystick.direction == JoystickDirection.up;
-    bool joystickDown = robotReleaseJoystick.direction == JoystickDirection.down;
-    bool joystickIsMoving = robotReleaseJoystick.isDragged;
-
-    if (joystickUp) {
-      if (robot.body.angle < -10.5 && robot.isLeft && joystickIsMoving) {
-        robot.body.angularVelocity = angularVelocity * robotReleaseJoystick.intensity;
+  void openClaws() {
+    if (release) {
+      if (robot.body.angle < -10.5 && robot.isLeft) {
+        robot.body.angularVelocity = angularVelocity;
         return;
       }
 
-      if (robot.body.angle > 10.5 && !robot.isLeft && joystickIsMoving) {
-        robot.body.angularVelocity = -angularVelocity * robotReleaseJoystick.intensity;
+      if (robot.body.angle > 10.5 && !robot.isLeft) {
+        robot.body.angularVelocity = -angularVelocity;
         return;
       }
 
       robot.body.angularVelocity = 0;
       return;
     }
+  }
 
-    if (joystickDown) {
-      if (robot.body.angle > -12.3 && robot.isLeft && joystickIsMoving) {
-        robot.body.angularVelocity = -angularVelocity * robotReleaseJoystick.intensity;
+  void closeClaws() {
+    if (!release) {
+      if (robot.body.angle > -12.3 && robot.isLeft) {
+        robot.body.angularVelocity = -angularVelocity;
         return;
       }
 
-      if (robot.body.angle < 12.3 && !robot.isLeft && joystickIsMoving) {
-        robot.body.angularVelocity = angularVelocity * robotReleaseJoystick.intensity;
+      if (robot.body.angle < 12.3 && !robot.isLeft) {
+        robot.body.angularVelocity = angularVelocity;
         return;
       }
 

@@ -5,6 +5,7 @@ import 'package:flame/effects.dart';
 import 'package:flutter/widgets.dart';
 import 'package:save_the_ocean/components/hub/battery_level_rive_component.dart';
 import 'package:save_the_ocean/components/hub/pollution_level_rive_component.dart';
+import 'package:save_the_ocean/components/hub/robot_release_trash_button.dart';
 import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
 import 'package:save_the_ocean/components/hub/rudder_joystick/rudder_joystick.dart';
 import 'package:save_the_ocean/constants/assets.dart';
@@ -36,6 +37,7 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
     await initPollutionLevel();
     initRudderJoystick();
     initRobotDeployButton();
+    initReleaseTrashButton();
   }
 
   Future<void> initBatteryLevel() async {
@@ -63,5 +65,11 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
     final robotDeployButton = RobotDeployButton();
     robotDeployButton.position = Vector2(size.x - robotDeployButton.size.x - 150, 15);
     add(robotDeployButton);
+  }
+
+  void initReleaseTrashButton() {
+    final releaseTrashButton = RobotReleaseTrashButton();
+    releaseTrashButton.position = Vector2(size.x - releaseTrashButton.size.x - 10, 15);
+    add(releaseTrashButton);
   }
 }

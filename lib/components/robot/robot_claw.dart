@@ -41,6 +41,7 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     _robotController = RobotController(this);
     _robotController.moveInXAxis();
     _robotController.deployListener();
+    _robotController.releaseListener();
   }
 
   @override
@@ -48,7 +49,8 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     super.update(dt);
     getWeightLoad();
     _robotController.bounds();
-    _robotController.openCloseClaws();
+    _robotController.openClaws();
+    _robotController.closeClaws();
   }
 
   void getWeightLoad() {
