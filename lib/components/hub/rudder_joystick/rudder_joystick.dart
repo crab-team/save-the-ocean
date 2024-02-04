@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/components/hub/rudder_joystick/rudder_joystick_button.dart';
 
 class RudderJoystick extends PositionComponent {
@@ -8,7 +7,6 @@ class RudderJoystick extends PositionComponent {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    debugMode = kDebugMode;
     initRudderJoystick();
   }
 

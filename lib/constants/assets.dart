@@ -5,11 +5,11 @@ class ImageAssets {
   static const String backgroundMiddle1 = 'background_3.png';
   static const String backgroundMiddle2 = 'background_4.png';
   static const String backgroundMiddle3 = 'background_5.png';
-  static const String backgroundFront1 = 'front_1.png';
-  static const String backgroundFront2 = 'front_2.png';
+  static const String foreground1 = 'front_1.png';
+  static const String foreground2 = 'front_2.png';
   static const String level = 'level.png';
   static const String bottle = 'bottle.png';
-  static const String controlPanel = 'control_panel_submarine.png';
+  static const String controlPanel = 'control_panel.png';
   static const String challengeLogo = 'images/challenge_logo.svg';
   static const String mtcLogo = 'images/mtc_logo.png';
 }

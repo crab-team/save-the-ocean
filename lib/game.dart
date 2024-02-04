@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/painting.dart';
+import 'package:save_the_ocean/components/game_scene/foreground_component.dart';
 import 'package:save_the_ocean/components/game_scene/ground_component.dart';
 import 'package:save_the_ocean/components/game_scene/lighting_component.dart';
 import 'package:save_the_ocean/components/game_scene/timer_text_component.dart';
@@ -96,11 +97,13 @@ class SaveTheOceanGame extends Forge2DGame {
     await loadSprite(ImageAssets.backgroundBehind1);
     await loadSprite(ImageAssets.backgroundBehind2);
     await loadSprite(ImageAssets.backgroundBehind3);
-    await loadSprite(ImageAssets.backgroundFront1);
-    await loadSprite(ImageAssets.backgroundFront2);
+    await loadSprite(ImageAssets.foreground1);
+    await loadSprite(ImageAssets.foreground2);
     await loadSprite(ImageAssets.backgroundMiddle1);
     await loadSprite(ImageAssets.backgroundMiddle2);
     await loadSprite(ImageAssets.backgroundMiddle3);
+    await loadSprite(ImageAssets.foreground1);
+    await loadSprite(ImageAssets.foreground2);
     await loadSprite(ImageAssets.level);
     await loadSprite(ImageAssets.bottle);
     await loadSprite(ImageAssets.controlPanel);
@@ -108,8 +111,10 @@ class SaveTheOceanGame extends Forge2DGame {
 
   void addCameraElements() {
     camera.viewport.addAll([
-      LightingPositionComponent(),
+      ForegroundComponent(path: ImageAssets.foreground2),
+      ForegroundComponent(path: ImageAssets.foreground1),
       HubFactory.create(),
+      LightingPositionComponent(),
       TimerTextComponent(),
       FpsTextComponent(),
     ]);

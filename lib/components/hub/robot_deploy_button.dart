@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
-import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/game.dart';
 
 class RobotDeployButton extends HudButtonComponent {
@@ -19,7 +18,6 @@ class RobotDeployButton extends HudButtonComponent {
 
   @override
   Future<void> onLoad() {
-    debugMode = kDebugMode;
     super.onPressed = () {
       !robotDeployNotifier.deploy ? robotDeployNotifier.deployRobot() : robotDeployNotifier.refoldRobot();
     };
