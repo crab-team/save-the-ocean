@@ -1,6 +1,6 @@
 import 'package:flame/effects.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/foundation.dart';
+import 'package:save_the_ocean/components/garbage/garbage_sprite.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/game.dart';
 
@@ -34,7 +34,11 @@ class GarbageComponent extends BodyComponent implements PositionProvider {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    debugMode = kDebugMode;
+    if (garbage.sprite != null) {
+      final sprite = GarbageSpriteComponent(path: garbage.sprite!);
+      sprite.size = Vector2(0.25, 0.45);
+      add(sprite);
+    }
   }
 
   @override

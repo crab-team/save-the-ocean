@@ -1,0 +1,18 @@
+import 'package:flame/components.dart';
+import 'package:save_the_ocean/game.dart';
+
+class GarbageSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
+  final String path;
+  GarbageSpriteComponent({required this.path})
+      : super(
+          size: Vector2(1, 1),
+          anchor: Anchor.center,
+          position: Vector2(0, 0),
+        );
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    sprite = Sprite(gameRef.images.fromCache(path));
+  }
+}

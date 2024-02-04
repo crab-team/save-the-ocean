@@ -1,4 +1,5 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:save_the_ocean/constants/assets.dart';
 
 enum GarbageType {
   banana,
@@ -16,6 +17,7 @@ class Garbage {
   final double restitution;
   final double density;
   final Shape shape;
+  final String? sprite;
 
   Garbage({
     required this.type,
@@ -25,6 +27,7 @@ class Garbage {
     required this.restitution,
     required this.density,
     required this.shape,
+    this.sprite,
   });
 
   factory Garbage.banana() {
@@ -48,6 +51,7 @@ class Garbage {
       restitution: 0.5,
       density: 0.3,
       shape: PolygonShape()..setAsBoxXY(0.1, 0.2),
+      sprite: ImageAssets.bottle,
     );
   }
 

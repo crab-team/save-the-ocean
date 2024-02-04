@@ -23,6 +23,7 @@ class GarbageController {
     Random random = Random.secure();
     Garbage garbage = garbages[random.nextInt(garbages.length)];
     final garbageComponent = GarbageComponent(garbage: garbage);
+    garbageComponent.priority = -1;
     world.add(garbageComponent);
     incrementPollutionLevel(garbage.type);
     decrementBatteryLevel();
