@@ -1,38 +1,28 @@
-import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:save_the_ocean/components/garbage/garbage_component.dart';
-import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
+import 'package:save_the_ocean/components/game_scene/trash/trash_sprite_component.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
-
-class TrashSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
-  @override
-  Future<void> onLoad() async {
-    sprite = await gameRef.loadSprite(ImageAssets.trash);
-  }
-}
 
 class Trash extends BodyComponent with ContactCallbacks {
   @override
   Body createBody() {
     final bodyDef = BodyDef(
       userData: this,
-      position: Vector2(worldSize.x - 1.5, worldSize.y - 3),
+      position: Vector2(worldSize.x - 5.5, worldSize.y),
       type: BodyType.static,
     );
 
     final shape = ChainShape()
       ..createChain([
-        Vector2(-1, 3),
-        Vector2(0.8, 3),
-        Vector2(0.8, 2),
+        Vector2(0.3, -3),
+        Vector2(0.3, 0),
+        Vector2(3.3, 0),
+        Vector2(3.3, -3),
       ]);
     final fixtureDef = FixtureDef(shape);
 
     final sprite = TrashSpriteComponent();
-    sprite.size = Vector2(1.8, 3);
-    sprite.anchor = Anchor.topCenter;
-    sprite.position = Vector2(0.3, 0);
     add(sprite);
 
     return world.createBody(bodyDef)..createFixture(fixtureDef);

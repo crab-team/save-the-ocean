@@ -1,5 +1,5 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:save_the_ocean/components/garbage/garbage_component.dart';
+import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
 import 'package:save_the_ocean/components/robot/robot_claw_sprite_component.dart';
 import 'package:save_the_ocean/components/robot/robot_controller.dart';
 import 'package:save_the_ocean/game.dart';

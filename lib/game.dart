@@ -2,6 +2,8 @@ import 'package:flame/components.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/painting.dart';
+import 'package:save_the_ocean/components/game_scene/bubbles/bubbles_component.dart';
+import 'package:save_the_ocean/components/game_scene/bubbles/bubbles_rive_component.dart';
 import 'package:save_the_ocean/components/game_scene/fishes_rive_component.dart';
 import 'package:save_the_ocean/components/game_scene/foreground_component.dart';
 import 'package:save_the_ocean/components/game_scene/ground_component.dart';
@@ -9,10 +11,10 @@ import 'package:save_the_ocean/components/game_scene/lighting_component.dart';
 import 'package:save_the_ocean/components/game_scene/pipeline.dart';
 import 'package:save_the_ocean/components/game_scene/timer_text_component.dart';
 import 'package:save_the_ocean/components/game_scene/wall_component.dart';
-import 'package:save_the_ocean/components/garbage/garbage_controller.dart';
+import 'package:save_the_ocean/components/game_scene/garbage/garbage_controller.dart';
 import 'package:save_the_ocean/components/hub/hub.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
-import 'package:save_the_ocean/components/trash/trash.dart';
+import 'package:save_the_ocean/components/game_scene/trash/trash.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
 import 'package:save_the_ocean/providers/game_providers.dart';
@@ -116,6 +118,7 @@ class SaveTheOceanGame extends Forge2DGame {
     camera.backdrop.addAll([parallax, FishesPositionComponent()]);
     camera.viewport.addAll([
       PipelineComponent(),
+      BubblesPositionComponent(),
       ForegroundComponent.top(),
       ForegroundComponent.bottom(),
       ForegroundComponent.left(),

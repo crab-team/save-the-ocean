@@ -28,13 +28,13 @@ class ForegroundComponent extends SpriteComponent with HasGameRef<SaveTheOceanGa
         break;
       case ForegroundPosition.left:
         sprite = Sprite(gameRef.images.fromCache(ImageAssets.foregroundLeftWall));
-        width = gameRef.size.x / 7;
+        width = 240;
         height = gameRef.size.y;
         x = 0;
         break;
       case ForegroundPosition.right:
         sprite = Sprite(gameRef.images.fromCache(ImageAssets.foregroundRightWall));
-        width = gameRef.size.x / 7;
+        width = 240;
         height = gameRef.size.y;
         x = gameRef.size.x - width;
         break;

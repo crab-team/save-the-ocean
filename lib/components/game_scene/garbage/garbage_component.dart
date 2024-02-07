@@ -1,6 +1,6 @@
 import 'package:flame/effects.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:save_the_ocean/components/garbage/garbage_sprite.dart';
+import 'package:save_the_ocean/components/game_scene/garbage/garbage_sprite.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/game.dart';
 
@@ -14,7 +14,7 @@ class GarbageComponent extends BodyComponent implements PositionProvider {
     final bodyDef = BodyDef(
       type: BodyType.dynamic,
       angle: 1,
-      position: Vector2(0.5, worldSize.y - 4),
+      position: Vector2(0.5, worldSize.y * 0.4),
       gravityScale: Vector2(0.5, 0.2),
       linearVelocity: Vector2(garbage.initialLinearVelocityX * 1.5, 0),
       angularVelocity: garbage.initialAngularVelocity,

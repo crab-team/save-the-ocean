@@ -45,8 +45,8 @@ class GroundBodyComponent extends BodyComponent implements PositionProvider {
     final shape = ChainShape()
       ..createChain([
         Vector2.zero(),
-        Vector2(worldSize.x - 3.5, 0),
-        Vector2(worldSize.x - 3.5, -3),
+        Vector2(worldSize.x - 5.8, 0),
+        Vector2(worldSize.x - 5.8, -4.5),
       ]);
     final fixtureDef = FixtureDef(shape, density: 1, friction: 0.7);
     return world.createBody(bodyDef)..createFixture(fixtureDef);
