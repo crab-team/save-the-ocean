@@ -1,36 +1,37 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flutter/foundation.dart';
-import 'package:save_the_ocean/components/robot/rive_robot.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:save_the_ocean/components/robot/robot_arm_component.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
+import 'package:save_the_ocean/components/robot/robot_controller.dart';
 import 'package:save_the_ocean/game.dart';
 
 class Robot extends PositionComponent {
-  final RiveRobot riveRobot;
-
-  Robot({required this.riveRobot});
+  late RobotController _robotController;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    debugMode = kDebugMode;
-    initRobotClaws();
-    add(riveRobot);
-  }
 
-  void initRobotClaws() {
+    final arm = RobotArmComponent();
     final leftClaw = RobotClaw(isLeft: true);
     final rightClaw = RobotClaw(isLeft: false);
-    leftClaw.initialPositionX = worldSize.x / 5;
-    leftClaw.initialPositionY = 1;
-    rightClaw.initialPositionX = worldSize.x / 5;
-    rightClaw.initialPositionY = 1;
     add(leftClaw);
     add(rightClaw);
+    add(arm);
+
+    _robotController = RobotController(leftRobotClaw: leftClaw, rightRobotClaw: rightClaw, robotArm: arm);
+    _robotController.moveInXAxis();
+    _robotController.deployListener();
+    _robotController.releaseListener();
   }
 
-  void deploy() {
-    riveRobot.deploy();
+  @override
+  void update(double dt) {
+    super.update(dt);
+    _robotController.bounds();
+    _robotController.openClaws();
+    _robotController.closeClaws();
   }
 }

@@ -17,6 +17,7 @@ class UserRankingRow extends StatelessWidget {
             user.username,
             style: const TextStyle(
               fontSize: 18,
+              color: Colors.white,
             ),
           ),
           const Spacer(),
@@ -24,6 +25,7 @@ class UserRankingRow extends StatelessWidget {
             user.score.formattedScore(),
             style: const TextStyle(
               fontSize: 18,
+              color: Colors.white,
             ),
           ),
         ],

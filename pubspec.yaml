@@ -36,3 +36,10 @@ flutter:
     assets:
         - assets/images/
         - assets/animations/
+    fonts:
+        - family: ProtestRevolution
+          fonts:
+              - asset: assets/fonts/ProtestRevolution-Regular.ttf
+        - family: ProtestRiot
+          fonts:
+              - asset: assets/fonts/ProtestRiot-Regular.ttf

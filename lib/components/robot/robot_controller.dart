@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:save_the_ocean/components/robot/robot_arm_component.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/game.dart';
 
@@ -10,9 +11,11 @@ enum RobotClawState {
 }
 
 class RobotController {
-  RobotController(this.robot);
+  final RobotClaw leftRobotClaw;
+  final RobotClaw rightRobotClaw;
+  final RobotArmComponent robotArm;
 
-  final RobotClaw robot;
+  RobotController({required this.leftRobotClaw, required this.rightRobotClaw, required this.robotArm});
 
   double linearVelocity = 2.8;
   double angularVelocity = 3;
@@ -20,7 +23,9 @@ class RobotController {
 
   void moveInXAxis() {
     robotPositionNotifier.addListener(() {
-      robot.body.linearVelocity = Vector2(robotPositionNotifier.velocity, 0);
+      leftRobotClaw.body.linearVelocity = Vector2(robotPositionNotifier.velocity, 0);
+      rightRobotClaw.body.linearVelocity = Vector2(robotPositionNotifier.velocity, 0);
+      robotArm.body.linearVelocity = Vector2(robotPositionNotifier.velocity, 0);
     });
   }
 
@@ -36,77 +41,90 @@ class RobotController {
     });
   }
 
-  bool get deployLimits => robot.body.position.x >= 1.6 && robot.body.position.x <= worldSize.x - 1.5;
+  bool get deployLimits =>
+      robotArm.body.position.x >= 1.6 &&
+      robotArm.body.position.x <= worldSize.x - 1.5 &&
+      robotArm.body.position.y <= worldSize.y - 2;
+
+  bool get refoldLimits => robotArm.body.position.y >= 1;
 
   void executeDeploy() {
     if (deployLimits) {
       Vector2 deployLinearVelocity = Vector2(0, linearVelocity);
-      robot.body.linearVelocity = deployLinearVelocity;
+      leftRobotClaw.body.linearVelocity = deployLinearVelocity;
+      rightRobotClaw.body.linearVelocity = deployLinearVelocity;
+      robotArm.body.linearVelocity = deployLinearVelocity;
       return;
     }
+
+    _stop();
   }
 
   void executeRefold() {
-    Vector2 refoldLinearVelocity = Vector2(0, -linearVelocity);
-    robot.body.linearVelocity = refoldLinearVelocity;
+    if (refoldLimits) {
+      Vector2 refoldLinearVelocity = Vector2(0, -linearVelocity);
+      leftRobotClaw.body.linearVelocity = refoldLinearVelocity;
+      rightRobotClaw.body.linearVelocity = refoldLinearVelocity;
+      robotArm.body.linearVelocity = refoldLinearVelocity;
+    }
   }
 
   void openClaws() {
     if (release) {
-      if (robot.body.angle < -10.5 && robot.isLeft) {
-        robot.body.angularVelocity = angularVelocity;
-        return;
+      if (leftRobotClaw.body.angle < -11) {
+        leftRobotClaw.body.angularVelocity = angularVelocity;
+      } else {
+        leftRobotClaw.body.angularVelocity = 0;
       }
 
-      if (robot.body.angle > 10.5 && !robot.isLeft) {
-        robot.body.angularVelocity = -angularVelocity;
-        return;
+      if (rightRobotClaw.body.angle > 11) {
+        rightRobotClaw.body.angularVelocity = -angularVelocity;
+      } else {
+        rightRobotClaw.body.angularVelocity = 0;
       }
-
-      robot.body.angularVelocity = 0;
-      return;
     }
   }
 
   void closeClaws() {
     if (!release) {
-      if (robot.body.angle > -12.3 && robot.isLeft) {
-        robot.body.angularVelocity = -angularVelocity;
-        return;
+      if (leftRobotClaw.body.angle > -12.3) {
+        leftRobotClaw.body.angularVelocity = -angularVelocity;
+      } else {
+        leftRobotClaw.body.angularVelocity = 0;
       }
 
-      if (robot.body.angle < 12.3 && !robot.isLeft) {
-        robot.body.angularVelocity = angularVelocity;
-        return;
+      if (rightRobotClaw.body.angle < 12.3) {
+        rightRobotClaw.body.angularVelocity = angularVelocity;
+      } else {
+        rightRobotClaw.body.angularVelocity = 0;
       }
-
-      robot.body.angularVelocity = 0;
-      return;
     }
   }
 
   void _stop() {
-    robot.body.linearVelocity = Vector2.zero();
+    leftRobotClaw.body.linearVelocity = Vector2.zero();
+    rightRobotClaw.body.linearVelocity = Vector2.zero();
+    robotArm.body.linearVelocity = Vector2.zero();
   }
 
   void bounds() {
     // Limite contra muro izquierdo
-    if (robot.body.position.x < 1.6 && robot.body.linearVelocity.x < 0) {
+    if (leftRobotClaw.body.position.x < 1.6 && leftRobotClaw.body.linearVelocity.x < 0) {
       _stop();
     }
 
     // Limite contra muro derecho
-    if (robot.body.position.x >= worldSize.x - 1.5 && robot.body.linearVelocity.x > 0) {
+    if (leftRobotClaw.body.position.x >= worldSize.x - 1.5 && leftRobotClaw.body.linearVelocity.x > 0) {
       _stop();
     }
 
     // Limite contra el suelo
-    if (robot.body.position.y > worldSize.y - 2.5 && robot.body.linearVelocity.y > 0) {
+    if (leftRobotClaw.body.position.y > worldSize.y - 2.5 && leftRobotClaw.body.linearVelocity.y > 0) {
       _stop();
     }
 
     // Limite contra el techo
-    if (robot.body.position.y < 1 && robot.body.linearVelocity.y < 0) {
+    if (leftRobotClaw.body.position.y < 1 && leftRobotClaw.body.linearVelocity.y < 0) {
       _stop();
     }
   }

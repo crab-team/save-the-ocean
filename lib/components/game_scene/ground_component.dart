@@ -9,7 +9,7 @@ class GroundBodyComponentFactory {
   static GroundBodyComponent create() {
     final ground = GroundBodyComponent();
     final effect = MoveEffect.to(
-      Vector2(0, worldSize.y - 1.5),
+      Vector2(0, worldSize.y - 2),
       EffectController(duration: 2, curve: Curves.easeOutCubic),
     );
     ground.add(effect);
@@ -22,7 +22,7 @@ class GroundSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOcean
       : super(
           size: Vector2(worldSize.x, worldSize.y),
           anchor: Anchor.topLeft,
-          position: Vector2(0, -worldSize.y + 1.55),
+          position: Vector2(0, -worldSize.y + 2.33),
         );
 
   @override
@@ -45,8 +45,8 @@ class GroundBodyComponent extends BodyComponent implements PositionProvider {
     final shape = ChainShape()
       ..createChain([
         Vector2.zero(),
-        Vector2(worldSize.x - 2.2, 0),
-        Vector2(worldSize.x - 2.2, -3),
+        Vector2(worldSize.x - 3.5, 0),
+        Vector2(worldSize.x - 3.5, -3),
       ]);
     final fixtureDef = FixtureDef(shape, density: 1, friction: 0.7);
     return world.createBody(bodyDef)..createFixture(fixtureDef);

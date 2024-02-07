@@ -37,9 +37,9 @@ class WallComponent extends BodyComponent implements PositionProvider {
         ..set([
           Vector2(0, 1),
           Vector2(0.4, 2),
-          Vector2(0.3, 3),
-          Vector2(0.5, 3),
-          Vector2(0.7, worldSize.y),
+          Vector2(0.25, 3),
+          Vector2(0.2, 3),
+          Vector2(0.3, worldSize.y),
           Vector2(0, worldSize.y),
         ]);
     } else {
@@ -48,8 +48,8 @@ class WallComponent extends BodyComponent implements PositionProvider {
           Vector2(0, 1),
           Vector2(-0.4, 2),
           Vector2(-0.3, 3),
-          Vector2(-0.5, 3),
-          Vector2(-0.7, worldSize.y),
+          Vector2(-0.3, 3),
+          Vector2(-0.2, worldSize.y),
           Vector2(0, worldSize.y),
         ]);
     }

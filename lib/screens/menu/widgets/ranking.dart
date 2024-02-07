@@ -24,13 +24,7 @@ class _RankingState extends State<Ranking> {
     return Consumer<RankingController>(
       builder: (context, controller, child) {
         RankingState currentState = controller.currentState;
-        return Card(
-          margin: const EdgeInsets.only(top: 16, bottom: 24, right: 24),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: _rankingContent(currentState),
-          ),
-        );
+        return _rankingContent(currentState);
       },
     );
   }
@@ -42,7 +36,7 @@ class _RankingState extends State<Ranking> {
       case PageStatus.error:
         return const Center(child: Text('An error has ocurred'));
       case PageStatus.data:
-       return RankingCard(users: state.users);
+        return RankingCard(users: state.users);
     }
   }
 }

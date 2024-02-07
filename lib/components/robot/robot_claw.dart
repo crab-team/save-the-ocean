@@ -1,6 +1,6 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/components/garbage/garbage_component.dart';
+import 'package:save_the_ocean/components/robot/robot_claw_sprite_component.dart';
 import 'package:save_the_ocean/components/robot/robot_controller.dart';
 import 'package:save_the_ocean/game.dart';
 
@@ -9,7 +9,6 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
 
   RobotClaw({required this.isLeft});
 
-  late RobotController _robotController;
   RobotClawState robotClawState = RobotClawState.open;
   double initialPositionX = worldSize.x / 2;
   double initialPositionY = 1;
@@ -37,20 +36,29 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    debugMode = kDebugMode;
-    _robotController = RobotController(this);
-    _robotController.moveInXAxis();
-    _robotController.deployListener();
-    _robotController.releaseListener();
+
+    _initSprites();
+  }
+
+  void _initSprites() {
+    RobotClawSpriteComponent robotClawSpriteComponent = RobotClawSpriteComponent();
+    if (isLeft) {
+      robotClawSpriteComponent.x = -0.28;
+      robotClawSpriteComponent.y = -0.1;
+      robotClawSpriteComponent.angle = -0.2;
+    } else {
+      robotClawSpriteComponent.x = 0.28;
+      robotClawSpriteComponent.y = -0.1;
+      robotClawSpriteComponent.angle = 0.2;
+      robotClawSpriteComponent.flipHorizontally();
+    }
+    add(robotClawSpriteComponent);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
     getWeightLoad();
-    _robotController.bounds();
-    _robotController.openClaws();
-    _robotController.closeClaws();
   }
 
   void getWeightLoad() {

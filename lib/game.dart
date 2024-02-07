@@ -2,15 +2,16 @@ import 'package:flame/components.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/painting.dart';
+import 'package:save_the_ocean/components/game_scene/fishes_rive_component.dart';
 import 'package:save_the_ocean/components/game_scene/foreground_component.dart';
 import 'package:save_the_ocean/components/game_scene/ground_component.dart';
 import 'package:save_the_ocean/components/game_scene/lighting_component.dart';
+import 'package:save_the_ocean/components/game_scene/pipeline.dart';
 import 'package:save_the_ocean/components/game_scene/timer_text_component.dart';
 import 'package:save_the_ocean/components/game_scene/wall_component.dart';
 import 'package:save_the_ocean/components/garbage/garbage_controller.dart';
 import 'package:save_the_ocean/components/hub/hub.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
-import 'package:save_the_ocean/components/robot/robot_factory.dart';
 import 'package:save_the_ocean/components/trash/trash.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
@@ -20,7 +21,7 @@ import 'package:save_the_ocean/providers/robot_deploy_provider.dart';
 import 'package:save_the_ocean/providers/robot_position_provider.dart';
 import 'package:save_the_ocean/providers/robot_release_trash_providers.dart';
 
-final screenSize = Vector2(1280, 720);
+final screenSize = Vector2(2220, 1080);
 const cameraZoom = 100.0;
 final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 final batteryLevelNotifier = BatteryLevelNotifier();
@@ -31,7 +32,6 @@ final robotReleaseTrashNotifier = RobotReleaseTrashNotifier();
 final gameNotifier = GameNotifier();
 
 class SaveTheOceanGame extends Forge2DGame {
-  late Robot robot;
   late GarbageController _garbageController;
   late Timer timer;
 
@@ -50,30 +50,13 @@ class SaveTheOceanGame extends Forge2DGame {
     await super.onLoad();
     await loadAssets();
 
-    final parallaxImages = [
-      ParallaxImageData(ImageAssets.backgroundBehind1),
-      ParallaxImageData(ImageAssets.backgroundBehind2),
-      ParallaxImageData(ImageAssets.backgroundBehind3),
-      ParallaxImageData(ImageAssets.backgroundMiddle1),
-      ParallaxImageData(ImageAssets.backgroundMiddle2),
-      ParallaxImageData(ImageAssets.backgroundMiddle3),
-    ];
-
-    final parallax = await loadParallaxComponent(
-      parallaxImages,
-      velocityMultiplierDelta: Vector2(1.8, 1.0),
-      filterQuality: FilterQuality.none,
-    );
-    camera.backdrop.add(parallax);
-
     initTimer();
     gameListeners();
 
     _garbageController = GarbageController(world);
-    robot = await RobotFactory.create();
     camera.moveTo(worldSize / 2);
 
-    addCameraElements();
+    await addCameraElements();
     addWorldElements();
   }
 
@@ -94,25 +77,49 @@ class SaveTheOceanGame extends Forge2DGame {
   }
 
   Future<void> loadAssets() async {
-    await loadSprite(ImageAssets.backgroundBehind1);
-    await loadSprite(ImageAssets.backgroundBehind2);
-    await loadSprite(ImageAssets.backgroundBehind3);
-    await loadSprite(ImageAssets.foreground1);
-    await loadSprite(ImageAssets.foreground2);
-    await loadSprite(ImageAssets.backgroundMiddle1);
-    await loadSprite(ImageAssets.backgroundMiddle2);
-    await loadSprite(ImageAssets.backgroundMiddle3);
-    await loadSprite(ImageAssets.foreground1);
-    await loadSprite(ImageAssets.foreground2);
+    await loadSprite(ImageAssets.water);
+    await loadSprite(ImageAssets.backgroundFar);
+    await loadSprite(ImageAssets.backgroundFarMid);
+    await loadSprite(ImageAssets.backgroundMid);
+    await loadSprite(ImageAssets.backgroundMidFront);
+    await loadSprite(ImageAssets.backgroundFront);
+    await loadSprite(ImageAssets.foregroundBottom);
+    await loadSprite(ImageAssets.foregroundLeftWall);
+    await loadSprite(ImageAssets.foregroundRightWall);
+    await loadSprite(ImageAssets.foregroundTopWall);
+    await loadSprite(ImageAssets.pipeline);
+    await loadSprite(ImageAssets.arm);
+    await loadSprite(ImageAssets.claw);
     await loadSprite(ImageAssets.level);
     await loadSprite(ImageAssets.bottle);
-    await loadSprite(ImageAssets.controlPanel);
+    await loadSprite(ImageAssets.trash);
   }
 
-  void addCameraElements() {
+  Future<void> addCameraElements() async {
+    final parallaxImages = [
+      ParallaxImageData(ImageAssets.water),
+      ParallaxImageData(ImageAssets.backgroundFar),
+      ParallaxImageData(ImageAssets.backgroundFarMid),
+      ParallaxImageData(ImageAssets.backgroundMid),
+      ParallaxImageData(ImageAssets.backgroundMidFront),
+      ParallaxImageData(ImageAssets.backgroundFront),
+    ];
+
+    final parallax = await loadParallaxComponent(
+      parallaxImages,
+      velocityMultiplierDelta: Vector2(1.8, 1.0),
+      size: Vector2(screenSize.x, screenSize.y),
+      scale: Vector2(1.2, 1.2),
+      filterQuality: FilterQuality.none,
+    );
+
+    camera.backdrop.addAll([parallax, FishesPositionComponent()]);
     camera.viewport.addAll([
-      ForegroundComponent(path: ImageAssets.foreground2),
-      ForegroundComponent(path: ImageAssets.foreground1),
+      PipelineComponent(),
+      ForegroundComponent.top(),
+      ForegroundComponent.bottom(),
+      ForegroundComponent.left(),
+      ForegroundComponent.right(),
       HubFactory.create(),
       LightingPositionComponent(),
       TimerTextComponent(),
@@ -122,9 +129,9 @@ class SaveTheOceanGame extends Forge2DGame {
 
   void addWorldElements() async {
     world.addAll([
-      robot,
-      Trash(),
+      Robot(),
       GroundBodyComponentFactory.create(),
+      Trash(),
       WallComponentFactory.create(false),
       WallComponentFactory.create(true),
     ]);

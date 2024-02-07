@@ -5,10 +5,9 @@ import 'package:flame/effects.dart';
 import 'package:flutter/widgets.dart';
 import 'package:save_the_ocean/components/hub/battery_level_rive_component.dart';
 import 'package:save_the_ocean/components/hub/pollution_level_rive_component.dart';
-import 'package:save_the_ocean/components/hub/robot_release_trash_button.dart';
 import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
+import 'package:save_the_ocean/components/hub/robot_release_trash_button.dart';
 import 'package:save_the_ocean/components/hub/rudder_joystick/rudder_joystick.dart';
-import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/game.dart';
 
 class HubFactory {
@@ -21,7 +20,7 @@ class HubFactory {
   }
 }
 
-class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
+class Hub extends PositionComponent with HasGameRef<SaveTheOceanGame> {
   Hub()
       : super(
           size: Vector2(screenSize.x, screenSize.y / 5),
@@ -32,7 +31,6 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    sprite = Sprite(gameRef.images.fromCache(ImageAssets.controlPanel));
     await initBatteryLevel();
     await initPollutionLevel();
     initRudderJoystick();
@@ -42,15 +40,15 @@ class Hub extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
 
   Future<void> initBatteryLevel() async {
     final batteryLevelComponent = await BatteryLevelRiveComponentFactory.create();
-    batteryLevelComponent.size = Vector2(size.x / 4, size.y / 4);
-    batteryLevelComponent.position = Vector2(300, 10);
+    batteryLevelComponent.size = Vector2(size.x / 3, size.y / 3);
+    batteryLevelComponent.position = Vector2(size.x / 3, 10);
     add(batteryLevelComponent);
   }
 
   Future<void> initPollutionLevel() async {
     final pollutionLevelComponent = await PollutionLevelRiveComponentFactory.create();
-    pollutionLevelComponent.size = Vector2(size.x / 4, size.y / 4);
-    pollutionLevelComponent.position = Vector2(300, size.y / 2);
+    pollutionLevelComponent.size = Vector2(size.x / 3, size.y / 3);
+    pollutionLevelComponent.position = Vector2(size.x / 3, size.y / 3);
     add(pollutionLevelComponent);
   }
 

@@ -6,6 +6,7 @@ import 'package:save_the_ocean/audio/audio_controller.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/app_lifecycle.dart';
 import 'package:save_the_ocean/core/router.dart';
+import 'package:save_the_ocean/core/theme.dart';
 import 'package:save_the_ocean/data/repository_provider.dart';
 import 'package:save_the_ocean/domain/repositories/ranking_repository.dart';
 import 'package:save_the_ocean/domain/use_cases/ranking/get_ranking.dart';
@@ -52,6 +53,7 @@ class MyGame extends StatelessWidget {
         ],
         child: Builder(builder: (context) {
           return MaterialApp.router(
+            theme: theme,
             title: TextConstants.appName,
             routeInformationProvider: router.routeInformationProvider,
             routeInformationParser: router.routeInformationParser,
