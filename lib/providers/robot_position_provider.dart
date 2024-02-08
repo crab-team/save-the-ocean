@@ -6,12 +6,12 @@ class RobotPositionNotifier extends ChangeNotifier {
   double get velocity => _velocity;
 
   void moveLeft() {
-    _velocity -= 3;
+    _velocity -= 7;
     notifyListeners();
   }
 
   void moveRight() {
-    _velocity += 3;
+    _velocity += 7;
     notifyListeners();
   }
 

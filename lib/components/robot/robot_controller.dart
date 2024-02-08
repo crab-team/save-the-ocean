@@ -17,7 +17,7 @@ class RobotController {
 
   RobotController({required this.leftRobotClaw, required this.rightRobotClaw, required this.robotArm});
 
-  double linearVelocity = 2.8;
+  double linearVelocity = 6;
   double angularVelocity = 3;
   bool release = false;
 
@@ -41,32 +41,19 @@ class RobotController {
     });
   }
 
-  bool get deployLimits =>
-      robotArm.body.position.x >= 1.6 &&
-      robotArm.body.position.x <= worldSize.x - 1.5 &&
-      robotArm.body.position.y <= worldSize.y - 2;
-
-  bool get refoldLimits => robotArm.body.position.y >= 1;
-
   void executeDeploy() {
-    if (deployLimits) {
-      Vector2 deployLinearVelocity = Vector2(0, linearVelocity);
-      leftRobotClaw.body.linearVelocity = deployLinearVelocity;
-      rightRobotClaw.body.linearVelocity = deployLinearVelocity;
-      robotArm.body.linearVelocity = deployLinearVelocity;
-      return;
-    }
-
-    _stop();
+    Vector2 deployLinearVelocity = Vector2(0, linearVelocity);
+    leftRobotClaw.body.linearVelocity = deployLinearVelocity;
+    rightRobotClaw.body.linearVelocity = deployLinearVelocity;
+    robotArm.body.linearVelocity = deployLinearVelocity;
+    return;
   }
 
   void executeRefold() {
-    if (refoldLimits) {
-      Vector2 refoldLinearVelocity = Vector2(0, -linearVelocity);
-      leftRobotClaw.body.linearVelocity = refoldLinearVelocity;
-      rightRobotClaw.body.linearVelocity = refoldLinearVelocity;
-      robotArm.body.linearVelocity = refoldLinearVelocity;
-    }
+    Vector2 refoldLinearVelocity = Vector2(0, -linearVelocity);
+    leftRobotClaw.body.linearVelocity = refoldLinearVelocity;
+    rightRobotClaw.body.linearVelocity = refoldLinearVelocity;
+    robotArm.body.linearVelocity = refoldLinearVelocity;
   }
 
   void openClaws() {
@@ -119,7 +106,7 @@ class RobotController {
     }
 
     // Limite contra el suelo
-    if (leftRobotClaw.body.position.y > worldSize.y - 2.5 && leftRobotClaw.body.linearVelocity.y > 0) {
+    if (leftRobotClaw.body.position.y > worldSize.y - 3.7 && leftRobotClaw.body.linearVelocity.y > 0) {
       _stop();
     }
 

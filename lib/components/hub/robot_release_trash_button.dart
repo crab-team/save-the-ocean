@@ -7,15 +7,13 @@ import 'package:save_the_ocean/game.dart';
 class RobotReleaseTrashButton extends ButtonComponent {
   RobotReleaseTrashButton()
       : super(
-          position: Vector2(0, 0),
-          size: Vector2(100, 100),
-          button: RectangleComponent(
-            size: Vector2(100, 100),
-            paint: BasicPalette.black.paint(),
+          button: CircleComponent(
+            radius: 80,
+            paint: BasicPalette.red.paint(),
           ),
-          buttonDown: RectangleComponent(
-            size: Vector2(100, 100),
-            paint: BasicPalette.darkGray.paint(),
+          buttonDown: CircleComponent(
+            radius: 80,
+            paint: BasicPalette.darkRed.paint(),
           ),
         );
 

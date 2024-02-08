@@ -5,7 +5,7 @@ import 'package:save_the_ocean/game.dart';
 class RobotClawSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   RobotClawSpriteComponent()
       : super(
-          size: Vector2(1.3 / 1.25, 1.76 / 1.25),
+          size: Vector2(1.15, 1.55),
           anchor: Anchor.topCenter,
           position: Vector2(0, 0),
         );

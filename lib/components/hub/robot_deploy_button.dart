@@ -7,12 +7,12 @@ class RobotDeployButton extends HudButtonComponent {
   RobotDeployButton()
       : super(
           button: CircleComponent(
-            radius: 50,
-            paint: BasicPalette.orange.paint(),
+            radius: 80,
+            paint: BasicPalette.green.paint(),
           ),
           buttonDown: CircleComponent(
-            radius: 50,
-            paint: BasicPalette.darkRed.paint(),
+            radius: 80,
+            paint: BasicPalette.darkGreen.paint(),
           ),
         );
 
@@ -28,7 +28,7 @@ class RobotDeployButton extends HudButtonComponent {
   void update(double dt) {
     super.update(dt);
     super.button = CircleComponent(
-      radius: 50,
+      radius: 80,
       paint: robotDeployNotifier.deploy ? BasicPalette.red.paint() : BasicPalette.orange.paint(),
     );
   }

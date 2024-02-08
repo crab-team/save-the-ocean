@@ -4,19 +4,20 @@ import 'package:flame_rive/flame_rive.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/game.dart';
 
-class PollutionLevelRiveComponentFactory {
-  static Future<PollutionLevelRiveComponent> create() async {
-    final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.riv), artboardName: 'pollution_level');
-    return PollutionLevelRiveComponent(artboard: artboard);
+class PollutionWaterRiveComponentFactory {
+  static Future<PollutionWaterRiveComponent> create() async {
+    final artboard =
+        await loadArtboard(RiveFile.asset(AnimationAssets.riv), artboardName: ArtboardNames.pollutionWater);
+    return PollutionWaterRiveComponent(artboard: artboard);
   }
 }
 
-class PollutionLevelRiveComponent extends RiveComponent {
+class PollutionWaterRiveComponent extends RiveComponent {
   StateMachineController? controller;
 
   late SMINumber? levelInput;
 
-  PollutionLevelRiveComponent({required super.artboard});
+  PollutionWaterRiveComponent({required super.artboard});
 
   @override
   Future<void> onLoad() async {
@@ -25,12 +26,12 @@ class PollutionLevelRiveComponent extends RiveComponent {
     if (controller == null) return;
 
     artboard.addController(controller!);
-    levelInput = controller?.findInput<double>("level") as SMINumber;
+    levelInput = controller?.findInput<double>("pollution_level") as SMINumber;
     listenBatteryLevel();
   }
 
   void listenBatteryLevel() {
-    batteryLevelNotifier.addListener(() {
+    pollutionLevelNotifier.addListener(() {
       levelInput?.value = pollutionLevelNotifier.level;
     });
   }

@@ -28,7 +28,8 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
     final fixtureDef = FixtureDef(
       shape,
       friction: 0.9,
-      density: 1,
+      density: 0.5,
+      restitution: 0.1,
     );
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
@@ -36,19 +37,18 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-
     _initSprites();
   }
 
   void _initSprites() {
     RobotClawSpriteComponent robotClawSpriteComponent = RobotClawSpriteComponent();
     if (isLeft) {
-      robotClawSpriteComponent.x = -0.28;
-      robotClawSpriteComponent.y = -0.1;
+      robotClawSpriteComponent.x = -0.4;
+      robotClawSpriteComponent.y = 0.15;
       robotClawSpriteComponent.angle = -0.2;
     } else {
-      robotClawSpriteComponent.x = 0.28;
-      robotClawSpriteComponent.y = -0.1;
+      robotClawSpriteComponent.x = 0.4;
+      robotClawSpriteComponent.y = 0.15;
       robotClawSpriteComponent.angle = 0.2;
       robotClawSpriteComponent.flipHorizontally();
     }
@@ -74,18 +74,18 @@ class RobotClaw extends BodyComponent with ContactCallbacks {
       return ChainShape()
         ..createChain([
           Vector2(0, 0),
-          Vector2(-1 / 2, 1.2 / 2),
-          Vector2(0, 2.2 / 2),
-          Vector2(0.5 / 2, 2.1 / 2),
+          Vector2(-1 * 0.7, 1.2 * 0.7),
+          Vector2(0, 2.2 * 0.7),
+          Vector2(0.43 * 0.7, 2.1 * 0.7),
         ]);
     }
 
     return ChainShape()
       ..createChain([
         Vector2(0, 0),
-        Vector2(1 / 2, 1.2 / 2),
-        Vector2(0, 2.2 / 2),
-        Vector2(-0.5 / 2, 2.1 / 2),
+        Vector2(1 * 0.7, 1.2 * 0.7),
+        Vector2(0, 2.2 * 0.7),
+        Vector2(-0.43 * 0.7, 2.1 * 0.7),
       ]);
   }
 

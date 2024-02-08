@@ -30,7 +30,7 @@ class GarbageController {
   }
 
   void incrementPollutionLevel(GarbageType garbageType) {
-    pollutionLevelNotifier.level += garbageTypeToLevel[garbageType]! / 2;
+    pollutionLevelNotifier.level += garbageTypeToLevel[garbageType]!;
   }
 
   void decrementBatteryLevel() {

@@ -9,7 +9,7 @@ class MtcPresentationRive extends StatelessWidget {
   Widget build(BuildContext context) {
     return const RiveAnimation.asset(
       AnimationAssets.riv,
-      artboard: ArtifactNames.mtcPresentation,
+      artboard: ArtboardNames.mtcPresentation,
       fit: BoxFit.contain,
     );
   }

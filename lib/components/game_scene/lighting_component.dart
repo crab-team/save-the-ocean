@@ -6,7 +6,7 @@ import 'package:save_the_ocean/constants/assets.dart';
 
 class LightingRiveComponentFactory {
   static Future<LightingRiveComponent> create() async {
-    final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.riv), artboardName: 'lighting');
+    final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.riv), artboardName: ArtboardNames.lighting);
     return LightingRiveComponent(artboard: artboard);
   }
 }

@@ -48,7 +48,7 @@ class MenuScreen extends StatelessWidget {
           ),
           const RiveAnimation.asset(
             AnimationAssets.riv,
-            artboard: ArtifactNames.lighting,
+            artboard: ArtboardNames.lighting,
           ),
           ClipRect(
             child: BackdropFilter(

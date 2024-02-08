@@ -30,11 +30,12 @@ class AnimationAssets {
   static const String riv = 'assets/animations/save_the_ocean.riv';
 }
 
-class ArtifactNames {
+class ArtboardNames {
   static const String mtcPresentation = 'mtc_presentation';
   static const String lighting = 'lighting';
   static const String bubble1 = 'bubble_1';
   static const String bubble2 = 'bubble_2';
+  static const String pollutionWater = 'pollution_water';
 }
 
 class AudioAssets {

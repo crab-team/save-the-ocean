@@ -9,13 +9,13 @@ class RudderJoystickButton extends ButtonComponent {
   RudderJoystickButton({this.isLeft = true})
       : super(
           position: Vector2(0, 0),
-          size: Vector2(100, 100),
+          size: Vector2(200, 200),
           button: RectangleComponent(
-            size: Vector2(100, 100),
+            size: Vector2(200, 200),
             paint: BasicPalette.black.paint(),
           ),
           buttonDown: RectangleComponent(
-            size: Vector2(100, 100),
+            size: Vector2(200, 200),
             paint: BasicPalette.darkGray.paint(),
           ),
         );

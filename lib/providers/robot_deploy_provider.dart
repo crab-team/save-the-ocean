@@ -6,6 +6,11 @@ class RobotDeployNotifier extends ChangeNotifier {
 
   bool get deploy => _deploy;
 
+  void stopDeploy() {
+    _deploy = false;
+    notifyListeners();
+  }
+
   void deployRobot() {
     if (deploy == true) return;
     robotPositionNotifier.stop();

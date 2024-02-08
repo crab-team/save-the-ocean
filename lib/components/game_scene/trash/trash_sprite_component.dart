@@ -6,8 +6,8 @@ class TrashSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOceanG
   @override
   Future<void> onLoad() async {
     sprite = Sprite(gameRef.images.fromCache(ImageAssets.trash));
-    width = 4;
-    height = 3.44;
+    width = 3;
+    height = 5.6;
     anchor = Anchor.bottomCenter;
     x = 1.7;
   }

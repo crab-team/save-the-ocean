@@ -1,10 +1,9 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
-import 'package:save_the_ocean/components/game_scene/trash/trash_sprite_component.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
 
-class Trash extends BodyComponent with ContactCallbacks {
+class TrashFloor extends BodyComponent with ContactCallbacks {
   @override
   Body createBody() {
     final bodyDef = BodyDef(
@@ -15,15 +14,10 @@ class Trash extends BodyComponent with ContactCallbacks {
 
     final shape = ChainShape()
       ..createChain([
-        Vector2(0.3, -3),
-        Vector2(0.3, 0),
-        Vector2(3.3, 0),
-        Vector2(3.3, -3),
+        Vector2(0.4, 0),
+        Vector2(3, 0),
       ]);
     final fixtureDef = FixtureDef(shape);
-
-    final sprite = TrashSpriteComponent();
-    add(sprite);
 
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
