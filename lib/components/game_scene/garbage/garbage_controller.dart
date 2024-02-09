@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
-import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
+import 'package:save_the_ocean/screens/game_screen.dart';
 
 class GarbageController {
   final World world;

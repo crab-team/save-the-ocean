@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:save_the_ocean/components/robot/robot_arm_component.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game_screen.dart';
 
 enum RobotClawState {
   opening,
@@ -106,7 +107,7 @@ class RobotController {
     }
 
     // Limite contra el suelo
-    if (leftRobotClaw.body.position.y > worldSize.y - 3.7 && leftRobotClaw.body.linearVelocity.y > 0) {
+    if (leftRobotClaw.body.position.y > worldSize.y - 3.9 && leftRobotClaw.body.linearVelocity.y > 0) {
       _stop();
     }
 

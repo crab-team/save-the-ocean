@@ -44,12 +44,12 @@ class Garbage {
 
   factory Garbage.bottle() {
     return Garbage(
-      initialLinearVelocityX: 2,
-      initialAngularVelocity: 1,
+      initialLinearVelocityX: 1,
+      initialAngularVelocity: 2,
       type: GarbageType.bottle,
-      friction: 0.3,
-      restitution: 0.5,
-      density: 0.3,
+      friction: 0.2,
+      restitution: 0.8,
+      density: 0.1,
       shape: PolygonShape()..setAsBoxXY(0.1, 0.2),
       sprite: ImageAssets.bottle,
     );
@@ -58,7 +58,7 @@ class Garbage {
   factory Garbage.paper() {
     return Garbage(
         initialLinearVelocityX: 2,
-        initialAngularVelocity: 1,
+        initialAngularVelocity: 0,
         type: GarbageType.paper,
         friction: 0.2,
         restitution: 0,
@@ -69,7 +69,7 @@ class Garbage {
   factory Garbage.plasticBag() {
     return Garbage(
         initialLinearVelocityX: 2,
-        initialAngularVelocity: 1,
+        initialAngularVelocity: 0,
         type: GarbageType.plasticBag,
         friction: 1,
         restitution: 0,
@@ -79,7 +79,7 @@ class Garbage {
 
   factory Garbage.tire() {
     return Garbage(
-      initialLinearVelocityX: 2,
+      initialLinearVelocityX: 3,
       initialAngularVelocity: 1,
       type: GarbageType.tire,
       friction: 0.8,

@@ -9,4 +9,9 @@ class PollutionLevelNotifier extends ChangeNotifier {
     _level = newLevel;
     notifyListeners();
   }
+
+  void restart() {
+    _level = 0.0;
+    notifyListeners();
+  }
 }

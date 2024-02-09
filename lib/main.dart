@@ -11,6 +11,7 @@ import 'package:save_the_ocean/data/repository_provider.dart';
 import 'package:save_the_ocean/domain/repositories/ranking_repository.dart';
 import 'package:save_the_ocean/domain/use_cases/ranking/get_ranking.dart';
 import 'package:save_the_ocean/firebase_options.dart';
+import 'package:save_the_ocean/providers/score_provider.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
 import 'package:save_the_ocean/settings/settings.dart';
 
@@ -38,6 +39,7 @@ class MyGame extends StatelessWidget {
       child: MultiProvider(
         providers: [
           Provider(create: (context) => SettingsController()),
+          Provider(create: (context) => ScoreNotifier()),
           ChangeNotifierProvider(create: (context) => RankingController(getRanking: getRanking)),
           // Set up audio.
           ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(

@@ -1,28 +1,14 @@
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/widgets.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/game.dart';
-
-class GroundBodyComponentFactory {
-  static GroundBodyComponent create() {
-    final ground = GroundBodyComponent();
-    final effect = MoveEffect.to(
-      Vector2(0, worldSize.y - 2),
-      EffectController(duration: 2, curve: Curves.easeOutCubic),
-    );
-    ground.add(effect);
-    return ground;
-  }
-}
 
 class GroundSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   GroundSpriteComponent()
       : super(
           size: Vector2(worldSize.x, worldSize.y),
-          anchor: Anchor.topLeft,
-          position: Vector2(0, -worldSize.y + 2.33),
+          anchor: Anchor.bottomLeft,
+          position: Vector2(0, 2.3),
         );
 
   @override
@@ -33,12 +19,12 @@ class GroundSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOcean
   }
 }
 
-class GroundBodyComponent extends BodyComponent implements PositionProvider {
+class GroundBodyComponent extends BodyComponent {
   @override
   Body createBody() {
     final bodyDef = BodyDef(
       userData: this,
-      position: Vector2(0, worldSize.y),
+      position: Vector2(0, worldSize.y - 2.3),
       type: BodyType.static,
     );
 
@@ -57,10 +43,5 @@ class GroundBodyComponent extends BodyComponent implements PositionProvider {
     await super.onLoad();
     final groundSprite = GroundSpriteComponent();
     add(groundSprite);
-  }
-
-  @override
-  set position(Vector2 value) {
-    body.setTransform(value, angle);
   }
 }

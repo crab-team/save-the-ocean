@@ -1,3 +1,4 @@
+import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/trash/trash_sprite_component.dart';
 import 'package:save_the_ocean/game.dart';
@@ -20,9 +21,18 @@ class TrashBoundaries extends BodyComponent {
       ]);
     final fixtureDef = FixtureDef(shape);
 
-    final sprite = TrashSpriteComponent();
-    add(sprite);
-
     return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    final component = await TrashRiveComponentFactory.create();
+    component.position = Vector2.zero();
+    component.width = 3;
+    component.height = 5.6;
+    component.anchor = Anchor.bottomCenter;
+    component.x = 1.7;
+    add(component);
   }
 }

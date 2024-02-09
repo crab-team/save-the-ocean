@@ -9,4 +9,9 @@ class GameNotifier extends ChangeNotifier {
     _isGameOver = true;
     notifyListeners();
   }
+
+  void restartGame() {
+    _isGameOver = false;
+    notifyListeners();
+  }
 }

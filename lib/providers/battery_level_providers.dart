@@ -18,4 +18,9 @@ class BatteryLevelNotifier extends ChangeNotifier {
     _level = newLevel;
     notifyListeners();
   }
+
+  void restart() {
+    _level = 100.0;
+    notifyListeners();
+  }
 }

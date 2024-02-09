@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flame_rive/flame_rive.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game_screen.dart';
 
 class PollutionWaterRiveComponentFactory {
   static Future<PollutionWaterRiveComponent> create() async {

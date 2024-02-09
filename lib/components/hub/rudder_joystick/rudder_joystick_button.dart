@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game_screen.dart';
 
 class RudderJoystickButton extends ButtonComponent {
   final bool isLeft;

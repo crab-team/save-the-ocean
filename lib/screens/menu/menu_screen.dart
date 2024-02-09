@@ -4,7 +4,6 @@ import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/router.dart';
-import 'package:save_the_ocean/shared/widgets/logo.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -26,7 +25,8 @@ class MenuScreen extends StatelessWidget {
           ),
           Positioned(
             left: -10,
-            width: 120,
+            bottom: 0,
+            width: 140,
             child: Image.asset(
               'assets/images/${ImageAssets.foregroundLeftWall}',
               fit: BoxFit.cover,
@@ -34,7 +34,8 @@ class MenuScreen extends StatelessWidget {
           ),
           Positioned(
             right: -5,
-            width: 120,
+            bottom: 0,
+            width: 140,
             child: Image.asset('assets/images/${ImageAssets.foregroundRightWall}'),
           ),
           Positioned(
@@ -56,16 +57,17 @@ class MenuScreen extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: BoxDecoration(color: Colors.black.withOpacity(0.2)),
+                decoration: BoxDecoration(color: Colors.black.withOpacity(0.3)),
               ),
             ),
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const Spacer(flex: 1),
               _buildMenu(context),
-              const SizedBox(height: 24),
+              const Spacer(flex: 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,24 +90,41 @@ class MenuScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Logo(),
-          const SizedBox(height: 12),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Text(
+                "Save the ocean",
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge!
+                    .copyWith(color: Theme.of(context).colorScheme.background, fontSize: 51),
+              ),
+              Text(
+                "Save the ocean",
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary),
+              ),
+            ],
+          ),
+          Image.asset("images/${ImageAssets.menuBottomLine}", width: 500),
+          const SizedBox(height: 24),
           TextButton(
             onPressed: () => AppRouter.goToGame(),
             child: Text(
               'PLAY',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.displayMedium!,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 12),
           TextButton(
             onPressed: () => AppRouter.goToSettings(),
-            style: TextButton.styleFrom(textStyle: Theme.of(context).textTheme.titleLarge),
             child: Text(
               'RANKING',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.white),
             ),
           ),
+          const SizedBox(height: 24),
+          Image.asset("images/${ImageAssets.menuLine}", width: 500),
         ],
       ),
     );

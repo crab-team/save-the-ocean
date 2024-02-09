@@ -1,67 +1,44 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/utils/score.dart';
 
-class TimerTextComponent extends PositionComponent {
-  TimerTextComponent() : super(position: Vector2(screenSize.x / 2, 10), size: Vector2(100, 100));
+class TimerTextComponent extends PositionComponent with HasGameRef<SaveTheOceanGame> {
+  TimerTextComponent() : super(position: Vector2(400, 190), size: Vector2(100, 100));
 
   double elapsedSecs = 0;
-  late Timer interval;
   late TextComponent _textComponent;
+  late TextComponent _textRecyclingTimeComponent;
 
   @override
   Future<FutureOr<void>> onLoad() async {
     await super.onLoad();
-    interval = Timer(
-      0.001,
-      onTick: () {
-        elapsedSecs += 0.001;
-        _textComponent.text = getTimeFormatByDt(elapsedSecs);
-      },
-      repeat: true,
+    _textRecyclingTimeComponent = TextComponent(
+      text: 'Recycling time:',
+      position: Vector2.zero(),
+      anchor: Anchor.center,
+      textRenderer: TextPaint(
+        style: const TextStyle(fontSize: 36.0, color: Color.fromRGBO(2, 51, 74, 1), fontFamily: 'ProtestRiot'),
+      ),
     );
 
     _textComponent = TextComponent(
       text: '00:00:000',
-      position: Vector2.zero(),
-      anchor: Anchor.topCenter,
+      position: Vector2(220, 0),
+      anchor: Anchor.center,
+      textRenderer: TextPaint(
+        style: const TextStyle(fontSize: 36.0, color: Color.fromRGBO(2, 51, 74, 1), fontFamily: 'ProtestRiot'),
+      ),
     );
 
-    gameListener();
+    add(_textRecyclingTimeComponent);
     add(_textComponent);
   }
 
   @override
   void update(double dt) {
-    interval.update(dt);
-  }
-
-  void gameListener() {
-    gameNotifier.addListener(() {
-      if (gameNotifier.isGameOver) {
-        interval.stop();
-      }
-    });
-  }
-
-  String getTimeFormatByDt(double dt) {
-    String minutes = getMinutes(dt);
-    String seconds = getSeconds(dt);
-    String milliseconds = getMilliseconds(dt);
-
-    return '$minutes:$seconds:$milliseconds';
-  }
-
-  String getMinutes(double dt) {
-    return (dt / 60).floor().toString().padLeft(2, '0');
-  }
-
-  String getSeconds(double dt) {
-    return (dt % 60).floor().toString().padLeft(2, '0');
-  }
-
-  String getMilliseconds(double dt) {
-    return ((dt * 1000) % 1000).floor().toString().padLeft(3, '0');
+    _textComponent.text = ScoreUtils.getTimeFormatByDt(gameRef.elapsedTime);
   }
 }

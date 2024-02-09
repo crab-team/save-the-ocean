@@ -1,14 +1,35 @@
-import 'package:flame/components.dart';
+import 'package:flame_rive/flame_rive.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game_screen.dart';
 
-class TrashSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
+class TrashRiveComponentFactory {
+  static Future<TrashRiveComponent> create() async {
+    final artboard = await loadArtboard(RiveFile.asset(AnimationAssets.riv), artboardName: ArtboardNames.trash);
+    return TrashRiveComponent(artboard: artboard);
+  }
+}
+
+class TrashRiveComponent extends RiveComponent {
+  StateMachineController? controller;
+
+  late SMITrigger? recycling;
+
+  TrashRiveComponent({required super.artboard});
+
   @override
   Future<void> onLoad() async {
-    sprite = Sprite(gameRef.images.fromCache(ImageAssets.trash));
-    width = 3;
-    height = 5.6;
-    anchor = Anchor.bottomCenter;
-    x = 1.7;
+    await super.onLoad();
+    controller = StateMachineController.fromArtboard(artboard, "state_machine");
+    if (controller == null) return;
+
+    artboard.addController(controller!);
+    recycling = controller?.findInput<bool>("recycling") as SMITrigger;
+    listenBatteryLevel();
+  }
+
+  void listenBatteryLevel() {
+    recyclingNotifier.addListener(() {
+      if (recyclingNotifier.value) recycling?.fire();
+    });
   }
 }

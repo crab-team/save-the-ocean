@@ -2,9 +2,10 @@ import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:save_the_ocean/components/game_scene/battery_level/battery_level_component.dart';
 import 'package:save_the_ocean/components/game_scene/bubbles/bubbles_component.dart';
 import 'package:save_the_ocean/components/game_scene/fishes_rive_component.dart';
 import 'package:save_the_ocean/components/game_scene/foreground_component.dart';
@@ -20,26 +21,17 @@ import 'package:save_the_ocean/components/game_scene/wall_component.dart';
 import 'package:save_the_ocean/components/hub/joystick.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/providers/battery_level_providers.dart';
-import 'package:save_the_ocean/providers/game_providers.dart';
-import 'package:save_the_ocean/providers/pollution_level_providers.dart';
-import 'package:save_the_ocean/providers/robot_deploy_provider.dart';
-import 'package:save_the_ocean/providers/robot_position_provider.dart';
-import 'package:save_the_ocean/providers/robot_release_trash_providers.dart';
+import 'package:save_the_ocean/screens/game_screen.dart';
 
 final screenSize = Vector2(2220, 1080);
 const cameraZoom = 100.0;
 final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
-final batteryLevelNotifier = BatteryLevelNotifier();
-final pollutionLevelNotifier = PollutionLevelNotifier();
-final robotPositionNotifier = RobotPositionNotifier();
-final robotDeployNotifier = RobotDeployNotifier();
-final robotReleaseTrashNotifier = RobotReleaseTrashNotifier();
-final gameNotifier = GameNotifier();
 
 class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   late GarbageController _garbageController;
   late Timer timer;
+  late Timer garbageTimer;
+  double elapsedTime = 0;
 
   SaveTheOceanGame()
       : super(
@@ -48,7 +40,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
             width: screenSize.x,
             height: screenSize.y,
           ),
-          gravity: Vector2(0, 15.0),
+          gravity: Vector2(0, 12.0),
         );
 
   @override
@@ -56,7 +48,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     await super.onLoad();
     await loadAssets();
 
-    initTimer();
+    initTimers();
     gameListeners();
 
     _garbageController = GarbageController(world);
@@ -66,8 +58,16 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     addWorldElements();
   }
 
-  initTimer() {
+  initTimers() {
     timer = Timer(
+      0.001,
+      onTick: () {
+        elapsedTime += 0.001;
+      },
+      repeat: true,
+    );
+
+    garbageTimer = Timer(
       1,
       onTick: () {
         _garbageController.spawnGarbage();
@@ -80,6 +80,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   void update(double dt) {
     super.update(dt);
     timer.update(dt);
+    garbageTimer.update(dt);
   }
 
   Future<void> loadAssets() async {
@@ -132,18 +133,33 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
       PollutionWaterComponent(),
       TimerTextComponent(),
       FpsTextComponent(),
+      BatteryLevelComponent(),
     ]);
   }
 
   void addWorldElements() async {
     world.addAll([
       Robot(),
-      GroundBodyComponentFactory.create(),
+      GroundBodyComponent(),
       TrashFloor(),
       TrashBoundaries(),
-      WallComponentFactory.create(false),
-      WallComponentFactory.create(true),
+      WallComponent(isLeft: false),
+      WallComponent(isLeft: true),
     ]);
+  }
+
+  void restart() {
+    elapsedTime = 0;
+    timer.stop();
+    garbageTimer.stop();
+    pollutionLevelNotifier.restart();
+    batteryLevelNotifier.restart();
+    scoreNotifier.restart();
+    world.removeAll(world.children);
+    addWorldElements();
+    timer.start();
+    garbageTimer.start();
+    resumeEngine();
   }
 
   void gameListeners() {
@@ -161,7 +177,12 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
 
     gameNotifier.addListener(() {
       if (gameNotifier.isGameOver) {
-        timer.stop();
+        overlays.add('PauseMenu');
+        scoreNotifier.updateScore(elapsedTime);
+        pauseEngine();
+      } else {
+        overlays.remove('PauseMenu');
+        restart();
       }
     });
   }
@@ -172,16 +193,30 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     Set<LogicalKeyboardKey> keysPressed,
   ) {
     final isKeyUp = event is RawKeyUpEvent;
+    final isKeyA = event.logicalKey == LogicalKeyboardKey.keyA;
+    final isKeyD = event.logicalKey == LogicalKeyboardKey.keyD;
+    final isKeyK = event.logicalKey == LogicalKeyboardKey.keyK;
+    final isKeyL = event.logicalKey == LogicalKeyboardKey.keyL;
     if (!event.repeat) {
-      if (event.logicalKey == LogicalKeyboardKey.keyA) {
+      if (isKeyA) {
         robotPositionNotifier.moveLeft();
-      } else if (event.logicalKey == LogicalKeyboardKey.keyD) {
+      }
+
+      if (isKeyD) {
         robotPositionNotifier.moveRight();
+      }
+
+      if (isKeyA && isKeyUp || isKeyD && isKeyUp) {
+        robotPositionNotifier.stop();
       }
     }
 
-    if (isKeyUp) {
-      robotPositionNotifier.stop();
+    if (isKeyK && !isKeyUp) {
+      !robotDeployNotifier.deploy ? robotDeployNotifier.deployRobot() : robotDeployNotifier.refoldRobot();
+    }
+
+    if (isKeyL && !isKeyUp) {
+      robotReleaseTrashNotifier.release();
     }
 
     return super.onKeyEvent(event, keysPressed);

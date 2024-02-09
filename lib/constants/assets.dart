@@ -6,6 +6,8 @@ class ImageAssets {
   // Menu
   static const String backgroundMenu = 'background_menu.png';
   static const String foregroundMenu = 'foreground_menu.png';
+  static const String menuLine = 'menu_line.png';
+  static const String menuBottomLine = 'menu_bottom_line.png';
 
   // Game scene
   static const String trash = 'trash.png';
@@ -36,6 +38,8 @@ class ArtboardNames {
   static const String bubble1 = 'bubble_1';
   static const String bubble2 = 'bubble_2';
   static const String pollutionWater = 'pollution_water';
+  static const String trash = 'trash';
+  static const String batteryLevel = 'battery_level';
 }
 
 class AudioAssets {

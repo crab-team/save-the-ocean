@@ -24,20 +24,17 @@ final ThemeData theme = ThemeData(
   ),
   textTheme: const TextTheme(
     displayLarge: TextStyle(
-      fontSize: 48.0,
-      fontWeight: FontWeight.bold,
-      letterSpacing: -1.5,
+      fontSize: 52.0,
       color: Colors.white,
+      fontFamily: 'ProtestRevolution',
     ),
     displayMedium: TextStyle(
       fontSize: 34.0,
-      fontWeight: FontWeight.bold,
       letterSpacing: -0.5,
       color: Colors.white,
     ),
     displaySmall: TextStyle(
       fontSize: 24.0,
-      fontWeight: FontWeight.w600,
       letterSpacing: 0.0,
       color: Colors.white,
     ),

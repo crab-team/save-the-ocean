@@ -2,6 +2,7 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
+import 'package:save_the_ocean/screens/game_screen.dart';
 
 class TrashFloor extends BodyComponent with ContactCallbacks {
   @override
@@ -28,10 +29,16 @@ class TrashFloor extends BodyComponent with ContactCallbacks {
 
     if (other is GarbageComponent) {
       double garbageToLevel = garbageTypeToLevel[other.garbage.type]!;
+      recycling();
       incrementBatteryLevel(garbageToLevel);
       decrementPollutionLevel(garbageToLevel);
       other.removeFromParent();
     }
+  }
+
+  void recycling() {
+    recyclingNotifier.value = true;
+    Future.microtask(() => recyclingNotifier.value = false);
   }
 
   void incrementBatteryLevel(double level) {
