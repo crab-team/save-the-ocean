@@ -54,7 +54,6 @@ class UserRepositoryImplementation implements UsersRepository {
   Future<String> getLocalUsername() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     String? currentUsername = sharedPreferences.getString('username');
-    print('currentUser: $currentUsername');
     if (currentUsername == null) {
       throw NoUsernameLocally();
     }

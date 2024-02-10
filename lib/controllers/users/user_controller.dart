@@ -19,11 +19,9 @@ class UserController extends ChangeNotifier {
   String get userId => _userId;
 
   Future<void> fetch() async {
-    print('fetch');
     _currentState = UserState.loading();
     try {
       final User user = await getUser.call();
-      print('user: $user');
       _currentState = UserState.success(user);
       _userId = user.username;
     } on NoUsernameLocally {
