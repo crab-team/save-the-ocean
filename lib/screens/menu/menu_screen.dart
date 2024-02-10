@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
-import 'package:save_the_ocean/controllers/users/user_error.dart';
 import 'package:save_the_ocean/controllers/users/user_state.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/menu/widgets/dialogs/welcome_dialog.dart';
+import 'package:save_the_ocean/screens/menu/widgets/username_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -28,85 +28,87 @@ class _MenuScreenState extends State<MenuScreen> {
       body: Stack(
         children: [
           const BackgroundMenu(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(flex: 1),
-              _buildMenu(context),
-              const Spacer(flex: 1),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(child: _buildMtcLogo(context)),
-                  Expanded(child: _buildMarquee(context)),
-                  Expanded(child: _buildVersion(context)),
-                ],
-              ),
-            ],
+          const Positioned(
+            top: 10,
+            left: 10,
+            child: UsernameText(),
           ),
-          _buildWelcomeDialog(),
+          Consumer<UserController>(
+            builder: (context, controller, child) {
+              if (controller.currentState.status == UserStatus.noUsernameLocally) {
+                return const WelcomeDialog();
+              }
+              return _buildMenu(context);
+            },
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildWelcomeDialog() {
-    return Consumer<UserController>(builder: (context, controller, child) {
-      UserState state = controller.currentState;
-
-      if (state.status == UserStatus.noUsernameLocally) {
-        return const WelcomeDialog();
-      }
-
-      return const SizedBox();
-    });
-  }
-
   Widget _buildMenu(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Stack(
-            alignment: Alignment.center,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Spacer(flex: 1),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "Save the ocean",
-                style: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(color: Theme.of(context).colorScheme.background, fontSize: 51),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Text(
+                    "Save the ocean",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: Theme.of(context).colorScheme.background, fontSize: 51),
+                  ),
+                  Text(
+                    "Save the ocean",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                  ),
+                ],
               ),
-              Text(
-                "Save the ocean",
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary),
+              Image.asset("images/${ImageAssets.menuBottomLine}", width: 500),
+              const SizedBox(height: 24),
+              TextButton(
+                onPressed: () => AppRouter.goToGame(),
+                child: Text(
+                  'PLAY',
+                  style: Theme.of(context).textTheme.displayMedium!,
+                ),
               ),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: () => AppRouter.goToRanking(),
+                child: Text(
+                  'RANKING',
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Image.asset("images/${ImageAssets.menuLine}", width: 500),
             ],
           ),
-          Image.asset("images/${ImageAssets.menuBottomLine}", width: 500),
-          const SizedBox(height: 24),
-          TextButton(
-            onPressed: () => AppRouter.goToGame(),
-            child: Text(
-              'PLAY',
-              style: Theme.of(context).textTheme.displayMedium!,
-            ),
-          ),
-          const SizedBox(height: 12),
-          TextButton(
-            onPressed: () => AppRouter.goToRanking(),
-            child: Text(
-              'RANKING',
-              style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.white),
-            ),
-          ),
-          const SizedBox(height: 24),
-          Image.asset("images/${ImageAssets.menuLine}", width: 500),
-        ],
-      ),
+        ),
+        const Spacer(flex: 1),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(child: _buildMtcLogo(context)),
+            Expanded(child: _buildMarquee(context)),
+            Expanded(child: _buildVersion(context)),
+          ],
+        ),
+      ],
     );
   }
 

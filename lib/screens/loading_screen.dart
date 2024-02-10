@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/game.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -11,7 +10,12 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Column(
+          children: [
+            Text("Loading"),
+            CircularProgressIndicator(),
+          ],
+        ),
       ),
     );
   }

@@ -20,6 +20,7 @@ import 'package:save_the_ocean/components/game_scene/trash/trash_floor.dart';
 import 'package:save_the_ocean/components/game_scene/wall_component.dart';
 import 'package:save_the_ocean/components/hub/joystick.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
+import 'package:save_the_ocean/constants/app.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/screens/game_screen.dart';
 
@@ -149,20 +150,6 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     ]);
   }
 
-  void restart() {
-    elapsedTime = 0;
-    timer.stop();
-    garbageTimer.stop();
-    pollutionLevelNotifier.restart();
-    batteryLevelNotifier.restart();
-    scoreNotifier.restart();
-    world.removeAll(world.children);
-    addWorldElements();
-    timer.start();
-    garbageTimer.start();
-    resumeEngine();
-  }
-
   void gameListeners() {
     batteryLevelNotifier.addListener(() {
       if (batteryLevelNotifier.level <= 0) {
@@ -178,14 +165,45 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
 
     gameNotifier.addListener(() {
       if (gameNotifier.isGameOver) {
-        overlays.add('PauseMenu');
-        scoreNotifier.updateScore(elapsedTime);
-        pauseEngine();
+        executeGameOver();
       } else {
-        overlays.remove('PauseMenu');
-        restart();
+        executeRestartGame();
       }
     });
+  }
+
+  void executeGameOver() {
+    overlays.add(AppConstants.gameOverDialog);
+    pauseEngine();
+  }
+
+  void executeRestartGame() {
+    overlays.remove(AppConstants.gameOverDialog);
+    restart();
+  }
+
+  void togglePauseGame() {
+    print(overlays.isActive(AppConstants.pauseDialog));
+    if (overlays.isActive(AppConstants.pauseDialog)) {
+      overlays.remove(AppConstants.pauseDialog);
+      resumeEngine();
+    } else {
+      overlays.add(AppConstants.pauseDialog);
+      pauseEngine();
+    }
+  }
+
+  void restart() {
+    elapsedTime = 0;
+    timer.stop();
+    garbageTimer.stop();
+    pollutionLevelNotifier.restart();
+    batteryLevelNotifier.restart();
+    world.removeAll(world.children);
+    addWorldElements();
+    timer.start();
+    garbageTimer.start();
+    resumeEngine();
   }
 
   @override
@@ -198,6 +216,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     final isKeyD = event.logicalKey == LogicalKeyboardKey.keyD;
     final isKeyK = event.logicalKey == LogicalKeyboardKey.keyK;
     final isKeyL = event.logicalKey == LogicalKeyboardKey.keyL;
+    final isKeyEsc = event.logicalKey == LogicalKeyboardKey.escape;
     if (!event.repeat) {
       if (isKeyA) {
         robotPositionNotifier.moveLeft();
@@ -218,6 +237,10 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
 
     if (isKeyL && !isKeyUp) {
       robotReleaseTrashNotifier.release();
+    }
+
+    if (isKeyEsc && !isKeyUp) {
+      togglePauseGame();
     }
 
     return super.onKeyEvent(event, keysPressed);

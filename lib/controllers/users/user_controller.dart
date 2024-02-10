@@ -4,60 +4,106 @@ import 'package:save_the_ocean/controllers/users/user_state.dart';
 import 'package:save_the_ocean/domain/entities/user.dart';
 import 'package:save_the_ocean/domain/use_cases/users/create_user.dart';
 import 'package:save_the_ocean/domain/use_cases/users/get_user.dart';
+import 'package:save_the_ocean/domain/use_cases/users/get_user_by_username.dart';
 import 'package:save_the_ocean/domain/use_cases/users/update_user.dart';
 
 class UserController extends ChangeNotifier {
   final GetUser getUser;
+  final GetUserByUsername getUserByUsername;
   final CreateUser createUser;
   final UpdateUserScore updateUserScore;
 
-  UserController({required this.getUser, required this.createUser, required this.updateUserScore});
+  UserController(
+      {required this.getUser,
+      required this.createUser,
+      required this.updateUserScore,
+      required this.getUserByUsername});
 
-  UserState _currentState = UserState.initial();
-  UserState get currentState => _currentState;
-  String _userId = '';
-  String get userId => _userId;
+  UserControllerState _currentState = UserControllerState.initial();
+  UserControllerState get currentState => _currentState;
+  User? _user;
+  User? get currentUser => _user;
+
+  set currentUser(User? user) {
+    _user = user;
+    notifyListeners();
+  }
+
+  Future<void> fetchByUsername(String username) async {
+    loading();
+    try {
+      final User user = await getUserByUsername.call(username);
+      currentUser = user;
+      success();
+    } on UserNotFound {
+      notUserRegistered();
+    } catch (e) {
+      failure(e as Exception);
+    }
+  }
 
   Future<void> fetch() async {
-    _currentState = UserState.loading();
+    loading();
     try {
       final User user = await getUser.call();
-      _currentState = UserState.success(user);
-      _userId = user.username;
+      currentUser = user;
+      success();
     } on NoUsernameLocally {
-      _currentState = UserState.notUsernameLocally();
-    } on UserNotFound {
-      _currentState = UserState.notUserRegistered();
+      notUsernameLocally();
     } catch (e) {
-      _currentState = UserState.failure(e as Exception);
+      failure(e as Exception);
     }
-
-    notifyListeners();
   }
 
   Future<void> create(String username) async {
-    _currentState = UserState.loading();
     try {
       User user = await createUser.call(username);
-      _currentState = UserState.success(user);
-    } on UserAlreadyExists {
-      _currentState = UserState.userAlreadyExists();
+      currentUser = user;
+      success();
     } catch (e) {
-      _currentState = UserState.failure(e as Exception);
+      failure(e as Exception);
     }
+  }
+
+  Future<void> updateScore(double newScore) async {
+    loading();
+    try {
+      print("newScore: $newScore");
+      print("currentUser?.score: ${currentUser?.score}");
+      if (currentUser == null) return success();
+      if (currentUser!.score > newScore) return success();
+      User user = await updateUserScore.call(currentUser!.username, newScore);
+      currentUser = user;
+      success();
+    } on UserNotFound {
+      notUserRegistered();
+    } catch (e) {
+      failure(e as Exception);
+    }
+  }
+
+  loading() {
+    _currentState = UserControllerState.loading();
     notifyListeners();
   }
 
-  Future<void> updateScore(int newScore) async {
-    _currentState = UserState.loading();
-    try {
-      User user = await updateUserScore.call(newScore);
-      _currentState = UserState.success(user);
-    } on UserNotFound {
-      _currentState = UserState.notUserRegistered();
-    } catch (e) {
-      _currentState = UserState.failure(e as Exception);
-    }
+  notUserRegistered() {
+    _currentState = UserControllerState.notUserRegistered();
+    notifyListeners();
+  }
+
+  notUsernameLocally() {
+    _currentState = UserControllerState.notUsernameLocally();
+    notifyListeners();
+  }
+
+  failure(Exception e) {
+    _currentState = UserControllerState.failure(e);
+    notifyListeners();
+  }
+
+  success() {
+    _currentState = UserControllerState.success();
     notifyListeners();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:save_the_ocean/controllers/users/user_controller.dart';
+import 'package:save_the_ocean/controllers/users/button_user_start_controller.dart';
 import 'package:save_the_ocean/shared/widgets/dialog.dart';
 
 class WelcomeDialog extends StatefulWidget {
@@ -19,10 +19,16 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
     return CustomDialog(
       title: "Welcome",
       actions: [
-        TextButton(
-          onPressed: () => _registerUser(context),
-          child: const Text("Start"),
-        ),
+        Consumer<ButtonUserStartController>(builder: (context, controller, _) {
+          if (controller.status == ButtonUserStartStatus.loading) {
+            return const CircularProgressIndicator();
+          }
+
+          return TextButton(
+            onPressed: () => _registerUser(context),
+            child: const Text("Start"),
+          );
+        }),
       ],
       child: Column(
         children: [
@@ -43,6 +49,7 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
                 }
                 return null;
               },
+              onFieldSubmitted: (_) => _registerUser(context),
             ),
           ),
         ],
@@ -52,7 +59,7 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
 
   void _registerUser(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      Provider.of<UserController>(context, listen: false).create(usernameController.text);
+      Provider.of<ButtonUserStartController>(context, listen: false).onPress(usernameController.text);
     }
   }
 }

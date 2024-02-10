@@ -1,39 +1,36 @@
-import 'package:save_the_ocean/domain/entities/user.dart';
-
 enum UserStatus { initial, loading, noUsernameLocally, userNotFound, userAlreadyExists, success, failure }
 
-class UserState {
+class UserControllerState {
   final UserStatus status;
   final Exception? error;
-  final User? user;
 
-  UserState({required this.status, this.error, this.user});
+  UserControllerState({required this.status, this.error});
 
-  factory UserState.initial() {
-    return UserState(status: UserStatus.initial);
+  factory UserControllerState.initial() {
+    return UserControllerState(status: UserStatus.initial);
   }
 
-  factory UserState.loading() {
-    return UserState(status: UserStatus.loading);
+  factory UserControllerState.loading() {
+    return UserControllerState(status: UserStatus.loading);
   }
 
-  factory UserState.notUserRegistered() {
-    return UserState(status: UserStatus.userNotFound);
+  factory UserControllerState.notUserRegistered() {
+    return UserControllerState(status: UserStatus.userNotFound);
   }
 
-  factory UserState.notUsernameLocally() {
-    return UserState(status: UserStatus.noUsernameLocally);
+  factory UserControllerState.notUsernameLocally() {
+    return UserControllerState(status: UserStatus.noUsernameLocally);
   }
 
-  factory UserState.userAlreadyExists() {
-    return UserState(status: UserStatus.userAlreadyExists);
+  factory UserControllerState.userAlreadyExists() {
+    return UserControllerState(status: UserStatus.userAlreadyExists);
   }
 
-  factory UserState.success(User user) {
-    return UserState(status: UserStatus.success, user: user);
+  factory UserControllerState.success() {
+    return UserControllerState(status: UserStatus.success);
   }
 
-  factory UserState.failure(Exception error) {
-    return UserState(status: UserStatus.failure, error: error);
+  factory UserControllerState.failure(Exception error) {
+    return UserControllerState(status: UserStatus.failure, error: error);
   }
 }

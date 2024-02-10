@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_the_ocean/audio/audio_controller.dart';
 import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/controllers/users/button_user_start_controller.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/core/app_lifecycle.dart';
 import 'package:save_the_ocean/core/router.dart';
@@ -14,6 +15,7 @@ import 'package:save_the_ocean/domain/repositories/users_repository.dart';
 import 'package:save_the_ocean/domain/use_cases/ranking/get_ranking.dart';
 import 'package:save_the_ocean/domain/use_cases/users/create_user.dart';
 import 'package:save_the_ocean/domain/use_cases/users/get_user.dart';
+import 'package:save_the_ocean/domain/use_cases/users/get_user_by_username.dart';
 import 'package:save_the_ocean/domain/use_cases/users/update_user.dart';
 import 'package:save_the_ocean/firebase_options.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
@@ -28,20 +30,27 @@ void main() async {
 
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
-  runApp(const MyGame());
+  UsersRepository usersRepository = await RepositoryProvider.provideUsers();
+  RankingRepository rankingRepository = RepositoryProvider.provideRanking();
+
+  runApp(MyGame(
+    usersRepository: usersRepository,
+    rankingRepository: rankingRepository,
+  ));
 }
 
 class MyGame extends StatelessWidget {
-  const MyGame({super.key});
+  final UsersRepository usersRepository;
+  final RankingRepository rankingRepository;
+
+  const MyGame({super.key, required this.usersRepository, required this.rankingRepository});
 
   @override
   Widget build(BuildContext context) {
-    UsersRepository usersRepository = RepositoryProvider.provideUsers();
     GetUser getUser = GetUser(usersRepository);
     CreateUser createUser = CreateUser(usersRepository);
     UpdateUserScore updateUserScore = UpdateUserScore(usersRepository);
-
-    RankingRepository rankingRepository = RepositoryProvider.provideRanking();
+    GetUserByUsername getUserByUsername = GetUserByUsername(usersRepository);
     GetRanking getRanking = GetRanking(rankingRepository);
 
     return AppLifecycleObserver(
@@ -49,11 +58,18 @@ class MyGame extends StatelessWidget {
         providers: [
           Provider(create: (context) => SettingsController()),
           ChangeNotifierProvider(
-              create: (context) => UserController(
-                    getUser: getUser,
-                    createUser: createUser,
-                    updateUserScore: updateUserScore,
-                  )),
+            create: (context) => UserController(
+              getUser: getUser,
+              getUserByUsername: getUserByUsername,
+              createUser: createUser,
+              updateUserScore: updateUserScore,
+            ),
+          ),
+          ChangeNotifierProxyProvider<UserController, ButtonUserStartController>(
+            create: (context) => ButtonUserStartController(userController: null),
+            update: (context, userController, buttonUserStartController) =>
+                ButtonUserStartController(userController: userController),
+          ),
           ChangeNotifierProvider(create: (context) => RankingController(getRanking: getRanking)),
           // Set up audio.
           ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(

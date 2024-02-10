@@ -22,7 +22,7 @@ class UserRankingRow extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            ScoreUtils.getTimeFormatByDt(user.score.toDouble()),
+            ScoreUtils.getTimeFormat(user.score.toDouble()),
             style: const TextStyle(
               fontSize: 18,
               color: Colors.white,

@@ -8,7 +8,7 @@ extension ScoreX on int {
 }
 
 class ScoreUtils {
-  static String getTimeFormatByDt(double dt) {
+  static String getTimeFormat(double dt) {
     String minutes = getMinutes(dt);
     String seconds = getSeconds(dt);
     String milliseconds = getMilliseconds(dt);

@@ -6,7 +6,7 @@ class UpdateUserScore {
 
   UpdateUserScore(this._userRepository);
 
-  Future<User> call(int score) async {
-    return await _userRepository.updateUserScore(score);
+  Future<User> call(String username, double score) async {
+    return await _userRepository.updateUserScore(username, score);
   }
 }

@@ -14,12 +14,23 @@ class RankingController extends ChangeNotifier {
   RankingState _currentState = RankingState();
 
   Future<void> fetch() async {
-    _currentState = _currentState.copyWith(status: PageStatus.loading);
-
+    loading();
     final List<User> users = await getRanking.call();
+    data(users);
+  }
 
+  void loading() {
+    _currentState = _currentState.copyWith(status: PageStatus.loading);
+    notifyListeners();
+  }
+
+  void error() {
+    _currentState = _currentState.copyWith(status: PageStatus.error);
+    notifyListeners();
+  }
+
+  void data(List<User> users) {
     _currentState = _currentState.copyWith(status: PageStatus.data, users: users);
-
     notifyListeners();
   }
 }

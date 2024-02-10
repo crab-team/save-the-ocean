@@ -39,6 +39,6 @@ class TimerTextComponent extends PositionComponent with HasGameRef<SaveTheOceanG
 
   @override
   void update(double dt) {
-    _textComponent.text = ScoreUtils.getTimeFormatByDt(gameRef.elapsedTime);
+    _textComponent.text = ScoreUtils.getTimeFormat(gameRef.elapsedTime);
   }
 }

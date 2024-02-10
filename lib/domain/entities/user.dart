@@ -1,6 +1,6 @@
 class User {
   final String username;
-  final int score;
+  final double score;
 
   const User({required this.username, required this.score});
 
@@ -20,7 +20,7 @@ class User {
 
   User copyWith({
     String? username,
-    int? score,
+    double? score,
   }) {
     return User(
       username: username ?? this.username,
