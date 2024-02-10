@@ -76,7 +76,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                 ],
               ),
-              Image.asset("images/${ImageAssets.menuBottomLine}", width: 500),
+              Image.asset("assets/images/${ImageAssets.menuBottomLine}", width: 500),
               const SizedBox(height: 24),
               TextButton(
                 onPressed: () => AppRouter.goToGame(),
@@ -94,7 +94,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              Image.asset("images/${ImageAssets.menuLine}", width: 500),
+              Image.asset("assets/images/${ImageAssets.menuLine}", width: 500),
             ],
           ),
         ),

@@ -33,11 +33,11 @@ class CustomDialog extends StatelessWidget {
               children: [
                 Text(title, style: Theme.of(context).textTheme.displayLarge),
                 const SizedBox(height: 24),
-                Image.asset("images/${ImageAssets.menuLine}", width: 500),
+                Image.asset("assets/images/${ImageAssets.menuLine}", width: 500),
                 const SizedBox(height: 24),
                 SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: child),
                 const SizedBox(height: 24),
-                Image.asset("images/${ImageAssets.menuBottomLine}", width: 500),
+                Image.asset("assets/images/${ImageAssets.menuBottomLine}", width: 500),
                 const SizedBox(height: 24),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

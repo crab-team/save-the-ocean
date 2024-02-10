@@ -33,7 +33,7 @@ class _RankingState extends State<Ranking> {
               .displayLarge!
               .copyWith(color: Theme.of(context).colorScheme.background, fontSize: 51),
         ),
-        Image.asset("images/${ImageAssets.menuBottomLine}", width: 500),
+        Image.asset("assets/images/${ImageAssets.menuBottomLine}", width: 500),
         const SizedBox(height: 24),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.4,
@@ -46,7 +46,7 @@ class _RankingState extends State<Ranking> {
           ),
         ),
         const SizedBox(height: 24),
-        Image.asset("images/${ImageAssets.menuLine}", width: 500),
+        Image.asset("assets/images/${ImageAssets.menuLine}", width: 500),
       ],
     );
   }

@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/breakpoint.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:save_the_ocean/audio/audio_controller.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/controllers/users/button_user_start_controller.dart';
@@ -83,16 +85,37 @@ class MyGame extends StatelessWidget {
             dispose: (context, audio) => audio.dispose(),
           ),
         ],
-        child: Builder(builder: (context) {
-          return MaterialApp.router(
-            theme: theme,
-            title: TextConstants.appName,
-            routeInformationProvider: router.routeInformationProvider,
-            routeInformationParser: router.routeInformationParser,
-            routerDelegate: router.routerDelegate,
-          );
-        }),
+        child: _buildResponsiveMaterial(
+          context,
+          Builder(builder: (context) {
+            return MaterialApp.router(
+              theme: theme,
+              title: TextConstants.appName,
+              routeInformationProvider: router.routeInformationProvider,
+              routeInformationParser: router.routeInformationParser,
+              routerDelegate: router.routerDelegate,
+            );
+          }),
+        ),
       ),
+    );
+  }
+
+  Widget _buildResponsiveMaterial(BuildContext context, Widget widget) {
+    return ResponsiveBreakpoints.builder(
+      child: widget,
+      breakpoints: [
+        const Breakpoint(start: 0, end: 450, name: MOBILE),
+        const Breakpoint(start: 451, end: 800, name: TABLET),
+        const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+        const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+      ],
+      breakpointsLandscape: [
+        const Breakpoint(start: 0, end: 450, name: MOBILE),
+        const Breakpoint(start: 451, end: 800, name: TABLET),
+        const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+        const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+      ],
     );
   }
 }
