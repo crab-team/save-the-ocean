@@ -5,7 +5,7 @@ class UpdateScore {
 
   UpdateScore(this._rankingRepository);
 
-  Future<void> call(String username, int score) async {
-    return await _rankingRepository.setScore(username, score);
+  Future<void> call(String usedId, int score) async {
+    return await _rankingRepository.setScore(usedId, score);
   }
 }

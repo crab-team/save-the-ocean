@@ -1,5 +1,5 @@
 import 'package:save_the_ocean/core/page_status.dart';
-import 'package:save_the_ocean/domain/user.dart';
+import 'package:save_the_ocean/domain/entities/user.dart';
 
 class RankingState {
   final PageStatus status;

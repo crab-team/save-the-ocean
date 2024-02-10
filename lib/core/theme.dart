@@ -108,6 +108,24 @@ final ThemeData theme = ThemeData(
       color: Color(0xFF3F51B5),
     ),
   ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.white),
+      padding: MaterialStateProperty.all(kPaddingApp),
+      shape: MaterialStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(kRadiusCorner),
+        ),
+      ),
+      textStyle: MaterialStateProperty.all(
+        const TextStyle(
+          fontSize: 32.0,
+          color: Colors.white,
+          fontFamily: 'ProtestRevolution',
+        ),
+      ),
+    ),
+  ),
   scaffoldBackgroundColor: Colors.black,
   disabledColor: Colors.grey,
 );

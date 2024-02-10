@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/core/page_status.dart';
 import 'package:save_the_ocean/domain/use_cases/ranking/get_ranking.dart';
-import 'package:save_the_ocean/domain/user.dart';
+import 'package:save_the_ocean/domain/entities/user.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_state.dart';
 
 class RankingController extends ChangeNotifier {

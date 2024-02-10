@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/page_status.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_state.dart';
@@ -16,16 +17,37 @@ class _RankingState extends State<Ranking> {
   @override
   void initState() {
     super.initState();
-    Provider.of<RankingController>(context, listen: false).fetch();
+    Future.microtask(() async => await Provider.of<RankingController>(context, listen: false).fetch());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RankingController>(
-      builder: (context, controller, child) {
-        RankingState currentState = controller.currentState;
-        return _rankingContent(currentState);
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Ranking",
+          style: Theme.of(context)
+              .textTheme
+              .displayLarge!
+              .copyWith(color: Theme.of(context).colorScheme.background, fontSize: 51),
+        ),
+        Image.asset("images/${ImageAssets.menuBottomLine}", width: 500),
+        const SizedBox(height: 24),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.4,
+          width: 500,
+          child: Consumer<RankingController>(
+            builder: (context, controller, child) {
+              RankingState currentState = controller.currentState;
+              return _rankingContent(currentState);
+            },
+          ),
+        ),
+        const SizedBox(height: 24),
+        Image.asset("images/${ImageAssets.menuLine}", width: 500),
+      ],
     );
   }
 

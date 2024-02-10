@@ -1,66 +1,33 @@
-import 'dart:ui';
-
-import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/controllers/users/user_controller.dart';
+import 'package:save_the_ocean/controllers/users/user_error.dart';
+import 'package:save_the_ocean/controllers/users/user_state.dart';
 import 'package:save_the_ocean/core/router.dart';
+import 'package:save_the_ocean/screens/menu/widgets/dialogs/welcome_dialog.dart';
+import 'package:save_the_ocean/shared/widgets/background_menu.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
+
+  @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async => await Provider.of<UserController>(context, listen: false).fetch());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset(
-            'assets/images/${ImageAssets.backgroundMenu}',
-            fit: BoxFit.cover,
-            width: double.infinity,
-          ),
-          Image.asset(
-            'assets/images/${ImageAssets.foregroundTopWall}',
-            fit: BoxFit.cover,
-            width: double.infinity,
-          ),
-          Positioned(
-            left: -10,
-            bottom: 0,
-            width: 140,
-            child: Image.asset(
-              'assets/images/${ImageAssets.foregroundLeftWall}',
-              fit: BoxFit.cover,
-            ),
-          ),
-          Positioned(
-            right: -5,
-            bottom: 0,
-            width: 140,
-            child: Image.asset('assets/images/${ImageAssets.foregroundRightWall}'),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 120,
-            child: Image.asset(
-              'assets/images/${ImageAssets.foregroundBottom}',
-            ),
-          ),
-          const RiveAnimation.asset(
-            AnimationAssets.riv,
-            artboard: ArtboardNames.lighting,
-          ),
-          ClipRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(color: Colors.black.withOpacity(0.3)),
-              ),
-            ),
-          ),
+          const BackgroundMenu(),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,9 +46,22 @@ class MenuScreen extends StatelessWidget {
               ),
             ],
           ),
+          _buildWelcomeDialog(),
         ],
       ),
     );
+  }
+
+  Widget _buildWelcomeDialog() {
+    return Consumer<UserController>(builder: (context, controller, child) {
+      UserState state = controller.currentState;
+
+      if (state.status == UserStatus.noUsernameLocally) {
+        return const WelcomeDialog();
+      }
+
+      return const SizedBox();
+    });
   }
 
   Widget _buildMenu(BuildContext context) {
@@ -117,7 +97,7 @@ class MenuScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           TextButton(
-            onPressed: () => AppRouter.goToSettings(),
+            onPressed: () => AppRouter.goToRanking(),
             child: Text(
               'RANKING',
               style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.white),

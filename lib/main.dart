@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_the_ocean/audio/audio_controller.dart';
 import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/core/app_lifecycle.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/core/theme.dart';
 import 'package:save_the_ocean/data/repository_provider.dart';
 import 'package:save_the_ocean/domain/repositories/ranking_repository.dart';
+import 'package:save_the_ocean/domain/repositories/users_repository.dart';
 import 'package:save_the_ocean/domain/use_cases/ranking/get_ranking.dart';
+import 'package:save_the_ocean/domain/use_cases/users/create_user.dart';
+import 'package:save_the_ocean/domain/use_cases/users/get_user.dart';
+import 'package:save_the_ocean/domain/use_cases/users/update_user.dart';
 import 'package:save_the_ocean/firebase_options.dart';
-import 'package:save_the_ocean/providers/score_provider.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
 import 'package:save_the_ocean/settings/settings.dart';
 
@@ -32,6 +36,11 @@ class MyGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UsersRepository usersRepository = RepositoryProvider.provideUsers();
+    GetUser getUser = GetUser(usersRepository);
+    CreateUser createUser = CreateUser(usersRepository);
+    UpdateUserScore updateUserScore = UpdateUserScore(usersRepository);
+
     RankingRepository rankingRepository = RepositoryProvider.provideRanking();
     GetRanking getRanking = GetRanking(rankingRepository);
 
@@ -39,7 +48,12 @@ class MyGame extends StatelessWidget {
       child: MultiProvider(
         providers: [
           Provider(create: (context) => SettingsController()),
-          Provider(create: (context) => ScoreNotifier()),
+          ChangeNotifierProvider(
+              create: (context) => UserController(
+                    getUser: getUser,
+                    createUser: createUser,
+                    updateUserScore: updateUserScore,
+                  )),
           ChangeNotifierProvider(create: (context) => RankingController(getRanking: getRanking)),
           // Set up audio.
           ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(

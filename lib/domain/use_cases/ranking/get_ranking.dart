@@ -1,5 +1,5 @@
 import 'package:save_the_ocean/domain/repositories/ranking_repository.dart';
-import 'package:save_the_ocean/domain/user.dart';
+import 'package:save_the_ocean/domain/entities/user.dart';
 
 class GetRanking {
   final RankingRepository _rankingRepository;
@@ -10,7 +10,3 @@ class GetRanking {
     return await _rankingRepository.getRanking();
   }
 }
-
-
-
-

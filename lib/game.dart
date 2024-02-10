@@ -28,6 +28,7 @@ const cameraZoom = 100.0;
 final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 
 class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
+  bool hasUserAlreadyRegistered = false;
   late GarbageController _garbageController;
   late Timer timer;
   late Timer garbageTimer;

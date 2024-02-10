@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:save_the_ocean/domain/repositories/ranking_repository.dart';
-import 'package:save_the_ocean/domain/user.dart';
+import 'package:save_the_ocean/domain/entities/user.dart';
 
 class FirestoreRankingRepository implements RankingRepository {
   final FirebaseFirestore firestore;

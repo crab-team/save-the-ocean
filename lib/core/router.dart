@@ -3,11 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:save_the_ocean/page_transition.dart';
 import 'package:save_the_ocean/screens/game_screen.dart';
 import 'package:save_the_ocean/screens/menu/menu_screen.dart';
-import 'package:save_the_ocean/screens/settings_screen.dart';
+import 'package:save_the_ocean/screens/ranking_screen.dart';
 import 'package:save_the_ocean/screens/splash_screen.dart';
 
 /// The router describes the game's navigational hierarchy, from the main
 /// screen through settings screens all the way to each individual level.
+
+const transitionColor = Color(0xFF5cdbde);
+
 final router = GoRouter(
   initialLocation: '/',
   routes: [
@@ -16,7 +19,7 @@ final router = GoRouter(
       name: 'splash',
       pageBuilder: (context, state) => buildPageTransition<void>(
         key: const ValueKey('splash'),
-        color: Colors.blueGrey,
+        color: transitionColor,
         child: const SplashScreen(),
       ),
     ),
@@ -25,7 +28,7 @@ final router = GoRouter(
       name: 'menu',
       pageBuilder: (context, state) => buildPageTransition<void>(
         key: const ValueKey('menu'),
-        color: Colors.blueGrey,
+        color: transitionColor,
         child: const MenuScreen(),
       ),
       routes: [
@@ -34,17 +37,17 @@ final router = GoRouter(
           name: 'game',
           pageBuilder: (context, state) => buildPageTransition<void>(
             key: const ValueKey('game'),
-            color: Colors.blueGrey,
+            color: transitionColor,
             child: const GameScreen(),
           ),
         ),
         GoRoute(
-          path: 'settings',
-          name: 'settings',
+          path: 'ranking',
+          name: 'ranking',
           pageBuilder: (context, state) => buildPageTransition<void>(
-            key: const ValueKey('settings'),
-            color: Colors.blueGrey,
-            child: const SettingsScreen(),
+            key: const ValueKey('ranking'),
+            color: transitionColor,
+            child: const RankingScreen(),
           ),
         ),
       ],
@@ -60,4 +63,6 @@ class AppRouter {
   static goToGame() => router.go('/menu/game');
 
   static goToSettings() => router.go('/menu/settings');
+
+  static goToRanking() => router.go('/menu/ranking');
 }

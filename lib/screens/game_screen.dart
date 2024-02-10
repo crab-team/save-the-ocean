@@ -1,13 +1,10 @@
-import 'dart:js_interop';
 import 'dart:ui';
 
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/game.dart';
-import 'package:save_the_ocean/screens/loading_screen.dart';
 import 'package:save_the_ocean/providers/battery_level_providers.dart';
 import 'package:save_the_ocean/providers/game_providers.dart';
 import 'package:save_the_ocean/providers/pollution_level_providers.dart';
@@ -15,6 +12,7 @@ import 'package:save_the_ocean/providers/robot_deploy_provider.dart';
 import 'package:save_the_ocean/providers/robot_position_provider.dart';
 import 'package:save_the_ocean/providers/robot_release_trash_providers.dart';
 import 'package:save_the_ocean/providers/score_provider.dart';
+import 'package:save_the_ocean/screens/loading_screen.dart';
 import 'package:save_the_ocean/utils/score.dart';
 
 final saveTheOceanGame = SaveTheOceanGame();

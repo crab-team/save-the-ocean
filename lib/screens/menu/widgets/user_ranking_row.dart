@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_ocean/domain/user.dart';
+import 'package:save_the_ocean/domain/entities/user.dart';
 import 'package:save_the_ocean/utils/score.dart';
 
 class UserRankingRow extends StatelessWidget {
@@ -22,7 +22,7 @@ class UserRankingRow extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            user.score.formattedScore(),
+            ScoreUtils.getTimeFormatByDt(user.score.toDouble()),
             style: const TextStyle(
               fontSize: 18,
               color: Colors.white,
