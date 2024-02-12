@@ -6,6 +6,7 @@ import 'package:save_the_ocean/controllers/users/user_state.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/menu/widgets/dialogs/welcome_dialog.dart';
 import 'package:save_the_ocean/screens/menu/widgets/username_text.dart';
+import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -47,55 +48,42 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Widget _buildMenu(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width * 0.5;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Spacer(flex: 1),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Text(
-                    "Save the ocean",
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayLarge!
-                        .copyWith(color: Theme.of(context).colorScheme.background, fontSize: 51),
-                  ),
-                  Text(
-                    "Save the ocean",
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayLarge!
-                        .copyWith(color: Theme.of(context).colorScheme.primary),
-                  ),
-                ],
-              ),
-              Image.asset("assets/images/${ImageAssets.menuBottomLine}", width: 500),
-              const SizedBox(height: 24),
-              TextButton(
-                onPressed: () => AppRouter.goToGame(),
-                child: Text(
-                  'PLAY',
-                  style: Theme.of(context).textTheme.displayMedium!,
+        SizedBox(
+          width: screenWidth,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    const AutoScaleText.title("Save the ocean"),
+                    AutoScaleText.title("Save the ocean", color: Theme.of(context).colorScheme.primary),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextButton(
-                onPressed: () => AppRouter.goToRanking(),
-                child: Text(
-                  'RANKING',
-                  style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.white),
+                Image.asset("assets/images/${ImageAssets.menuBottomLine}"),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: () => AppRouter.goToGame(),
+                  child: const AutoScaleText.body('PLAY'),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Image.asset("assets/images/${ImageAssets.menuLine}", width: 500),
-            ],
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: () => AppRouter.goToRanking(),
+                  child: const AutoScaleText.body('RANKING'),
+                ),
+                const SizedBox(height: 24),
+                Image.asset("assets/images/${ImageAssets.menuLine}"),
+              ],
+            ),
           ),
         ),
         const Spacer(flex: 1),
@@ -113,16 +101,9 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Widget _buildMarquee(BuildContext context) {
-    return Card(
+    return const Card(
       color: Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          "El plástico es la fracción más grande, más dañina y más persistente de los desechos marinos",
-          style: Theme.of(context).textTheme.bodyMedium,
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: Padding(padding: EdgeInsets.all(8.0), child: AutoScaleText.body("Link sobre contaminación marina")),
     );
   }
 

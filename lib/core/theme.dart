@@ -24,7 +24,7 @@ final ThemeData theme = ThemeData(
   ),
   textTheme: const TextTheme(
     displayLarge: TextStyle(
-      fontSize: 52.0,
+      fontSize: 38.0,
       color: Colors.white,
       fontFamily: 'ProtestRevolution',
     ),

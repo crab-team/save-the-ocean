@@ -5,6 +5,7 @@ import 'package:save_the_ocean/core/page_status.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
 import 'package:save_the_ocean/screens/menu/controllers/ranking_state.dart';
 import 'package:save_the_ocean/screens/menu/widgets/ranking_card.dart';
+import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 
 class Ranking extends StatefulWidget {
   const Ranking({super.key});
@@ -26,18 +27,11 @@ class _RankingState extends State<Ranking> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          "Ranking",
-          style: Theme.of(context)
-              .textTheme
-              .displayLarge!
-              .copyWith(color: Theme.of(context).colorScheme.background, fontSize: 51),
-        ),
-        Image.asset("assets/images/${ImageAssets.menuBottomLine}", width: 500),
+        const AutoScaleText.title("Ranking"),
+        Image.asset("assets/images/${ImageAssets.menuBottomLine}"),
         const SizedBox(height: 24),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.4,
-          width: 500,
+          height: MediaQuery.of(context).size.height * 0.3,
           child: Consumer<RankingController>(
             builder: (context, controller, child) {
               RankingState currentState = controller.currentState;
@@ -46,7 +40,7 @@ class _RankingState extends State<Ranking> {
           ),
         ),
         const SizedBox(height: 24),
-        Image.asset("assets/images/${ImageAssets.menuLine}", width: 500),
+        Image.asset("assets/images/${ImageAssets.menuLine}"),
       ],
     );
   }

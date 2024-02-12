@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/controllers/users/user_state.dart';
+import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 
 class UsernameText extends StatelessWidget {
   const UsernameText({super.key});
@@ -14,8 +15,7 @@ class UsernameText extends StatelessWidget {
           return const CircularProgressIndicator();
         }
 
-        return Text("Welcome ${controller.currentUser?.username ?? 'No user'}",
-            style: Theme.of(context).textTheme.displaySmall);
+        return AutoScaleText.small("Welcome ${controller.currentUser?.username ?? 'No user'}");
       },
     );
   }

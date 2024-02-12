@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 
 class CustomDialog extends StatelessWidget {
   final String title;
@@ -12,6 +13,7 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.7),
       body: Stack(
@@ -27,24 +29,26 @@ class CustomDialog extends StatelessWidget {
             ),
           ),
           Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(title, style: Theme.of(context).textTheme.displayLarge),
-                const SizedBox(height: 24),
-                Image.asset("assets/images/${ImageAssets.menuLine}", width: 500),
-                const SizedBox(height: 24),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.4, child: child),
-                const SizedBox(height: 24),
-                Image.asset("assets/images/${ImageAssets.menuBottomLine}", width: 500),
-                const SizedBox(height: 24),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: actions,
-                )
-              ],
+            child: Container(
+              width: screenWidth,
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AutoScaleText.title(title),
+                  const SizedBox(height: 24),
+                  Image.asset("assets/images/${ImageAssets.menuLine}", width: screenWidth * 0.6),
+                  const SizedBox(height: 24),
+                  child,
+                  const SizedBox(height: 12),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: actions,
+                  )
+                ],
+              ),
             ),
           ),
         ],

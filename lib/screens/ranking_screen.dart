@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/menu/widgets/ranking.dart';
 import 'package:save_the_ocean/screens/menu/widgets/sync_button.dart';
+import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
+import 'package:save_the_ocean/shared/widgets/screen_container.dart';
 
 class RankingScreen extends StatelessWidget {
   const RankingScreen({super.key});
@@ -14,14 +16,16 @@ class RankingScreen extends StatelessWidget {
         children: [
           const BackgroundMenu(),
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Ranking(),
-                const SizedBox(height: 24),
-                _buildActions(context),
-              ],
+            child: ScreenContainer(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Ranking(),
+                  const SizedBox(height: 12),
+                  _buildActions(context),
+                ],
+              ),
             ),
           ),
         ],
@@ -34,7 +38,7 @@ class RankingScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        TextButton(onPressed: () => AppRouter.back(), child: const Text("Back")),
+        TextButton(onPressed: () => AppRouter.back(), child: const AutoScaleText.body("Back")),
         const SizedBox(width: 100),
         const SyncButton(),
       ],

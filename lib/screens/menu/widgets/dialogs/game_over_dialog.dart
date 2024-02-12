@@ -4,6 +4,7 @@ import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/game.dart';
 import 'package:save_the_ocean/screens/game_screen.dart';
+import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/dialog.dart';
 import 'package:save_the_ocean/utils/score.dart';
 
@@ -37,10 +38,7 @@ class _GameOverDialogState extends State<GameOverDialog> {
       actions: [
         TextButton(
           onPressed: () => _restartGame(),
-          child: Text(
-            'Restart',
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
+          child: const AutoScaleText.body('Restart'),
         ),
         const SizedBox(width: 100),
         TextButton(
@@ -48,38 +46,20 @@ class _GameOverDialogState extends State<GameOverDialog> {
             _restartGame();
             AppRouter.goToMenu();
           },
-          child: Text(
-            'Main menu',
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
+          child: const AutoScaleText.body('Main menu'),
         ),
       ],
       child: Column(
         children: [
           Visibility(
             visible: isLastScoreBetter,
-            child: Text(
-              'New record!',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.secondary),
-            ),
+            child: AutoScaleText.small('New record!', color: Theme.of(context).colorScheme.tertiary),
           ),
-          Text(
-            'Recycling time',
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
-          Text(
-            newScore,
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
+          const AutoScaleText.small('Recycling time'),
+          AutoScaleText.body(newScore),
           const SizedBox(height: 24),
-          Text(
-            'Last time',
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
-          Text(
-            lastScore,
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
+          const AutoScaleText.small('Last time'),
+          AutoScaleText.body(lastScore),
         ],
       ),
     );

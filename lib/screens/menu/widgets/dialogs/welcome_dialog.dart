@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_the_ocean/controllers/users/button_user_start_controller.dart';
+import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/dialog.dart';
 
 class WelcomeDialog extends StatefulWidget {
@@ -30,29 +31,31 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
           );
         }),
       ],
-      child: Column(
-        children: [
-          Text("Please enter a username to start playing", style: Theme.of(context).textTheme.displaySmall),
-          const SizedBox(height: 12),
-          Text("if you already have one, you can use it to continue your game.",
-              style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(height: 24),
-          Form(
-            key: formKey,
-            child: TextFormField(
-              controller: usernameController,
-              decoration: const InputDecoration(labelText: "Enter the username"),
-              style: Theme.of(context).textTheme.displaySmall!,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Please enter a username";
-                }
-                return null;
-              },
-              onFieldSubmitted: (_) => _registerUser(context),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.5,
+        child: Column(
+          children: [
+            const AutoScaleText.subtitle("Please enter a username to start playing"),
+            const SizedBox(height: 12),
+            const AutoScaleText.body("if you already have one, you can use it to continue your game."),
+            const SizedBox(height: 24),
+            Form(
+              key: formKey,
+              child: TextFormField(
+                controller: usernameController,
+                decoration: const InputDecoration(labelText: "Enter the username"),
+                style: Theme.of(context).textTheme.displaySmall!,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter a username";
+                  }
+                  return null;
+                },
+                onFieldSubmitted: (_) => _registerUser(context),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

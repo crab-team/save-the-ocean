@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/constants/app.dart';
+import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/dialog.dart';
 
 class PauseDialog extends StatelessWidget {
@@ -11,25 +13,24 @@ class PauseDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return CustomDialog(
       title: "Pause",
-      actions: [
-        TextButton(
-          onPressed: () => _resumeGame(),
-          child: const Text("Resume"),
-        ),
-        const SizedBox(width: 100),
-        TextButton(
-          onPressed: () => AppRouter.goToMenu(),
-          child: const Text("Go to menu"),
-        ),
-      ],
-      child: Center(
-          child: Text(
-        "El último registro indico un incremento del 26% de plásticos en el oceano.",
-        style: Theme.of(context).textTheme.displaySmall,
-        textAlign: TextAlign.center,
-      )),
+      actions: const [],
+      child: Column(
+        children: [
+          TextButton(
+            onPressed: () => _resumeGame(),
+            child: const AutoScaleText.body("Resume"),
+          ),
+          const SizedBox(height: 24),
+          TextButton(
+            onPressed: () => AppRouter.goToMenu(),
+            child: const AutoScaleText.body("Go to menu"),
+          ),
+          Image.asset("assets/images/${ImageAssets.menuBottomLine}", width: screenWidth * 0.6),
+        ],
+      ),
     );
   }
 

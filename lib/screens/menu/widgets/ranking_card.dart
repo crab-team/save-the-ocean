@@ -11,7 +11,14 @@ class RankingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        ...users.map((user) => UserRankingRow(user: user)).toList(),
+        ...users
+            .asMap()
+            .entries
+            .map((entry) => UserRankingRow(
+                  user: entry.value,
+                  position: entry.key + 1,
+                ))
+            .toList(),
       ],
     );
   }
