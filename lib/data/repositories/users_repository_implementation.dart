@@ -92,7 +92,6 @@ class UserRepositoryImplementation implements UsersRepository {
     Logger.log('Updating user score locally');
     User currentUser = await getLocalUser();
     User updatedUser = User(score: newScore, username: currentUser.username);
-    print("updatedUser $updatedUser");
     _sharedPreferences.setString('user', json.encode(updatedUser));
   }
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/page_status.dart';
-import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
-import 'package:save_the_ocean/screens/menu/controllers/ranking_state.dart';
-import 'package:save_the_ocean/screens/menu/widgets/ranking_card.dart';
+import 'package:save_the_ocean/controllers/ranking/ranking_controller.dart';
+import 'package:save_the_ocean/controllers/ranking/ranking_state.dart';
+import 'package:save_the_ocean/screens/ranking/ranking_card.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 
 class Ranking extends StatefulWidget {

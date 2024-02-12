@@ -34,7 +34,7 @@ class _GameOverDialogState extends State<GameOverDialog> {
     lastScore = _getLastScore();
     newScore = ScoreUtils.getTimeFormat(widget.game.elapsedTime);
     return CustomDialog(
-      title: "Game over",
+      title: "The ocean is dead",
       actions: [
         TextButton(
           onPressed: () => _restartGame(),

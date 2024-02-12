@@ -20,7 +20,7 @@ import 'package:save_the_ocean/domain/use_cases/users/get_user.dart';
 import 'package:save_the_ocean/domain/use_cases/users/get_user_by_username.dart';
 import 'package:save_the_ocean/domain/use_cases/users/update_user.dart';
 import 'package:save_the_ocean/firebase_options.dart';
-import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
+import 'package:save_the_ocean/controllers/ranking/ranking_controller.dart';
 import 'package:save_the_ocean/settings/settings.dart';
 
 void main() async {

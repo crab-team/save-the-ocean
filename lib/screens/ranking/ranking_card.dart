@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/domain/entities/user.dart';
-import 'package:save_the_ocean/screens/menu/widgets/user_ranking_row.dart';
+import 'package:save_the_ocean/screens/ranking/user_ranking_row.dart';
 
 class RankingCard extends StatelessWidget {
   final List<User> users;

@@ -8,8 +8,8 @@ import 'package:save_the_ocean/providers/pollution_level_providers.dart';
 import 'package:save_the_ocean/providers/robot_deploy_provider.dart';
 import 'package:save_the_ocean/providers/robot_position_provider.dart';
 import 'package:save_the_ocean/providers/robot_release_trash_providers.dart';
-import 'package:save_the_ocean/screens/menu/widgets/dialogs/game_over_dialog.dart';
-import 'package:save_the_ocean/screens/menu/widgets/dialogs/pause_dialog.dart';
+import 'package:save_the_ocean/shared/dialogs/game_over_dialog.dart';
+import 'package:save_the_ocean/shared/dialogs/pause_dialog.dart';
 
 // Notifiers
 final recyclingNotifier = ValueNotifier<bool>(false);

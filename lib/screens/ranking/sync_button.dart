@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:save_the_ocean/screens/menu/controllers/ranking_controller.dart';
+import 'package:save_the_ocean/controllers/ranking/ranking_controller.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 
 class SyncButton extends StatelessWidget {

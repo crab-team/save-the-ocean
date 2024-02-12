@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:save_the_ocean/page_transition.dart';
 import 'package:save_the_ocean/screens/game_screen.dart';
+import 'package:save_the_ocean/screens/introduction_screen.dart';
 import 'package:save_the_ocean/screens/menu/menu_screen.dart';
 import 'package:save_the_ocean/screens/ranking_screen.dart';
 import 'package:save_the_ocean/screens/splash_screen.dart';
@@ -9,7 +10,7 @@ import 'package:save_the_ocean/screens/splash_screen.dart';
 /// The router describes the game's navigational hierarchy, from the main
 /// screen through settings screens all the way to each individual level.
 
-const transitionColor = Color(0xFF5cdbde);
+const transitionColor = Color(0xFF02191f);
 
 final router = GoRouter(
   initialLocation: '/',
@@ -52,6 +53,15 @@ final router = GoRouter(
         ),
       ],
     ),
+    GoRoute(
+      path: '/introduction',
+      name: 'introduction',
+      pageBuilder: (context, state) => buildPageTransition<void>(
+        key: const ValueKey('introduction'),
+        color: transitionColor,
+        child: const IntroductionScreen(),
+      ),
+    ),
   ],
 );
 
@@ -65,4 +75,6 @@ class AppRouter {
   static goToSettings() => router.go('/menu/settings');
 
   static goToRanking() => router.go('/menu/ranking');
+
+  static goToIntroduction() => router.go('/introduction');
 }

@@ -4,7 +4,7 @@ import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/controllers/users/user_state.dart';
 import 'package:save_the_ocean/core/router.dart';
-import 'package:save_the_ocean/screens/menu/widgets/dialogs/welcome_dialog.dart';
+import 'package:save_the_ocean/shared/dialogs/welcome_dialog.dart';
 import 'package:save_the_ocean/screens/menu/widgets/username_text.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
@@ -72,7 +72,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 Image.asset("assets/images/${ImageAssets.menuBottomLine}"),
                 const SizedBox(height: 12),
                 TextButton(
-                  onPressed: () => AppRouter.goToGame(),
+                  onPressed: () => _goToScreen(),
                   child: const AutoScaleText.body('PLAY'),
                 ),
                 const SizedBox(height: 12),
@@ -124,5 +124,9 @@ class _MenuScreenState extends State<MenuScreen> {
         style: Theme.of(context).textTheme.bodySmall,
       ),
     );
+  }
+
+  void _goToScreen() {
+    AppRouter.goToIntroduction();
   }
 }

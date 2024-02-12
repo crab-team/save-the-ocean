@@ -26,6 +26,12 @@ class ImageAssets {
   static const String foregroundRightWall = 'foreground_right_wall.png';
   static const String foregroundTopWall = 'foreground_top_wall.png';
   static const String foregroundBottom = 'foreground_bottom.png';
+  static const String buttonDeploy = 'button_deploy.png';
+  static const String buttonDeployPressed = 'button_deploy_pressed.png';
+  static const String buttonCraw = 'button_open_craw.png';
+  static const String buttonCrawPressed = 'button_open_craw_pressed.png';
+  static const String buttonDirection = 'button_direction.png';
+  static const String buttonDirectionPressed = 'button_direction_pressed.png';
 }
 
 class AnimationAssets {
@@ -33,6 +39,7 @@ class AnimationAssets {
 }
 
 class ArtboardNames {
+  static const String introductionScreen = 'introduction_screen';
   static const String mtcPresentation = 'mtc_presentation';
   static const String lighting = 'lighting';
   static const String bubble1 = 'bubble_1';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/core/router.dart';
-import 'package:save_the_ocean/screens/menu/widgets/ranking.dart';
-import 'package:save_the_ocean/screens/menu/widgets/sync_button.dart';
+import 'package:save_the_ocean/screens/ranking/ranking.dart';
+import 'package:save_the_ocean/screens/ranking/sync_button.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
 import 'package:save_the_ocean/shared/widgets/screen_container.dart';

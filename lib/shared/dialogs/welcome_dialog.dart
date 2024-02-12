@@ -35,16 +35,16 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
         width: MediaQuery.of(context).size.width * 0.5,
         child: Column(
           children: [
-            const AutoScaleText.subtitle("Please enter a username to start playing"),
+            const AutoScaleText.body("Please enter a username to start playing"),
             const SizedBox(height: 12),
-            const AutoScaleText.body("if you already have one, you can use it to continue your game."),
+            const AutoScaleText.small("if you already have one, you can use it to continue your game."),
             const SizedBox(height: 24),
             Form(
               key: formKey,
               child: TextFormField(
                 controller: usernameController,
                 decoration: const InputDecoration(labelText: "Enter the username"),
-                style: Theme.of(context).textTheme.displaySmall!,
+                style: Theme.of(context).textTheme.displayMedium!,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter a username";
