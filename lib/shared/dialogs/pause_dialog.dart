@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:save_the_ocean/constants/app.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/router.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/dialog.dart';
 

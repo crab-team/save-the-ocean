@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
 class GarbageSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   final String path;

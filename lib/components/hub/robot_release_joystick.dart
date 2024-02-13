@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
 JoystickComponent robotReleaseJoystick = JoystickComponent(
   knob: CircleComponent(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
 class LoadingScreen extends StatelessWidget {
   final SaveTheOceanGame game;

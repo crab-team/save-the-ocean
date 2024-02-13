@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/utils/score.dart';
 
 class TimerTextComponent extends PositionComponent with HasGameRef<SaveTheOceanGame> {

@@ -1,8 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:save_the_ocean/components/robot/robot_arm_component.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
-import 'package:save_the_ocean/game.dart';
-import 'package:save_the_ocean/screens/game_screen.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
+import 'package:save_the_ocean/screens/game/game_screen.dart';
 
 enum RobotClawState {
   opening,

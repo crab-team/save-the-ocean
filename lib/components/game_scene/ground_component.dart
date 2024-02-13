@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
 class GroundSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   GroundSpriteComponent()

@@ -2,7 +2,7 @@ import 'package:flame/effects.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_sprite.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
 class GarbageComponent extends BodyComponent implements PositionProvider {
   final Garbage garbage;

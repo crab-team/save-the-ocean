@@ -22,7 +22,7 @@ import 'package:save_the_ocean/components/hub/joystick.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/constants/app.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/screens/game_screen.dart';
+import 'package:save_the_ocean/screens/game/game_screen.dart';
 
 final screenSize = Vector2(2220, 1080);
 const cameraZoom = 100.0;

@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:save_the_ocean/components/hub/robot_deploy_button.dart';
 import 'package:save_the_ocean/components/hub/robot_release_trash_button.dart';
 import 'package:save_the_ocean/components/hub/rudder_joystick/rudder_joystick.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
 class JoystickFactory {
   static Joystick create() {

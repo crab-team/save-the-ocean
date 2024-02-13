@@ -5,8 +5,8 @@ import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/game.dart';
-import 'package:save_the_ocean/screens/game_screen.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
+import 'package:save_the_ocean/screens/game/game_screen.dart';
 
 class RudderJoystickButtonSprite extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
   final bool isPressed;

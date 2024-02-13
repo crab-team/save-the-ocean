@@ -1,6 +1,6 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/robot/robot_arm_sprite_component.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
 class RobotArmComponent extends BodyComponent {
   double initialPositionX = worldSize.x / 2;

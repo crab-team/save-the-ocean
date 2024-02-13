@@ -1,7 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/constants/app.dart';
-import 'package:save_the_ocean/game.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
 import 'package:save_the_ocean/controllers/game/game_controller.dart';
 import 'package:save_the_ocean/controllers/game/pollution_level_controller.dart';

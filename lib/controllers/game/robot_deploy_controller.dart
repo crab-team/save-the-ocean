@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_ocean/screens/game_screen.dart';
+import 'package:save_the_ocean/screens/game/game_screen.dart';
 
 class RobotDeployController extends ChangeNotifier {
   bool _deploy = false;
