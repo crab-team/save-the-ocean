@@ -24,12 +24,12 @@ final ThemeData theme = ThemeData(
   ),
   textTheme: const TextTheme(
     displayLarge: TextStyle(
-      fontSize: 36.0,
+      fontSize: 32.0,
       color: Colors.white,
       fontFamily: 'ProtestRevolution',
     ),
     displayMedium: TextStyle(
-      fontSize: 30.0,
+      fontSize: 28.0,
       letterSpacing: -0.5,
       color: Colors.white,
     ),

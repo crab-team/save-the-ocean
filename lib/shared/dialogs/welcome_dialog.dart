@@ -22,12 +22,15 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
       actions: [
         Consumer<ButtonUserStartController>(builder: (context, controller, _) {
           if (controller.status == ButtonUserStartStatus.loading) {
-            return const CircularProgressIndicator();
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: CircularProgressIndicator(),
+            );
           }
 
           return TextButton(
             onPressed: () => _registerUser(context),
-            child: const Text("Start"),
+            child: const AutoScaleText.body("Start"),
           );
         }),
       ],
