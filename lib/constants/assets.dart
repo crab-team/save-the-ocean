@@ -16,6 +16,10 @@ class ImageAssets {
   static const String pipeline = 'pipeline.png';
   static const String level = 'level.png';
   static const String bottle = 'bottle.png';
+  static const String tire = 'tire.png';
+  static const String plastic = 'plastic.png';
+  static const String battery = 'battery.png';
+  static const String beer = 'beer.png';
   static const String water = 'water.png';
   static const String backgroundFar = 'background_far.png';
   static const String backgroundFarMid = 'background_far_mid.png';

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 
 Map<GarbageType, double> garbageTypeToLevel = {
-  GarbageType.plasticBag: 3.5,
+  GarbageType.beer: 3.5,
   GarbageType.bottle: 2.5,
   GarbageType.tire: 6.0,
-  GarbageType.paper: 2.0,
-  GarbageType.banana: 0.5,
+  GarbageType.plastic: 2.0,
+  GarbageType.battery: 0.5,
 };
 
 class BatteryLevelController extends ChangeNotifier {

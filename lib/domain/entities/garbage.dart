@@ -2,10 +2,10 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 
 enum GarbageType {
-  banana,
+  battery,
   bottle,
-  paper,
-  plasticBag,
+  plastic,
+  beer,
   tire,
 }
 
@@ -17,7 +17,8 @@ class Garbage {
   final double restitution;
   final double density;
   final Shape shape;
-  final String? sprite;
+  final String sprite;
+  final Vector2 size;
 
   Garbage({
     required this.type,
@@ -27,18 +28,21 @@ class Garbage {
     required this.restitution,
     required this.density,
     required this.shape,
-    this.sprite,
+    required this.sprite,
+    required this.size,
   });
 
-  factory Garbage.banana() {
+  factory Garbage.battery() {
     return Garbage(
       initialLinearVelocityX: 2,
       initialAngularVelocity: 1,
-      type: GarbageType.banana,
+      type: GarbageType.battery,
       friction: 0.8,
       restitution: 0.2,
       density: 0.5,
-      shape: PolygonShape()..setAsBoxXY(0.05, 0.2),
+      sprite: ImageAssets.battery,
+      shape: PolygonShape()..setAsBoxXY(0.15, 0.3),
+      size: Vector2(0.4, 0.7),
     );
   }
 
@@ -48,33 +52,40 @@ class Garbage {
       initialAngularVelocity: 2,
       type: GarbageType.bottle,
       friction: 0.2,
-      restitution: 0.8,
+      restitution: 0.3,
       density: 0.1,
-      shape: PolygonShape()..setAsBoxXY(0.1, 0.2),
+      shape: PolygonShape()..setAsBoxXY(0.1, 0.4),
       sprite: ImageAssets.bottle,
+      size: Vector2(0.4, 0.8),
     );
   }
 
-  factory Garbage.paper() {
+  factory Garbage.plastic() {
     return Garbage(
-        initialLinearVelocityX: 2,
-        initialAngularVelocity: 0,
-        type: GarbageType.paper,
-        friction: 0.2,
-        restitution: 0,
-        density: 0.4,
-        shape: PolygonShape()..setAsBoxXY(0.1, 0.2));
+      initialLinearVelocityX: 2,
+      initialAngularVelocity: 0,
+      type: GarbageType.plastic,
+      friction: 0.2,
+      restitution: 0.1,
+      density: 0.4,
+      sprite: ImageAssets.plastic,
+      shape: PolygonShape()..setAsBoxXY(0.3, 0.2),
+      size: Vector2(0.7, 0.5),
+    );
   }
 
-  factory Garbage.plasticBag() {
+  factory Garbage.beer() {
     return Garbage(
-        initialLinearVelocityX: 2,
-        initialAngularVelocity: 0,
-        type: GarbageType.plasticBag,
-        friction: 1,
-        restitution: 0,
-        density: 0.1,
-        shape: PolygonShape()..setAsBoxXY(0.1, 0.1));
+      initialLinearVelocityX: 2,
+      initialAngularVelocity: 0,
+      type: GarbageType.beer,
+      friction: 0.9,
+      restitution: 0,
+      density: 0.3,
+      sprite: ImageAssets.beer,
+      shape: PolygonShape()..setAsBoxXY(0.15, 0.3),
+      size: Vector2(0.5, 0.7),
+    );
   }
 
   factory Garbage.tire() {
@@ -82,10 +93,12 @@ class Garbage {
       initialLinearVelocityX: 3,
       initialAngularVelocity: 1,
       type: GarbageType.tire,
-      friction: 0.8,
-      restitution: 0.4,
+      friction: 0.5,
+      restitution: 0.5,
       density: 0.8,
-      shape: CircleShape()..radius = 0.3,
+      sprite: ImageAssets.tire,
+      shape: CircleShape()..radius = 0.5,
+      size: Vector2(1, 1),
     );
   }
 }

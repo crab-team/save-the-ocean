@@ -13,10 +13,10 @@ class GarbageController {
 
   void spawnGarbage() {
     List<Garbage> garbages = [
-      Garbage.banana(),
+      Garbage.battery(),
       Garbage.bottle(),
-      Garbage.paper(),
-      Garbage.plasticBag(),
+      Garbage.plastic(),
+      Garbage.beer(),
       Garbage.tire(),
     ];
 

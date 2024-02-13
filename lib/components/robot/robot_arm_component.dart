@@ -18,6 +18,7 @@ class RobotArmComponent extends BodyComponent {
 
   @override
   Future<void> onLoad() async {
+    renderBody = false;
     await super.onLoad();
 
     RobotArmSpriteComponent robotArmSpriteComponent = RobotArmSpriteComponent();

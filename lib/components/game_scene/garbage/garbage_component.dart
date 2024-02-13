@@ -34,11 +34,10 @@ class GarbageComponent extends BodyComponent implements PositionProvider {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    if (garbage.sprite != null) {
-      final sprite = GarbageSpriteComponent(path: garbage.sprite!);
-      sprite.size = Vector2(0.25, 0.45);
-      add(sprite);
-    }
+    renderBody = false;
+    final sprite = GarbageSpriteComponent(path: garbage.sprite);
+    sprite.size = garbage.size;
+    add(sprite);
   }
 
   @override

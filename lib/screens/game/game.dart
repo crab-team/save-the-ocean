@@ -101,6 +101,10 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     await loadSprite(ImageAssets.claw);
     await loadSprite(ImageAssets.level);
     await loadSprite(ImageAssets.bottle);
+    await loadSprite(ImageAssets.battery);
+    await loadSprite(ImageAssets.beer);
+    await loadSprite(ImageAssets.plastic);
+    await loadSprite(ImageAssets.tire);
     await loadSprite(ImageAssets.trash);
     await loadSprite(ImageAssets.buttonDeploy);
     await loadSprite(ImageAssets.buttonDeployPressed);
@@ -158,13 +162,13 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
 
   void gameListeners() {
     batteryLevelController.addListener(() {
-      if (batteryLevelController.level <= 0) {
+      if (batteryLevelController.level <= -500) {
         gameController.gameOver();
       }
     });
 
     pollutionLevelController.addListener(() {
-      if (pollutionLevelController.level >= 100) {
+      if (pollutionLevelController.level >= 500) {
         gameController.gameOver();
       }
     });
