@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PollutionLevelNotifier extends ChangeNotifier {
+class PollutionLevelController extends ChangeNotifier {
   double _level = 0.0;
 
   double get level => _level;

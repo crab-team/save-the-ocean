@@ -28,8 +28,8 @@ class TrashRiveComponent extends RiveComponent {
   }
 
   void listenBatteryLevel() {
-    recyclingNotifier.addListener(() {
-      if (recyclingNotifier.value) recycling?.fire();
+    recyclingController.addListener(() {
+      if (recyclingController.value) recycling?.fire();
     });
   }
 }

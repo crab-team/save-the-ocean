@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class RobotReleaseTrashNotifier extends ChangeNotifier {
+class RobotReleaseGarbageController extends ChangeNotifier {
   bool _released = false;
 
   bool get released => _released;

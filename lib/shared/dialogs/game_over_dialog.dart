@@ -66,7 +66,7 @@ class _GameOverDialogState extends State<GameOverDialog> {
   }
 
   void _restartGame() {
-    gameNotifier.restartGame();
+    gameController.restartGame();
   }
 
   Future<void> _updateScore(double elapsedTime) async {

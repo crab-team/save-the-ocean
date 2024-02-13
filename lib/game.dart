@@ -157,20 +157,20 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   }
 
   void gameListeners() {
-    batteryLevelNotifier.addListener(() {
-      if (batteryLevelNotifier.level <= 0) {
-        gameNotifier.gameOver();
+    batteryLevelController.addListener(() {
+      if (batteryLevelController.level <= 0) {
+        gameController.gameOver();
       }
     });
 
-    pollutionLevelNotifier.addListener(() {
-      if (pollutionLevelNotifier.level >= 100) {
-        gameNotifier.gameOver();
+    pollutionLevelController.addListener(() {
+      if (pollutionLevelController.level >= 100) {
+        gameController.gameOver();
       }
     });
 
-    gameNotifier.addListener(() {
-      if (gameNotifier.isGameOver) {
+    gameController.addListener(() {
+      if (gameController.isGameOver) {
         executeGameOver();
       } else {
         executeRestartGame();
@@ -203,8 +203,8 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     elapsedTime = 0;
     timer.stop();
     garbageTimer.stop();
-    pollutionLevelNotifier.restart();
-    batteryLevelNotifier.restart();
+    pollutionLevelController.restart();
+    batteryLevelController.restart();
     world.removeAll(world.children);
     addWorldElements();
     timer.start();
@@ -225,24 +225,24 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     final isKeyEsc = event.logicalKey == LogicalKeyboardKey.escape;
     if (!event.repeat) {
       if (isKeyA) {
-        robotPositionNotifier.moveLeft();
+        robotPositionController.moveLeft();
       }
 
       if (isKeyD) {
-        robotPositionNotifier.moveRight();
+        robotPositionController.moveRight();
       }
 
       if (isKeyA && isKeyUp || isKeyD && isKeyUp) {
-        robotPositionNotifier.stop();
+        robotPositionController.stop();
       }
     }
 
     if (isKeyK && !isKeyUp) {
-      !robotDeployNotifier.deploy ? robotDeployNotifier.deployRobot() : robotDeployNotifier.refoldRobot();
+      !robotDeployController.deploy ? robotDeployController.deployRobot() : robotDeployController.refoldRobot();
     }
 
     if (isKeyL && !isKeyUp) {
-      robotReleaseTrashNotifier.release();
+      robotReleaseGarbageController.release();
     }
 
     if (isKeyEsc && !isKeyUp) {

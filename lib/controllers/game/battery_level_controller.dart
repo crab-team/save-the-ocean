@@ -9,7 +9,7 @@ Map<GarbageType, double> garbageTypeToLevel = {
   GarbageType.banana: 0.5,
 };
 
-class BatteryLevelNotifier extends ChangeNotifier {
+class BatteryLevelController extends ChangeNotifier {
   double _level = 100.0;
 
   double get level => _level;

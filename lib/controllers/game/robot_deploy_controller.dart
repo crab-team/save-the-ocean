@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/screens/game_screen.dart';
 
-class RobotDeployNotifier extends ChangeNotifier {
+class RobotDeployController extends ChangeNotifier {
   bool _deploy = false;
 
   bool get deploy => _deploy;
@@ -13,14 +13,14 @@ class RobotDeployNotifier extends ChangeNotifier {
 
   void deployRobot() {
     if (deploy == true) return;
-    robotPositionNotifier.stop();
+    robotPositionController.stop();
     _deploy = true;
     notifyListeners();
   }
 
   void refoldRobot() {
     if (deploy == false) return;
-    robotPositionNotifier.stop();
+    robotPositionController.stop();
     _deploy = false;
     notifyListeners();
   }

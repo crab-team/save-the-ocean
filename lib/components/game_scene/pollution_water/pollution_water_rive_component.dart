@@ -31,8 +31,8 @@ class PollutionWaterRiveComponent extends RiveComponent {
   }
 
   void listenBatteryLevel() {
-    pollutionLevelNotifier.addListener(() {
-      levelInput?.value = pollutionLevelNotifier.level;
+    pollutionLevelController.addListener(() {
+      levelInput?.value = pollutionLevelController.level;
     });
   }
 }

@@ -23,22 +23,22 @@ class RobotController {
   bool release = false;
 
   void moveInXAxis() {
-    robotPositionNotifier.addListener(() {
-      leftRobotClaw.body.linearVelocity = Vector2(robotPositionNotifier.velocity, 0);
-      rightRobotClaw.body.linearVelocity = Vector2(robotPositionNotifier.velocity, 0);
-      robotArm.body.linearVelocity = Vector2(robotPositionNotifier.velocity, 0);
+    robotPositionController.addListener(() {
+      leftRobotClaw.body.linearVelocity = Vector2(robotPositionController.velocity, 0);
+      rightRobotClaw.body.linearVelocity = Vector2(robotPositionController.velocity, 0);
+      robotArm.body.linearVelocity = Vector2(robotPositionController.velocity, 0);
     });
   }
 
   void deployListener() {
-    robotDeployNotifier.addListener(() {
-      robotDeployNotifier.deploy ? executeDeploy() : executeRefold();
+    robotDeployController.addListener(() {
+      robotDeployController.deploy ? executeDeploy() : executeRefold();
     });
   }
 
   void releaseListener() {
-    robotReleaseTrashNotifier.addListener(() {
-      release = robotReleaseTrashNotifier.released;
+    robotReleaseGarbageController.addListener(() {
+      release = robotReleaseGarbageController.released;
     });
   }
 

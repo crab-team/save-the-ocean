@@ -40,7 +40,7 @@ class RobotDeployButton extends HudButtonComponent {
   @override
   Future<void> onLoad() {
     super.onPressed = () {
-      !robotDeployNotifier.deploy ? robotDeployNotifier.deployRobot() : robotDeployNotifier.refoldRobot();
+      !robotDeployController.deploy ? robotDeployController.deployRobot() : robotDeployController.refoldRobot();
     };
     return super.onLoad();
   }

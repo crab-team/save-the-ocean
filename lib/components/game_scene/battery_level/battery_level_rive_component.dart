@@ -35,14 +35,14 @@ class BatteryLevelRiveComponent extends RiveComponent {
   }
 
   void listenRecycling() {
-    recyclingNotifier.addListener(() {
-      if (recyclingNotifier.value) recycling?.fire();
+    recyclingController.addListener(() {
+      if (recyclingController.value) recycling?.fire();
     });
   }
 
   void listenBatteryLevel() {
-    batteryLevelNotifier.addListener(() {
-      levelInput?.value = batteryLevelNotifier.level;
+    batteryLevelController.addListener(() {
+      levelInput?.value = batteryLevelController.level;
     });
   }
 }

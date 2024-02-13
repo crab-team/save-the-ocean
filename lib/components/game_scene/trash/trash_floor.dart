@@ -1,7 +1,7 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
 import 'package:save_the_ocean/game.dart';
-import 'package:save_the_ocean/providers/battery_level_providers.dart';
+import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
 import 'package:save_the_ocean/screens/game_screen.dart';
 
 class TrashFloor extends BodyComponent with ContactCallbacks {
@@ -37,15 +37,15 @@ class TrashFloor extends BodyComponent with ContactCallbacks {
   }
 
   void recycling() {
-    recyclingNotifier.value = true;
-    Future.microtask(() => recyclingNotifier.value = false);
+    recyclingController.value = true;
+    Future.microtask(() => recyclingController.value = false);
   }
 
   void incrementBatteryLevel(double level) {
-    batteryLevelNotifier.level += level;
+    batteryLevelController.level += level;
   }
 
   void decrementPollutionLevel(double level) {
-    pollutionLevelNotifier.level -= level;
+    pollutionLevelController.level -= level;
   }
 }

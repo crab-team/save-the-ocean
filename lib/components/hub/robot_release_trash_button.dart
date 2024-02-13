@@ -41,6 +41,6 @@ class RobotReleaseTrashButton extends ButtonComponent {
   @override
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
-    robotReleaseTrashNotifier.release();
+    robotReleaseGarbageController.release();
   }
 }

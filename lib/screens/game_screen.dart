@@ -2,23 +2,23 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/constants/app.dart';
 import 'package:save_the_ocean/game.dart';
-import 'package:save_the_ocean/providers/battery_level_providers.dart';
-import 'package:save_the_ocean/providers/game_providers.dart';
-import 'package:save_the_ocean/providers/pollution_level_providers.dart';
-import 'package:save_the_ocean/providers/robot_deploy_provider.dart';
-import 'package:save_the_ocean/providers/robot_position_provider.dart';
-import 'package:save_the_ocean/providers/robot_release_trash_providers.dart';
+import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
+import 'package:save_the_ocean/controllers/game/game_controller.dart';
+import 'package:save_the_ocean/controllers/game/pollution_level_controller.dart';
+import 'package:save_the_ocean/controllers/game/robot_deploy_controller.dart';
+import 'package:save_the_ocean/controllers/game/robot_position_controller.dart';
+import 'package:save_the_ocean/controllers/game/robot_release_garbage_controller.dart';
 import 'package:save_the_ocean/shared/dialogs/game_over_dialog.dart';
 import 'package:save_the_ocean/shared/dialogs/pause_dialog.dart';
 
-// Notifiers
-final recyclingNotifier = ValueNotifier<bool>(false);
-final gameNotifier = GameNotifier();
-final robotDeployNotifier = RobotDeployNotifier();
-final robotPositionNotifier = RobotPositionNotifier();
-final robotReleaseTrashNotifier = RobotReleaseTrashNotifier();
-final pollutionLevelNotifier = PollutionLevelNotifier();
-final batteryLevelNotifier = BatteryLevelNotifier();
+// Controllers
+final recyclingController = ValueNotifier<bool>(false);
+final gameController = GameController();
+final robotDeployController = RobotDeployController();
+final robotPositionController = RobotPositionController();
+final robotReleaseGarbageController = RobotReleaseGarbageController();
+final pollutionLevelController = PollutionLevelController();
+final batteryLevelController = BatteryLevelController();
 
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key});

@@ -60,21 +60,21 @@ class RudderJoystickButton extends ButtonComponent {
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
     if (isLeft) {
-      robotPositionNotifier.moveLeft();
+      robotPositionController.moveLeft();
     } else {
-      robotPositionNotifier.moveRight();
+      robotPositionController.moveRight();
     }
   }
 
   @override
   void onTapUp(TapUpEvent event) {
     super.onTapUp(event);
-    robotPositionNotifier.stop();
+    robotPositionController.stop();
   }
 
   @override
   void onTapCancel(TapCancelEvent event) {
     super.onTapCancel(event);
-    robotPositionNotifier.stop();
+    robotPositionController.stop();
   }
 }
