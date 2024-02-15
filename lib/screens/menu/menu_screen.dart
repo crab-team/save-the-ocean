@@ -8,6 +8,7 @@ import 'package:save_the_ocean/shared/dialogs/welcome_dialog.dart';
 import 'package:save_the_ocean/screens/menu/widgets/username_text.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
+import 'package:save_the_ocean/shared/widgets/logo.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -62,13 +63,7 @@ class _MenuScreenState extends State<MenuScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    const AutoScaleText.title("Save the ocean"),
-                    AutoScaleText.title("Save the ocean", color: Theme.of(context).colorScheme.primary),
-                  ],
-                ),
+                const Logo(),
                 Image.asset("assets/images/${ImageAssets.menuBottomLine}"),
                 const SizedBox(height: 12),
                 TextButton(
@@ -92,7 +87,6 @@ class _MenuScreenState extends State<MenuScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(child: _buildMtcLogo(context)),
-            Expanded(child: _buildMarquee(context)),
             Expanded(child: _buildVersion(context)),
           ],
         ),
@@ -100,29 +94,19 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  Widget _buildMarquee(BuildContext context) {
-    return const Card(
-      color: Colors.transparent,
-      child: Padding(padding: EdgeInsets.all(8.0), child: AutoScaleText.body("Link sobre contaminación marina")),
-    );
-  }
-
   Widget _buildMtcLogo(BuildContext context) {
     return Center(
       child: Image.asset(
         'assets/images/${ImageAssets.mtcLogoWhite}',
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
       ),
     );
   }
 
   Widget _buildVersion(BuildContext context) {
-    return Center(
-      child: Text(
-        'Version 1.0.0',
-        style: Theme.of(context).textTheme.bodySmall,
-      ),
+    return const Center(
+      child: AutoScaleText.small('Version 1.0.0'),
     );
   }
 

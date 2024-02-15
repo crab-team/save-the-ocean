@@ -6,7 +6,7 @@ import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/utils/score.dart';
 
 class TimerTextComponent extends PositionComponent with HasGameRef<SaveTheOceanGame> {
-  TimerTextComponent() : super(position: Vector2(400, 190), size: Vector2(100, 100));
+  TimerTextComponent() : super(position: Vector2(380, 130), size: Vector2(100, 100));
 
   double elapsedSecs = 0;
   late TextComponent _textComponent;

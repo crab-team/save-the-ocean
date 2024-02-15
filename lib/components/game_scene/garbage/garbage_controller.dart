@@ -4,16 +4,17 @@ import 'package:flame/components.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/screens/game/game_screen.dart';
 
 class GarbageController {
+  final SaveTheOceanGame game;
   final World world;
 
-  GarbageController(this.world);
+  GarbageController(this.world, this.game);
 
   void spawnGarbage() {
     List<Garbage> garbages = [
-      Garbage.battery(),
       Garbage.bottle(),
       Garbage.plastic(),
       Garbage.beer(),
@@ -22,11 +23,27 @@ class GarbageController {
 
     Random random = Random.secure();
     Garbage garbage = garbages[random.nextInt(garbages.length)];
+
+    if (spawnBattery()) garbage = Garbage.battery();
+
     final garbageComponent = GarbageComponent(garbage: garbage);
     garbageComponent.priority = -1;
     world.add(garbageComponent);
+
     incrementPollutionLevel(garbage.type);
     decrementBatteryLevel();
+  }
+
+  bool spawnBattery() {
+    bool worldContainsBattery = world.children.any((element) {
+      if (element is GarbageComponent) {
+        return element.garbage.type == GarbageType.battery;
+      }
+      return false;
+    });
+
+    bool isElapsingTimeFactorOfTwenty = game.elapsedTime.ceil() % 40 == 0;
+    return isElapsingTimeFactorOfTwenty && !worldContainsBattery;
   }
 
   void incrementPollutionLevel(GarbageType garbageType) {
@@ -35,7 +52,7 @@ class GarbageController {
 
   void decrementBatteryLevel() {
     if (batteryLevelController.level > 0) {
-      batteryLevelController.level -= 4;
+      batteryLevelController.level -= 2;
     }
   }
 }

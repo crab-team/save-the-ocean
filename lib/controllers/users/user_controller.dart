@@ -68,8 +68,6 @@ class UserController extends ChangeNotifier {
   Future<void> updateScore(double newScore) async {
     loading();
     try {
-      print("newScore: $newScore");
-      print("currentUser?.score: ${currentUser?.score}");
       if (currentUser == null) return success();
       if (currentUser!.score > newScore) return success();
       User user = await updateUserScore.call(currentUser!.username, newScore);

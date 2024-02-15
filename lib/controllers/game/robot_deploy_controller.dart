@@ -13,12 +13,14 @@ class RobotDeployController extends ChangeNotifier {
 
   void deployRobot() {
     if (deploy == true) return;
+    if (breakageLevelController.isBroken) return;
     robotPositionController.stop();
     _deploy = true;
     notifyListeners();
   }
 
   void refoldRobot() {
+    breakageLevelController.decrementLevel();
     if (deploy == false) return;
     robotPositionController.stop();
     _deploy = false;

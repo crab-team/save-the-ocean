@@ -11,10 +11,9 @@ class BackgroundMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(
-          'assets/images/${ImageAssets.backgroundMenu}',
-          fit: BoxFit.cover,
-          width: double.infinity,
+        const RiveAnimation.asset(
+          AnimationAssets.riv,
+          artboard: ArtboardNames.background,
         ),
         Image.asset(
           'assets/images/${ImageAssets.foregroundTopWall}',
@@ -44,10 +43,6 @@ class BackgroundMenu extends StatelessWidget {
           child: Image.asset(
             'assets/images/${ImageAssets.foregroundBottom}',
           ),
-        ),
-        const RiveAnimation.asset(
-          AnimationAssets.riv,
-          artboard: ArtboardNames.lighting,
         ),
         ClipRect(
           child: BackdropFilter(

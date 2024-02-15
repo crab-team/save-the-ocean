@@ -16,6 +16,11 @@ class _SplashScreenState extends State<SplashScreen> {
   final flameController = FlameSplashController(waitDuration: const Duration(seconds: 4));
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FlameSplashScreen(
       controller: flameController,

@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/constants/app.dart';
+import 'package:save_the_ocean/controllers/game/breakage_level_controller.dart';
 import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
 import 'package:save_the_ocean/controllers/game/game_controller.dart';
@@ -19,6 +20,7 @@ final robotPositionController = RobotPositionController();
 final robotReleaseGarbageController = RobotReleaseGarbageController();
 final pollutionLevelController = PollutionLevelController();
 final batteryLevelController = BatteryLevelController();
+final breakageLevelController = BreakageLevelController();
 
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key});

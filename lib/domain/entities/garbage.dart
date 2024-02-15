@@ -19,6 +19,7 @@ class Garbage {
   final Shape shape;
   final String sprite;
   final Vector2 size;
+  final bool? isRiveComponent;
 
   Garbage({
     required this.type,
@@ -30,6 +31,7 @@ class Garbage {
     required this.shape,
     required this.sprite,
     required this.size,
+    this.isRiveComponent = false,
   });
 
   factory Garbage.battery() {
@@ -40,9 +42,10 @@ class Garbage {
       friction: 0.8,
       restitution: 0.2,
       density: 0.5,
-      sprite: ImageAssets.battery,
+      sprite: ArtboardNames.battery,
       shape: PolygonShape()..setAsBoxXY(0.15, 0.3),
       size: Vector2(0.4, 0.7),
+      isRiveComponent: true,
     );
   }
 

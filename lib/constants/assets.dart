@@ -12,6 +12,7 @@ class ImageAssets {
   // Game scene
   static const String trash = 'trash.png';
   static const String arm = 'arm.png';
+  static const String armBreakage = 'arm_breakage.png';
   static const String claw = 'claw.png';
   static const String pipeline = 'pipeline.png';
   static const String level = 'level.png';
@@ -45,12 +46,14 @@ class AnimationAssets {
 class ArtboardNames {
   static const String introductionScreen = 'introduction_screen';
   static const String mtcPresentation = 'mtc_presentation';
-  static const String lighting = 'lighting';
+  static const String background = 'background';
   static const String bubble1 = 'bubble_1';
   static const String bubble2 = 'bubble_2';
   static const String pollutionWater = 'pollution_water';
   static const String trash = 'trash';
   static const String batteryLevel = 'battery_level';
+  static const String breakageLevel = 'breakage_level';
+  static const String battery = 'battery';
 }
 
 class AudioAssets {
