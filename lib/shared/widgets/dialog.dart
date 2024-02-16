@@ -37,10 +37,15 @@ class CustomDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoScaleText.title(title),
-                  const SizedBox(height: 24),
-                  Image.asset("assets/images/${ImageAssets.menuLine}", width: screenWidth * 0.6),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 12),
+                  Transform.flip(
+                    flipY: true,
+                    child: Image.asset("assets/images/${ImageAssets.menuLine}", width: screenWidth * 0.6),
+                  ),
+                  const SizedBox(height: 12),
                   child,
+                  const SizedBox(height: 12),
+                  Image.asset("assets/images/${ImageAssets.menuLine}", width: screenWidth * 0.6),
                   const SizedBox(height: 12),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

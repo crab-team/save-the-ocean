@@ -6,6 +6,7 @@ import 'package:responsive_framework/breakpoint.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:save_the_ocean/audio/audio_controller.dart';
 import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/controllers/ranking/ranking_controller.dart';
 import 'package:save_the_ocean/controllers/users/button_user_start_controller.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/core/app_lifecycle.dart';
@@ -18,10 +19,12 @@ import 'package:save_the_ocean/domain/use_cases/ranking/get_ranking.dart';
 import 'package:save_the_ocean/domain/use_cases/users/create_user.dart';
 import 'package:save_the_ocean/domain/use_cases/users/get_user.dart';
 import 'package:save_the_ocean/domain/use_cases/users/get_user_by_username.dart';
+import 'package:save_the_ocean/domain/use_cases/users/is_first_time.dart';
+import 'package:save_the_ocean/domain/use_cases/users/save_first_time.dart';
 import 'package:save_the_ocean/domain/use_cases/users/update_user.dart';
 import 'package:save_the_ocean/firebase_options.dart';
-import 'package:save_the_ocean/controllers/ranking/ranking_controller.dart';
 import 'package:save_the_ocean/settings/settings.dart';
+import 'package:save_the_ocean/utils/preload_rive.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +35,7 @@ void main() async {
 
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
+
   UsersRepository usersRepository = await RepositoryProvider.provideUsers();
   RankingRepository rankingRepository = RepositoryProvider.provideRanking();
 
@@ -45,7 +49,11 @@ class MyGame extends StatelessWidget {
   final UsersRepository usersRepository;
   final RankingRepository rankingRepository;
 
-  const MyGame({super.key, required this.usersRepository, required this.rankingRepository});
+  const MyGame({
+    super.key,
+    required this.usersRepository,
+    required this.rankingRepository,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,18 +61,23 @@ class MyGame extends StatelessWidget {
     CreateUser createUser = CreateUser(usersRepository);
     UpdateUserScore updateUserScore = UpdateUserScore(usersRepository);
     GetUserByUsername getUserByUsername = GetUserByUsername(usersRepository);
+    IsFirstTime isFirstTime = IsFirstTime(usersRepository);
+    SaveFirstTime saveFirstTime = SaveFirstTime(usersRepository);
     GetRanking getRanking = GetRanking(rankingRepository);
 
     return AppLifecycleObserver(
       child: MultiProvider(
         providers: [
           Provider(create: (context) => SettingsController()),
+          Provider(create: (context) => RiveAnimationProvider()),
           ChangeNotifierProvider(
             create: (context) => UserController(
-              getUser: getUser,
+              getUserUseCase: getUser,
               getUserByUsername: getUserByUsername,
-              createUser: createUser,
-              updateUserScore: updateUserScore,
+              createUserUseCase: createUser,
+              updateUserScoreUseCase: updateUserScore,
+              isFirstTimeUseCase: isFirstTime,
+              saveFirstTimeUseCase: saveFirstTime,
             ),
           ),
           ChangeNotifierProxyProvider<UserController, ButtonUserStartController>(

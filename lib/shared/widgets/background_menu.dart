@@ -1,56 +1,45 @@
 import 'dart:ui';
 
-import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/utils/preload_rive.dart';
 
 class BackgroundMenu extends StatelessWidget {
-  const BackgroundMenu({super.key});
+  final bool withFilter;
+
+  const BackgroundMenu({super.key, this.withFilter = true});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const RiveAnimation.asset(
-          AnimationAssets.riv,
-          artboard: ArtboardNames.background,
-        ),
         Image.asset(
-          'assets/images/${ImageAssets.foregroundTopWall}',
+          'assets/images/${ImageAssets.backgroundFar}',
           fit: BoxFit.cover,
           width: double.infinity,
         ),
-        Positioned(
-          left: -10,
-          bottom: 0,
-          width: 140,
-          child: Image.asset(
-            'assets/images/${ImageAssets.foregroundLeftWall}',
-            fit: BoxFit.cover,
-          ),
+        context.read<RiveAnimationProvider>().fishRiveAnimation,
+        Image.asset(
+          'assets/images/${ImageAssets.backgroundFront}',
+          fit: BoxFit.cover,
+          width: double.infinity,
         ),
-        Positioned(
-          right: -5,
-          bottom: 0,
-          width: 140,
-          child: Image.asset('assets/images/${ImageAssets.foregroundRightWall}'),
+        Image.asset(
+          'assets/images/${ImageAssets.foreground}',
+          fit: BoxFit.cover,
+          width: double.infinity,
         ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 120,
-          child: Image.asset(
-            'assets/images/${ImageAssets.foregroundBottom}',
-          ),
-        ),
-        ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.3)),
+        Visibility(
+          visible: withFilter,
+          child: ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(color: Colors.black.withOpacity(0.3)),
+              ),
             ),
           ),
         ),

@@ -1,16 +1,12 @@
-import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/widgets.dart';
-import 'package:save_the_ocean/constants/assets.dart';
+import 'package:provider/provider.dart';
+import 'package:save_the_ocean/utils/preload_rive.dart';
 
 class MtcPresentationRive extends StatelessWidget {
   const MtcPresentationRive({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const RiveAnimation.asset(
-      AnimationAssets.riv,
-      artboard: ArtboardNames.mtcPresentation,
-      fit: BoxFit.contain,
-    );
+    return context.read<RiveAnimationProvider>().mtcPresentationAnimation;
   }
 }

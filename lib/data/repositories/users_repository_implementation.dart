@@ -114,4 +114,14 @@ class UserRepositoryImplementation implements UsersRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<bool> isFirstTime() {
+    return Future.value(_sharedPreferences.getBool('firstTime') ?? true);
+  }
+
+  @override
+  Future<void> saveFirstTime() {
+    return _sharedPreferences.setBool('firstTime', false);
+  }
 }

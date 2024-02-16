@@ -1,5 +1,6 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
+import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
 import 'package:save_the_ocean/screens/game/game_screen.dart';
@@ -15,8 +16,8 @@ class TrashFloor extends BodyComponent with ContactCallbacks {
 
     final shape = ChainShape()
       ..createChain([
-        Vector2(0.5, 0),
-        Vector2(2.9, 0),
+        Vector2(0.6, -0.2),
+        Vector2(2.8, -0.2),
       ]);
     final fixtureDef = FixtureDef(shape);
 
@@ -28,6 +29,16 @@ class TrashFloor extends BodyComponent with ContactCallbacks {
     super.beginContact(other, contact);
 
     if (other is GarbageComponent) {
+      if (other.garbage.type == GarbageType.battery) {
+        incrementBatteryLevel(100);
+        return;
+      }
+
+      if (other.garbage.type == GarbageType.tools) {
+        breakageLevelController.incrementLevel();
+        return;
+      }
+
       double garbageToLevel = garbageTypeToLevel[other.garbage.type]!;
       recycling();
       incrementBatteryLevel(garbageToLevel);

@@ -24,7 +24,8 @@ class GarbageController {
     Random random = Random.secure();
     Garbage garbage = garbages[random.nextInt(garbages.length)];
 
-    if (spawnBattery()) garbage = Garbage.battery();
+    if (spawnTool()) garbage = Garbage.tools();
+    // if (spawnBattery()) garbage = Garbage.battery();
 
     final garbageComponent = GarbageComponent(garbage: garbage);
     garbageComponent.priority = -1;
@@ -32,6 +33,11 @@ class GarbageController {
 
     incrementPollutionLevel(garbage.type);
     decrementBatteryLevel();
+  }
+
+  bool spawnTool() {
+    bool isTimeToSpawn = game.elapsedTime.ceil() % 11 == 0;
+    return isTimeToSpawn;
   }
 
   bool spawnBattery() {
@@ -42,17 +48,18 @@ class GarbageController {
       return false;
     });
 
-    bool isElapsingTimeFactorOfTwenty = game.elapsedTime.ceil() % 40 == 0;
-    return isElapsingTimeFactorOfTwenty && !worldContainsBattery;
+    bool isTimeToSpawn = game.elapsedTime.ceil() % 10 == 0;
+    return isTimeToSpawn && !worldContainsBattery;
   }
 
   void incrementPollutionLevel(GarbageType garbageType) {
-    pollutionLevelController.level += garbageTypeToLevel[garbageType]!;
+    if (garbageType == GarbageType.battery || garbageType == GarbageType.tools) return;
+    pollutionLevelController.level += garbageTypeToLevel[garbageType]! * 0.4;
   }
 
   void decrementBatteryLevel() {
     if (batteryLevelController.level > 0) {
-      batteryLevelController.level -= 2;
+      batteryLevelController.level -= 3;
     }
   }
 }

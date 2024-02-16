@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/constants/app.dart';
-import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
@@ -13,7 +12,6 @@ class PauseDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return CustomDialog(
       title: "Pause",
       actions: const [],
@@ -25,10 +23,12 @@ class PauseDialog extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           TextButton(
-            onPressed: () => AppRouter.goToMenu(),
+            onPressed: () {
+              game.restart();
+              AppRouter.goToMenu();
+            },
             child: const AutoScaleText.body("Go to menu"),
           ),
-          Image.asset("assets/images/${ImageAssets.menuBottomLine}", width: screenWidth * 0.6),
         ],
       ),
     );

@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:save_the_ocean/components/robot/robot_arm_component.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/components/robot/robot_controller.dart';
-import 'package:save_the_ocean/screens/game/game_screen.dart';
 
 class Robot extends PositionComponent {
   late RobotController _robotController;
@@ -22,20 +21,9 @@ class Robot extends PositionComponent {
 
     _robotController = RobotController(leftRobotClaw: leftClaw, rightRobotClaw: rightClaw, robotArm: arm);
 
-    _listenBreakageLevel();
     _robotController.moveInXAxis();
     _robotController.deployListener();
     _robotController.releaseListener();
-  }
-
-  void _listenBreakageLevel() {
-    breakageLevelController.addListener(() {
-      if (breakageLevelController.isBroken) {
-        robotPositionController.isFreezed = true;
-        robotReleaseGarbageController.isFreezed = true;
-        _robotController.executeRefold();
-      }
-    });
   }
 
   @override

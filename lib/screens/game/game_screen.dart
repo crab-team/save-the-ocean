@@ -1,16 +1,20 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/app.dart';
-import 'package:save_the_ocean/controllers/game/breakage_level_controller.dart';
-import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
+import 'package:save_the_ocean/controllers/game/breakage_level_controller.dart';
 import 'package:save_the_ocean/controllers/game/game_controller.dart';
 import 'package:save_the_ocean/controllers/game/pollution_level_controller.dart';
 import 'package:save_the_ocean/controllers/game/robot_deploy_controller.dart';
 import 'package:save_the_ocean/controllers/game/robot_position_controller.dart';
 import 'package:save_the_ocean/controllers/game/robot_release_garbage_controller.dart';
+import 'package:save_the_ocean/controllers/users/user_controller.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/shared/dialogs/game_over_dialog.dart';
 import 'package:save_the_ocean/shared/dialogs/pause_dialog.dart';
+import 'package:save_the_ocean/shared/dialogs/tutorial_dialog.dart';
+import 'package:save_the_ocean/shared/widgets/background_menu.dart';
 
 // Controllers
 final recyclingController = ValueNotifier<bool>(false);
@@ -27,12 +31,17 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isFirstTime = context.read<UserController>().isFirstTime;
+
     return GameWidget(
       game: SaveTheOceanGame(),
       overlayBuilderMap: {
         AppConstants.pauseDialog: (BuildContext context, SaveTheOceanGame game) => PauseDialog(game: game),
         AppConstants.gameOverDialog: (BuildContext context, SaveTheOceanGame game) => GameOverDialog(game: game),
+        AppConstants.tutorialDialog: (BuildContext context, SaveTheOceanGame game) => TutorialDialog(game: game),
       },
+      // initialActiveOverlays: [isFirstTime ? AppConstants.tutorialDialog : ""],
+      backgroundBuilder: (BuildContext context) => const BackgroundMenu(withFilter: false),
     );
   }
 }

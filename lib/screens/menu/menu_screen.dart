@@ -21,7 +21,10 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async => await Provider.of<UserController>(context, listen: false).fetch());
+    Future.microtask(() async {
+      Provider.of<UserController>(context, listen: false).checkFirstTime();
+      await Provider.of<UserController>(context, listen: false).fetch();
+    });
   }
 
   @override
@@ -111,6 +114,6 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   void _goToScreen() {
-    AppRouter.goToIntroduction();
+    Provider.of<UserController>(context, listen: false).isFirstTime ? AppRouter.goToIntroduction() : AppRouter.goToGame;
   }
 }

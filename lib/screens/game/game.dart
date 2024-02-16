@@ -10,7 +10,6 @@ import 'package:save_the_ocean/components/game_scene/bubbles/bubbles_component.d
 import 'package:save_the_ocean/components/game_scene/foreground_component.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_controller.dart';
 import 'package:save_the_ocean/components/game_scene/ground_component.dart';
-import 'package:save_the_ocean/components/game_scene/background_component.dart';
 import 'package:save_the_ocean/components/game_scene/pipeline.dart';
 import 'package:save_the_ocean/components/game_scene/pollution_water/pollution_water_component.dart';
 import 'package:save_the_ocean/components/game_scene/timer_text_component.dart';
@@ -86,10 +85,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   }
 
   Future<void> loadAssets() async {
-    await loadSprite(ImageAssets.foregroundBottom);
-    await loadSprite(ImageAssets.foregroundLeftWall);
-    await loadSprite(ImageAssets.foregroundRightWall);
-    await loadSprite(ImageAssets.foregroundTopWall);
+    await loadSprite(ImageAssets.foreground);
     await loadSprite(ImageAssets.pipeline);
     await loadSprite(ImageAssets.arm);
     await loadSprite(ImageAssets.armBreakage);
@@ -98,6 +94,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     await loadSprite(ImageAssets.bottle);
     await loadSprite(ImageAssets.battery);
     await loadSprite(ImageAssets.beer);
+    await loadSprite(ImageAssets.tools);
     await loadSprite(ImageAssets.plastic);
     await loadSprite(ImageAssets.tire);
     await loadSprite(ImageAssets.trash);
@@ -107,17 +104,15 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     await loadSprite(ImageAssets.buttonCrawPressed);
     await loadSprite(ImageAssets.buttonDirection);
     await loadSprite(ImageAssets.buttonDirectionPressed);
+    await loadSprite(ImageAssets.pollutionWater);
+    await loadSprite(AnimationAssets.tools);
   }
 
   Future<void> addCameraElements() async {
-    camera.backdrop.add(BackgroundPositionComponent());
     camera.viewport.addAll([
       PipelineComponent(),
       BubblesPositionComponent(),
-      ForegroundComponent.top(),
-      ForegroundComponent.bottom(),
-      ForegroundComponent.left(),
-      ForegroundComponent.right(),
+      ForegroundComponent(),
       JoystickFactory.create(),
       PollutionWaterComponent(),
       TimerTextComponent(),
@@ -140,7 +135,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
 
   void gameListeners() {
     batteryLevelController.addListener(() {
-      if (batteryLevelController.level <= 0) {
+      if (batteryLevelController.level <= 0 || breakageLevelController.isBroken) {
         gameController.gameOver();
       }
     });
@@ -180,6 +175,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     garbageTimer.stop();
     pollutionLevelController.restart();
     batteryLevelController.restart();
+    breakageLevelController.restart();
     world.removeAll(world.children);
     addWorldElements();
     timer.start();

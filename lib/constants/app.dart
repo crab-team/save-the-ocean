@@ -6,4 +6,5 @@ class AppConstants {
   // Dialogs
   static const String gameOverDialog = 'game_over_dialog';
   static const String pauseDialog = 'pause_dialog';
+  static const String tutorialDialog = 'tutorial_dialog';
 }

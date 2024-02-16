@@ -27,7 +27,7 @@ class TrashBoundaries extends BodyComponent {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    renderBody = false;
+    renderBody = true;
     final component = await TrashRiveComponentFactory.create();
     component.position = Vector2.zero();
     component.width = 3;

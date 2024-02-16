@@ -1,8 +1,8 @@
-import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
-import 'package:save_the_ocean/constants/assets.dart';
+import 'package:provider/provider.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
+import 'package:save_the_ocean/utils/preload_rive.dart';
 
 class IntroductionScreen extends StatefulWidget {
   const IntroductionScreen({super.key});
@@ -26,11 +26,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
       color: Colors.black,
       child: Stack(
         children: [
-          const RiveAnimation.asset(
-            AnimationAssets.riv,
-            artboard: ArtboardNames.introductionScreen,
-            fit: BoxFit.contain,
-          ),
+          context.read<RiveAnimationProvider>().introductionScreenAnimation,
           Positioned(
             child: TextButton(
               onPressed: () {
