@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:save_the_ocean/controllers/audio/audio_controller.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/game/game.dart';
@@ -42,10 +43,7 @@ class _GameOverDialogState extends State<GameOverDialog> {
         ),
         const SizedBox(width: 100),
         TextButton(
-          onPressed: () {
-            _restartGame();
-            AppRouter.goToMenu();
-          },
+          onPressed: () => _onPresseMainMenu(),
           child: const AutoScaleText.body('Main menu'),
         ),
       ],
@@ -67,6 +65,16 @@ class _GameOverDialogState extends State<GameOverDialog> {
 
   void _restartGame() {
     gameController.restartGame();
+  }
+
+  void _onPresseMainMenu() {
+    _startMusic();
+    _restartGame();
+    AppRouter.goToMenu();
+  }
+
+  void _startMusic() {
+    Provider.of<AudioController>(context, listen: false).play();
   }
 
   Future<void> _updateScore(double elapsedTime) async {

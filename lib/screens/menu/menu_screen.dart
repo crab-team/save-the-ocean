@@ -4,8 +4,9 @@ import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/controllers/users/user_state.dart';
 import 'package:save_the_ocean/core/router.dart';
-import 'package:save_the_ocean/shared/dialogs/welcome_dialog.dart';
+import 'package:save_the_ocean/screens/menu/widgets/sound_button.dart';
 import 'package:save_the_ocean/screens/menu/widgets/username_text.dart';
+import 'package:save_the_ocean/shared/dialogs/welcome_dialog.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
 import 'package:save_the_ocean/shared/widgets/logo.dart';
@@ -37,6 +38,11 @@ class _MenuScreenState extends State<MenuScreen> {
             top: 10,
             left: 10,
             child: UsernameText(),
+          ),
+          const Positioned(
+            top: 10,
+            right: 10,
+            child: SoundButton(),
           ),
           Consumer<UserController>(
             builder: (context, controller, child) {

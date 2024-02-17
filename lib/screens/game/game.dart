@@ -193,37 +193,43 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   @override
   KeyEventResult onKeyEvent(event, Set<LogicalKeyboardKey> keysPressed) {
     final isKeyUp = event is KeyUpEvent;
+    final isKeyDown = event is RawKeyDownEvent;
     final isKeyA = event.logicalKey == LogicalKeyboardKey.keyA;
     final isKeyD = event.logicalKey == LogicalKeyboardKey.keyD;
     final isKeyK = event.logicalKey == LogicalKeyboardKey.keyK;
     final isKeyL = event.logicalKey == LogicalKeyboardKey.keyL;
     final isKeyEsc = event.logicalKey == LogicalKeyboardKey.escape;
-    if (!event.repeat) {
-      if (isKeyA) {
+    final isAlreadyPressed = keysPressed.contains(event.logicalKey);
+
+    if (isKeyA && isKeyDown) {
+      if (!isAlreadyPressed) {
         robotPositionController.moveLeft();
       }
-
-      if (isKeyD) {
-        robotPositionController.moveRight();
-      }
-
-      if (isKeyA && isKeyUp || isKeyD && isKeyUp) {
-        robotPositionController.stop();
-      }
+      return KeyEventResult.handled;
     }
 
-    if (isKeyK && !isKeyUp) {
+    if (isKeyD && isKeyDown && !isAlreadyPressed) {
+      robotPositionController.moveRight();
+      return KeyEventResult.handled;
+    }
+
+    if (isKeyK && !isAlreadyPressed) {
       !robotDeployController.deploy ? robotDeployController.deployRobot() : robotDeployController.refoldRobot();
+      return KeyEventResult.handled;
     }
 
-    if (isKeyL && !isKeyUp) {
+    if (isKeyL && isKeyDown && !isAlreadyPressed) {
       robotReleaseGarbageController.release();
+      return KeyEventResult.handled;
     }
 
-    if (isKeyEsc && !isKeyUp) {
+    if (isKeyEsc && isKeyDown && !isAlreadyPressed) {
       togglePauseGame();
+      return KeyEventResult.handled;
     }
 
-    return super.onKeyEvent(event, keysPressed);
+    keysPressed.clear();
+    robotPositionController.stop();
+    return KeyEventResult.ignored;
   }
 }

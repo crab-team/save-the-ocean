@@ -16,6 +16,7 @@ dependencies:
     devtools_extensions: ^0.0.9
     firebase_core: ^2.24.2
     flame: ^1.14.0
+    flame_audio: ^2.1.8
     flame_forge2d: ^0.16.0+4
     flame_rive: ^1.9.10
     flame_splash_screen: ^0.2.0
@@ -40,6 +41,7 @@ flutter:
     assets:
         - assets/images/
         - assets/animations/
+        - assets/audio/
     fonts:
         - family: ProtestRevolution
           fonts:

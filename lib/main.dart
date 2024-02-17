@@ -1,11 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/breakpoint.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
-import 'package:save_the_ocean/audio/audio_controller.dart';
 import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/controllers/audio/audio_controller.dart';
 import 'package:save_the_ocean/controllers/ranking/ranking_controller.dart';
 import 'package:save_the_ocean/controllers/users/button_user_start_controller.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
@@ -23,7 +24,6 @@ import 'package:save_the_ocean/domain/use_cases/users/is_first_time.dart';
 import 'package:save_the_ocean/domain/use_cases/users/save_first_time.dart';
 import 'package:save_the_ocean/domain/use_cases/users/update_user.dart';
 import 'package:save_the_ocean/firebase_options.dart';
-import 'package:save_the_ocean/settings/settings.dart';
 import 'package:save_the_ocean/utils/preload_rive.dart';
 
 void main() async {
@@ -35,6 +35,7 @@ void main() async {
 
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
+  FlameAudio.bgm.initialize();
 
   UsersRepository usersRepository = await RepositoryProvider.provideUsers();
   RankingRepository rankingRepository = RepositoryProvider.provideRanking();
@@ -68,8 +69,8 @@ class MyGame extends StatelessWidget {
     return AppLifecycleObserver(
       child: MultiProvider(
         providers: [
-          Provider(create: (context) => SettingsController()),
           Provider(create: (context) => RiveAnimationProvider()),
+          ChangeNotifierProvider(create: (context) => AudioController()),
           ChangeNotifierProvider(
             create: (context) => UserController(
               getUserUseCase: getUser,
@@ -87,16 +88,16 @@ class MyGame extends StatelessWidget {
           ),
           ChangeNotifierProvider(create: (context) => RankingController(getRanking: getRanking)),
           // Set up audio.
-          ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(
-            // Ensures that music starts immediately.
-            lazy: false,
-            create: (context) => AudioController(),
-            update: (context, settings, lifecycleNotifier, audio) {
-              audio!.attachDependencies(lifecycleNotifier, settings);
-              return audio;
-            },
-            dispose: (context, audio) => audio.dispose(),
-          ),
+          // ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(
+          //   // Ensures that music starts immediately.
+          //   lazy: false,
+          //   create: (context) => AudioController(),
+          //   update: (context, settings, lifecycleNotifier, audio) {
+          //     audio!.attachDependencies(lifecycleNotifier, settings);
+          //     return audio;
+          //   },
+          //   dispose: (context, audio) => audio.dispose(),
+          // ),
         ],
         child: _buildResponsiveMaterial(
           context,

@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/app.dart';
+import 'package:save_the_ocean/controllers/audio/audio_controller.dart';
 import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
 import 'package:save_the_ocean/controllers/game/breakage_level_controller.dart';
 import 'package:save_the_ocean/controllers/game/game_controller.dart';
@@ -32,6 +33,7 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isFirstTime = context.read<UserController>().isFirstTime;
+    _stopMusic(context);
 
     return GameWidget(
       game: SaveTheOceanGame()..isFirstTime = isFirstTime,
@@ -42,5 +44,9 @@ class GameScreen extends StatelessWidget {
       },
       backgroundBuilder: (BuildContext context) => const BackgroundMenu(withFilter: false),
     );
+  }
+
+  void _stopMusic(BuildContext context) {
+    Provider.of<AudioController>(context, listen: false).stop();
   }
 }

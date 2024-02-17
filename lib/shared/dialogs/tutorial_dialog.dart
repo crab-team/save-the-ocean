@@ -26,6 +26,7 @@ class _TutorialDialogState extends State<TutorialDialog> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return CustomDialog(
       title: "How to play",
       actions: [
@@ -37,11 +38,11 @@ class _TutorialDialogState extends State<TutorialDialog> {
       child: isTutorial1
           ? Image.asset(
               "assets/images/${ImageAssets.tutorial1}",
-              width: screenSize.x * 0.3,
+              width: screenWidth * 0.5,
             )
           : Image.asset(
               "assets/images/${ImageAssets.tutorial2}",
-              width: screenSize.x * 0.3,
+              width: screenWidth * 0.5,
             ),
     );
   }
