@@ -34,13 +34,12 @@ class GameScreen extends StatelessWidget {
     bool isFirstTime = context.read<UserController>().isFirstTime;
 
     return GameWidget(
-      game: SaveTheOceanGame(),
+      game: SaveTheOceanGame()..isFirstTime = isFirstTime,
       overlayBuilderMap: {
         AppConstants.pauseDialog: (BuildContext context, SaveTheOceanGame game) => PauseDialog(game: game),
         AppConstants.gameOverDialog: (BuildContext context, SaveTheOceanGame game) => GameOverDialog(game: game),
         AppConstants.tutorialDialog: (BuildContext context, SaveTheOceanGame game) => TutorialDialog(game: game),
       },
-      // initialActiveOverlays: [isFirstTime ? AppConstants.tutorialDialog : ""],
       backgroundBuilder: (BuildContext context) => const BackgroundMenu(withFilter: false),
     );
   }

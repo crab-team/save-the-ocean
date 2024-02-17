@@ -32,6 +32,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   late Timer timer;
   late Timer garbageTimer;
   double elapsedTime = 0;
+  bool isFirstTime = true;
 
   SaveTheOceanGame()
       : super(
@@ -46,6 +47,11 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
+    if (isFirstTime) {
+      overlays.add(AppConstants.tutorialDialog);
+      isFirstTime = false;
+    }
 
     await loadAssets();
 
@@ -114,8 +120,8 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
       PipelineComponent(),
       BubblesPositionComponent(),
       ForegroundComponent(),
-      JoystickFactory.create(),
       PollutionWaterComponent(),
+      JoystickFactory.create(),
       TimerTextComponent(),
       FpsTextComponent(),
       BatteryLevelComponent(),
@@ -185,11 +191,8 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   }
 
   @override
-  KeyEventResult onKeyEvent(
-    RawKeyEvent event,
-    Set<LogicalKeyboardKey> keysPressed,
-  ) {
-    final isKeyUp = event is RawKeyUpEvent;
+  KeyEventResult onKeyEvent(event, Set<LogicalKeyboardKey> keysPressed) {
+    final isKeyUp = event is KeyUpEvent;
     final isKeyA = event.logicalKey == LogicalKeyboardKey.keyA;
     final isKeyD = event.logicalKey == LogicalKeyboardKey.keyD;
     final isKeyK = event.logicalKey == LogicalKeyboardKey.keyK;
