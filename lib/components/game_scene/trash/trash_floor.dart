@@ -31,11 +31,13 @@ class TrashFloor extends BodyComponent with ContactCallbacks {
     if (other is GarbageComponent) {
       if (other.garbage.type == GarbageType.battery) {
         incrementBatteryLevel(100);
+        other.removeFromParent();
         return;
       }
 
       if (other.garbage.type == GarbageType.tools) {
         breakageLevelController.incrementLevel();
+        other.removeFromParent();
         return;
       }
 

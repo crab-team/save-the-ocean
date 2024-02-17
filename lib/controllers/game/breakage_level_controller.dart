@@ -18,8 +18,10 @@ class BreakageLevelController extends ChangeNotifier {
   }
 
   void incrementLevel() {
-    _level += 25;
-    notifyListeners();
+    if (_level <= 100) {
+      _level += 25;
+      notifyListeners();
+    }
   }
 
   void decrementLevel() {

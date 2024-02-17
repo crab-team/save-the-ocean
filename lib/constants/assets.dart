@@ -40,7 +40,8 @@ class ImageAssets {
 
 class AnimationAssets {
   static const String riv = 'assets/animations/save_the_ocean.riv';
-  static const String tools = 'tools_animation.png';
+  static const String toolsSpriteSheet = 'tools_sprite_sheet.png';
+  static const String batterySpriteSheet = 'battery_sprite_sheet.png';
 }
 
 class ArtboardNames {

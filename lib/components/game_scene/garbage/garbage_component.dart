@@ -1,8 +1,6 @@
-import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_animated_sprite.dart';
-import 'package:save_the_ocean/components/game_scene/garbage/garbage_rive_component.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_sprite.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/screens/game/game.dart';
@@ -45,9 +43,6 @@ class GarbageComponent extends BodyComponent implements PositionProvider {
         spriteSize: garbage.size,
         spritePosition: Vector2(0, 0),
       );
-      // spriteAnimated.position = Vector2(0, 0);
-      // spriteAnimated.size = garbage.size;
-      // spriteAnimated.anchor = Anchor.center;
       add(spriteAnimated);
       return;
     }

@@ -105,7 +105,8 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     await loadSprite(ImageAssets.buttonDirection);
     await loadSprite(ImageAssets.buttonDirectionPressed);
     await loadSprite(ImageAssets.pollutionWater);
-    await loadSprite(AnimationAssets.tools);
+    await loadSprite(AnimationAssets.toolsSpriteSheet);
+    await loadSprite(AnimationAssets.batterySpriteSheet);
   }
 
   Future<void> addCameraElements() async {

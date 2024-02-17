@@ -25,7 +25,7 @@ class GarbageController {
     Garbage garbage = garbages[random.nextInt(garbages.length)];
 
     if (spawnTool()) garbage = Garbage.tools();
-    // if (spawnBattery()) garbage = Garbage.battery();
+    if (spawnBattery()) garbage = Garbage.battery();
 
     final garbageComponent = GarbageComponent(garbage: garbage);
     garbageComponent.priority = -1;

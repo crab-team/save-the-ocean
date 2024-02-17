@@ -45,9 +45,10 @@ class Garbage {
       friction: 1,
       restitution: 0.2,
       density: 1,
-      sprite: ArtboardNames.battery,
-      shape: PolygonShape()..setAsBoxXY(0.2, 0.5),
-      size: Vector2(0.8, 1.2),
+      sprite: ImageAssets.battery,
+      spriteSheet: AnimationAssets.batterySpriteSheet,
+      shape: PolygonShape()..setAsBoxXY(0.2, 0.4),
+      size: Vector2(1.2, 1.2),
       isAnimated: true,
     );
   }
@@ -61,7 +62,7 @@ class Garbage {
       restitution: 0.5,
       density: 0.8,
       sprite: ImageAssets.tools,
-      spriteSheet: AnimationAssets.tools,
+      spriteSheet: AnimationAssets.toolsSpriteSheet,
       shape: PolygonShape()..setAsBoxXY(0.4, 0.4),
       size: Vector2(1.2, 1),
       isAnimated: true,
