@@ -48,7 +48,7 @@ class GarbageController {
       return false;
     });
 
-    bool isTimeToSpawn = game.elapsedTime.ceil() % 10 == 0;
+    bool isTimeToSpawn = game.elapsedTime.ceil() % 40 == 0;
     return isTimeToSpawn && !worldContainsBattery;
   }
 

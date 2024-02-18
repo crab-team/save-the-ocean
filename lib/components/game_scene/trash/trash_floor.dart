@@ -16,8 +16,8 @@ class TrashFloor extends BodyComponent with ContactCallbacks {
 
     final shape = ChainShape()
       ..createChain([
-        Vector2(0.6, -0.2),
-        Vector2(2.8, -0.2),
+        Vector2(0.6, -2),
+        Vector2(2.8, -2),
       ]);
     final fixtureDef = FixtureDef(shape);
 

@@ -11,7 +11,12 @@ class AllowAudioWebButton extends StatelessWidget {
     return Consumer<AudioController>(builder: (context, controller, _) {
       return Visibility(
         visible: !controller.isAllowed,
-        child: ElevatedButton(onPressed: () => allowAudio(context), child: const AutoScaleText.body("Allow audio")),
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
+            onPressed: () => allowAudio(context),
+            child: const AutoScaleText.small("Allow audio")),
       );
     });
   }
