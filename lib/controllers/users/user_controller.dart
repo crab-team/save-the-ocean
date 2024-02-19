@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/controllers/users/user_error.dart';
-import 'package:save_the_ocean/controllers/users/user_state.dart';
 import 'package:save_the_ocean/domain/entities/user.dart';
 import 'package:save_the_ocean/domain/use_cases/users/create_user.dart';
 import 'package:save_the_ocean/domain/use_cases/users/get_user.dart';
@@ -8,6 +7,8 @@ import 'package:save_the_ocean/domain/use_cases/users/get_user_by_username.dart'
 import 'package:save_the_ocean/domain/use_cases/users/is_first_time.dart';
 import 'package:save_the_ocean/domain/use_cases/users/save_first_time.dart';
 import 'package:save_the_ocean/domain/use_cases/users/update_user.dart';
+
+enum UserControllerState { initial, loading, notUserRegistered, notUsernameLocally, failure, success }
 
 class UserController extends ChangeNotifier {
   final GetUser getUserUseCase;
@@ -27,7 +28,7 @@ class UserController extends ChangeNotifier {
 
   bool _isFirstTime = true;
   bool get isFirstTime => _isFirstTime;
-  UserControllerState _currentState = UserControllerState.initial();
+  UserControllerState _currentState = UserControllerState.initial;
   UserControllerState get currentState => _currentState;
   User? _user;
   User? get currentUser => _user;
@@ -37,37 +38,45 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchByUsername(String username) async {
+  Future<User?> fetchByUsername(String username) async {
     loading();
     try {
-      final User user = await getUserByUsername.call(username);
-      currentUser = user;
-      success();
-    } on UserNotFound {
-      notUserRegistered();
+      final User? user = await getUserByUsername.call(username);
+      print('user: $user');
+      if (user == null) {
+        notUserRegistered();
+        return null;
+      }
+
+      success(user);
+      return user;
     } catch (e) {
       failure(e as Exception);
     }
+    return null;
   }
 
-  Future<void> fetch() async {
+  Future<User?> fetch() async {
     loading();
     try {
-      final User user = await getUserUseCase.call();
-      currentUser = user;
-      success();
-    } on NoUsernameLocally {
-      notUsernameLocally();
+      final User? user = await getUserUseCase.call();
+      if (user == null) {
+        notUserRegistered();
+        return null;
+      }
+
+      success(user);
+      return user;
     } catch (e) {
       failure(e as Exception);
     }
+    return null;
   }
 
   Future<void> create(String username) async {
     try {
       User user = await createUserUseCase.call(username);
-      currentUser = user;
-      success();
+      success(user);
     } catch (e) {
       failure(e as Exception);
     }
@@ -76,13 +85,13 @@ class UserController extends ChangeNotifier {
   Future<void> updateScore(double newScore) async {
     loading();
     try {
-      if (currentUser == null) return success();
-      if (currentUser!.score > newScore) return success();
+      if (currentUser == null) return skip();
+      if (currentUser!.score > newScore) return skip();
       User user = await updateUserScoreUseCase.call(currentUser!.username, newScore);
-      currentUser = user;
-      success();
+      success(user);
     } on UserNotFound {
       notUserRegistered();
+      rethrow;
     } catch (e) {
       failure(e as Exception);
     }
@@ -100,27 +109,33 @@ class UserController extends ChangeNotifier {
   }
 
   loading() {
-    _currentState = UserControllerState.loading();
+    _currentState = UserControllerState.loading;
     notifyListeners();
   }
 
   notUserRegistered() {
-    _currentState = UserControllerState.notUserRegistered();
+    _currentState = UserControllerState.notUserRegistered;
     notifyListeners();
   }
 
   notUsernameLocally() {
-    _currentState = UserControllerState.notUsernameLocally();
+    _currentState = UserControllerState.notUsernameLocally;
     notifyListeners();
   }
 
   failure(Exception e) {
-    _currentState = UserControllerState.failure(e);
+    _currentState = UserControllerState.failure;
     notifyListeners();
   }
 
-  success() {
-    _currentState = UserControllerState.success();
+  skip() {
+    _currentState = UserControllerState.success;
+    notifyListeners();
+  }
+
+  success(User user) {
+    _currentState = UserControllerState.success;
+    currentUser = user;
     notifyListeners();
   }
 }

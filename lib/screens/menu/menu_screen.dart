@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
-import 'package:save_the_ocean/controllers/users/user_state.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/menu/widgets/sound_button.dart';
 import 'package:save_the_ocean/screens/menu/widgets/username_text.dart';
-import 'package:save_the_ocean/shared/dialogs/welcome_dialog.dart';
+import 'package:save_the_ocean/shared/dialogs/welcome/welcome_dialog.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
 import 'package:save_the_ocean/shared/widgets/logo.dart';
@@ -46,10 +45,15 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           Consumer<UserController>(
             builder: (context, controller, child) {
-              if (controller.currentState.status == UserStatus.noUsernameLocally) {
-                return const WelcomeDialog();
+              if (controller.currentState == UserControllerState.loading) {
+                return const Center(child: CircularProgressIndicator());
               }
-              return _buildMenu(context);
+
+              if (controller.currentState == UserControllerState.success) {
+                return _buildMenu(context);
+              }
+
+              return const WelcomeDialog();
             },
           ),
         ],

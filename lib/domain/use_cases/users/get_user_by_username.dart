@@ -6,7 +6,7 @@ class GetUserByUsername {
 
   GetUserByUsername(this._userRepository);
 
-  Future<User> call(String username) async {
+  Future<User?> call(String username) async {
     return await _userRepository.getUserByUsername(username);
   }
 }

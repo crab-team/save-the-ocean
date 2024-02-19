@@ -56,6 +56,6 @@ class _TutorialDialogState extends State<TutorialDialog> {
   void _startGame() {
     widget.game.overlays.remove(AppConstants.tutorialDialog);
     widget.game.resumeEngine();
-    Provider.of<UserController>(context).saveFirstTime();
+    Provider.of<UserController>(context, listen: false).saveFirstTime();
   }
 }

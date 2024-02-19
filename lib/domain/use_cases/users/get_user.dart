@@ -6,7 +6,7 @@ class GetUser {
 
   GetUser(this._userRepository);
 
-  Future<User> call() async {
+  Future<User?> call() async {
     return await _userRepository.getUser();
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:save_the_ocean/controllers/users/button_user_start_controller.dart';
+import 'package:save_the_ocean/controllers/users/user_controller.dart';
+import 'package:save_the_ocean/domain/entities/user.dart';
+import 'package:save_the_ocean/shared/dialogs/welcome/start_button.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/dialog.dart';
 
@@ -19,21 +21,7 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
   Widget build(BuildContext context) {
     return CustomDialog(
       title: "Welcome",
-      actions: [
-        Consumer<ButtonUserStartController>(builder: (context, controller, _) {
-          if (controller.status == ButtonUserStartStatus.loading) {
-            return const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          return TextButton(
-            onPressed: () => _registerUser(context),
-            child: const AutoScaleText.body("Start"),
-          );
-        }),
-      ],
+      actions: [StartButton(onPressed: () => onSubmit(context))],
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.5,
         child: Column(
@@ -54,7 +42,6 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
                   }
                   return null;
                 },
-                onFieldSubmitted: (_) => _registerUser(context),
               ),
             ),
           ],
@@ -63,9 +50,14 @@ class _WelcomeDialogState extends State<WelcomeDialog> {
     );
   }
 
-  void _registerUser(BuildContext context) {
+  Future<void> onSubmit(BuildContext context) async {
     if (formKey.currentState!.validate()) {
-      Provider.of<ButtonUserStartController>(context, listen: false).onPress(usernameController.text);
+      final userController = context.read<UserController>();
+      User? user = await userController.fetchByUsername(usernameController.text);
+      if (user == null) {
+        await userController.create(usernameController.text);
+        return;
+      }
     }
   }
 }

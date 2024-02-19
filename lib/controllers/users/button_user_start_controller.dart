@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
+import 'package:save_the_ocean/domain/entities/user.dart';
 
 enum ButtonUserStartStatus {
   initial,
   loading,
   success,
+  notUserRegistered,
   failure,
 }
 
@@ -36,10 +38,20 @@ class ButtonUserStartController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void notUserRegistered() {
+    _status = ButtonUserStartStatus.notUserRegistered;
+    notifyListeners();
+  }
+
   Future<void> onPress(String username) async {
     loading();
     try {
-      await userController?.create(username);
+      User? user = await userController?.fetchByUsername(username);
+      if (user != null) {
+        await userController?.create(username);
+        return;
+      }
+
       success();
     } catch (e) {
       failure();
