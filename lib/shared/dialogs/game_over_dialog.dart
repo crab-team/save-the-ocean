@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:save_the_ocean/controllers/audio/audio_controller.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/game/game.dart';
@@ -43,7 +42,7 @@ class _GameOverDialogState extends State<GameOverDialog> {
         ),
         const SizedBox(width: 100),
         TextButton(
-          onPressed: () => _onPresseMainMenu(),
+          onPressed: () => _onPressingMainMenu(),
           child: const AutoScaleText.body('Main menu'),
         ),
       ],
@@ -51,7 +50,7 @@ class _GameOverDialogState extends State<GameOverDialog> {
         children: [
           Visibility(
             visible: isLastScoreBetter,
-            child: AutoScaleText.small('New record!', color: Theme.of(context).colorScheme.tertiary),
+            child: AutoScaleText.small('New record!', color: Theme.of(context).colorScheme.primary),
           ),
           const AutoScaleText.small('Recycling time'),
           AutoScaleText.body(newScore),
@@ -67,27 +66,22 @@ class _GameOverDialogState extends State<GameOverDialog> {
     gameController.restartGame();
   }
 
-  void _onPresseMainMenu() {
-    _startMusic();
+  void _onPressingMainMenu() {
     _restartGame();
     AppRouter.goToMenu();
   }
 
-  void _startMusic() {
-    Provider.of<AudioController>(context, listen: false).play();
-  }
-
   Future<void> _updateScore(double elapsedTime) async {
-    await Provider.of<UserController>(context, listen: false).updateScore(widget.game.elapsedTime);
+    await context.read<UserController>().updateScore(widget.game.elapsedTime);
   }
 
   String _getLastScore() {
-    double lastScore = Provider.of<UserController>(context, listen: false).currentUser!.score;
+    double lastScore = context.read<UserController>().currentUser!.score;
     return ScoreUtils.getTimeFormat(lastScore);
   }
 
   bool get isLastScoreBetter {
-    double lastScore = Provider.of<UserController>(context, listen: false).currentUser!.score;
+    double lastScore = context.read<UserController>().currentUser!.score;
     return lastScore < widget.game.elapsedTime;
   }
 }

@@ -42,6 +42,7 @@ flutter:
         - assets/images/
         - assets/animations/
         - assets/audio/
+        - assets/audio/sfx/
     fonts:
         - family: ProtestRevolution
           fonts:

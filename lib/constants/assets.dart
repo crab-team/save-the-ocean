@@ -15,6 +15,8 @@ class ImageAssets {
   // Menu
   static const String menuLine = 'menu_line.png';
   static const String menuBottomLine = 'menu_bottom_line.png';
+  static const String soundOff = 'sound_off.png';
+  static const String soundOn = 'sound_on.png';
 
   // Game scene
   static const String trash = 'trash.png';
@@ -61,8 +63,12 @@ class ArtboardNames {
 }
 
 class AudioAssets {
-  static const String musicFolder = 'music';
-  static const String sfxFolder = 'sfx';
+  static const String music = 'save_the_ocean.mp3';
+  static const String gameOver = 'sfx/game_over.mp3';
+  static const String deploy = 'sfx/deploy.mp3';
+  static const String garbageFloor = 'sfx/garbage_floor.wav';
+  static const String reward = 'sfx/reward.wav';
+  static const String batteryReward = 'sfx/battery_reward.wav';
 }
 
 class TextConstants {

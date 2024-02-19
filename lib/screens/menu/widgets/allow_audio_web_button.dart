@@ -1,5 +1,7 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/controllers/audio/audio_controller.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 
@@ -21,8 +23,8 @@ class AllowAudioWebButton extends StatelessWidget {
     });
   }
 
-  void allowAudio(BuildContext context) {
+  Future<void> allowAudio(BuildContext context) async {
     Provider.of<AudioController>(context, listen: false).isAllowed = true;
-    Provider.of<AudioController>(context, listen: false).play();
+    await FlameAudio.bgm.play(AudioAssets.music, volume: 0.2);
   }
 }

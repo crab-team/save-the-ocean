@@ -1,10 +1,9 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_splash_screen/flame_splash_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/assets.dart';
-import 'package:save_the_ocean/controllers/audio/audio_controller.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/menu/widgets/allow_audio_web_button.dart';
 import 'package:save_the_ocean/shared/widgets/mtc_presentation_rive.dart';
@@ -44,11 +43,17 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void initAudio() {
+  Future<void> initAudio() async {
     if (kIsWeb) {
       return;
     }
 
-    Provider.of<AudioController>(context, listen: false).play();
+    await FlameAudio.bgm.play(AudioAssets.music, volume: 0.2);
+    await FlameAudio.audioCache.loadAll([
+      AudioAssets.reward,
+      AudioAssets.batteryReward,
+      AudioAssets.garbageFloor,
+      AudioAssets.gameOver,
+    ]);
   }
 }

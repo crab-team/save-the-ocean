@@ -33,10 +33,9 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isFirstTime = context.read<UserController>().isFirstTime;
-    _stopMusic(context);
 
     return GameWidget(
-      game: SaveTheOceanGame()..isFirstTime = isFirstTime,
+      game: SaveTheOceanGame(audioController: context.read<AudioController>())..isFirstTime = isFirstTime,
       overlayBuilderMap: {
         AppConstants.pauseDialog: (BuildContext context, SaveTheOceanGame game) => PauseDialog(game: game),
         AppConstants.gameOverDialog: (BuildContext context, SaveTheOceanGame game) => GameOverDialog(game: game),
@@ -44,9 +43,5 @@ class GameScreen extends StatelessWidget {
       },
       backgroundBuilder: (BuildContext context) => const BackgroundMenu(withFilter: false),
     );
-  }
-
-  void _stopMusic(BuildContext context) {
-    Provider.of<AudioController>(context, listen: false).stop();
   }
 }

@@ -4,8 +4,9 @@ import 'package:flame/components.dart';
 import 'package:save_the_ocean/components/robot/robot_arm_component.dart';
 import 'package:save_the_ocean/components/robot/robot_claw.dart';
 import 'package:save_the_ocean/components/robot/robot_controller.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
-class Robot extends PositionComponent {
+class Robot extends PositionComponent with HasGameRef<SaveTheOceanGame> {
   late RobotController _robotController;
 
   @override
@@ -22,7 +23,7 @@ class Robot extends PositionComponent {
     _robotController = RobotController(leftRobotClaw: leftClaw, rightRobotClaw: rightClaw, robotArm: arm);
 
     _robotController.moveInXAxis();
-    _robotController.deployListener();
+    _robotController.deployListener(gameRef);
     _robotController.releaseListener();
   }
 

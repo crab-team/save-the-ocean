@@ -22,8 +22,8 @@ class _MenuScreenState extends State<MenuScreen> {
   void initState() {
     super.initState();
     Future.microtask(() async {
-      Provider.of<UserController>(context, listen: false).checkFirstTime();
-      await Provider.of<UserController>(context, listen: false).fetch();
+      await context.read<UserController>().checkFirstTime();
+      await context.read<UserController>().fetch();
     });
   }
 
@@ -80,7 +80,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 Image.asset("assets/images/${ImageAssets.menuBottomLine}"),
                 const SizedBox(height: 12),
                 TextButton(
-                  onPressed: () => _goToScreen(),
+                  onPressed: () => _goToScreen(context),
                   child: const AutoScaleText.body('PLAY'),
                 ),
                 const SizedBox(height: 12),
@@ -123,7 +123,7 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  void _goToScreen() {
-    Provider.of<UserController>(context, listen: false).isFirstTime ? AppRouter.goToIntroduction() : AppRouter.goToGame;
+  void _goToScreen(BuildContext context) {
+    context.read<UserController>().isFirstTime ? AppRouter.goToIntroduction() : AppRouter.goToGame();
   }
 }

@@ -18,7 +18,7 @@ class RobotController {
 
   RobotController({required this.leftRobotClaw, required this.rightRobotClaw, required this.robotArm});
 
-  double linearVelocity = 6;
+  double linearVelocity = 8;
   double angularVelocity = 3;
   bool release = false;
 
@@ -30,7 +30,7 @@ class RobotController {
     });
   }
 
-  void deployListener() {
+  void deployListener(SaveTheOceanGame gameRef) {
     robotDeployController.addListener(() {
       robotDeployController.deploy ? executeDeploy() : executeRefold();
     });

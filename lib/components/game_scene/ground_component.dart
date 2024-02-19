@@ -1,5 +1,7 @@
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/screens/game/game.dart';
 
@@ -19,7 +21,7 @@ class GroundSpriteComponent extends SpriteComponent with HasGameRef<SaveTheOcean
   }
 }
 
-class GroundBodyComponent extends BodyComponent {
+class GroundBodyComponent extends BodyComponent with ContactCallbacks {
   @override
   Body createBody() {
     final bodyDef = BodyDef(
@@ -43,5 +45,18 @@ class GroundBodyComponent extends BodyComponent {
     await super.onLoad();
     final groundSprite = GroundSpriteComponent();
     add(groundSprite);
+  }
+
+  @override
+  void beginContact(Object other, Contact contact) {
+    super.beginContact(other, contact);
+
+    if (other is GarbageComponent) {
+      // playSfx();
+    }
+  }
+
+  void playSfx() {
+    FlameAudio.play(AudioAssets.garbageFloor, volume: 0.2);
   }
 }

@@ -14,13 +14,13 @@ class RobotPositionController extends ChangeNotifier {
 
   void moveLeft() {
     if (_isFreezed) return;
-    _velocity -= 7;
+    _velocity -= 8;
     notifyListeners();
   }
 
   void moveRight() {
     if (_isFreezed) return;
-    _velocity += 7;
+    _velocity += 8;
     notifyListeners();
   }
 

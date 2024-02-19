@@ -42,7 +42,6 @@ class UserController extends ChangeNotifier {
     loading();
     try {
       final User? user = await getUserByUsername.call(username);
-      print('user: $user');
       if (user == null) {
         notUserRegistered();
         return null;

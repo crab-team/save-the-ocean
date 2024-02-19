@@ -1,11 +1,18 @@
+import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:save_the_ocean/components/game_scene/garbage/garbage_component.dart';
+import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/domain/entities/garbage.dart';
 import 'package:save_the_ocean/screens/game/game.dart';
 import 'package:save_the_ocean/controllers/game/battery_level_controller.dart';
 import 'package:save_the_ocean/screens/game/game_screen.dart';
 
 class TrashFloor extends BodyComponent with ContactCallbacks {
+  final bool isSoundOn;
+
+  TrashFloor({required this.isSoundOn});
+
   @override
   Body createBody() {
     final bodyDef = BodyDef(
@@ -30,12 +37,14 @@ class TrashFloor extends BodyComponent with ContactCallbacks {
 
     if (other is GarbageComponent) {
       if (other.garbage.type == GarbageType.battery) {
+        if (isSoundOn) FlameAudio.play(AudioAssets.batteryReward, volume: 0.2);
         incrementBatteryLevel(100);
         other.removeFromParent();
         return;
       }
 
       if (other.garbage.type == GarbageType.tools) {
+        FlameAudio.play(AudioAssets.reward, volume: 0.2);
         breakageLevelController.incrementLevel();
         other.removeFromParent();
         return;

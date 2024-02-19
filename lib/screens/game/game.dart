@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,7 @@ import 'package:save_the_ocean/components/hub/joystick.dart';
 import 'package:save_the_ocean/components/robot/robot.dart';
 import 'package:save_the_ocean/constants/app.dart';
 import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/controllers/audio/audio_controller.dart';
 import 'package:save_the_ocean/screens/game/game_screen.dart';
 
 final screenSize = Vector2(2220, 1080);
@@ -27,14 +29,16 @@ const cameraZoom = 100.0;
 final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 
 class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
+  final AudioController audioController;
   bool hasUserAlreadyRegistered = false;
   late GarbageController _garbageController;
   late Timer timer;
   late Timer garbageTimer;
   double elapsedTime = 0;
   bool isFirstTime = true;
+  bool isSoundOn = false;
 
-  SaveTheOceanGame()
+  SaveTheOceanGame({required this.audioController})
       : super(
           zoom: cameraZoom,
           cameraComponent: CameraComponent.withFixedResolution(
@@ -56,6 +60,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     await loadAssets();
 
     initTimers();
+    audioListener();
     gameListeners();
 
     _garbageController = GarbageController(world, this);
@@ -133,11 +138,17 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     world.addAll([
       Robot(),
       GroundBodyComponent(),
-      TrashFloor(),
+      TrashFloor(isSoundOn: isSoundOn),
       TrashBoundaries(),
       WallComponent(isLeft: false),
       WallComponent(isLeft: true),
     ]);
+  }
+
+  void audioListener() {
+    audioController.addListener(() {
+      isSoundOn = audioController.isAllowed;
+    });
   }
 
   void gameListeners() {
@@ -156,7 +167,8 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
     });
   }
 
-  void executeGameOver() {
+  Future<void> executeGameOver() async {
+    await FlameAudio.play(AudioAssets.gameOver, volume: 0.5);
     overlays.add(AppConstants.gameOverDialog);
     pauseEngine();
   }
