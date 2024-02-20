@@ -44,7 +44,7 @@ class TrashFloor extends BodyComponent with ContactCallbacks {
       }
 
       if (other.garbage.type == GarbageType.tools) {
-        FlameAudio.play(AudioAssets.reward, volume: 0.2);
+        if (isSoundOn) FlameAudio.play(AudioAssets.reward, volume: 0.2);
         breakageLevelController.incrementLevel();
         other.removeFromParent();
         return;

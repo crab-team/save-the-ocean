@@ -33,8 +33,6 @@ class _PageReveal extends StatelessWidget {
 
   final Color color;
 
-  final _slideTween = Tween(begin: const Offset(0, -1), end: Offset.zero);
-
   final _fadeTween = TweenSequence([
     TweenSequenceItem(tween: ConstantTween(0.0), weight: 1),
     TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 1),
@@ -51,18 +49,6 @@ class _PageReveal extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        SlideTransition(
-          position: _slideTween.animate(
-            CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeOutCubic,
-              reverseCurve: Curves.easeOutCubic,
-            ),
-          ),
-          child: Container(
-            color: color,
-          ),
-        ),
         FadeTransition(
           opacity: _fadeTween.animate(animation),
           child: child,

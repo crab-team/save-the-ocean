@@ -30,11 +30,11 @@ final worldSize = Vector2(screenSize.x / cameraZoom, screenSize.y / cameraZoom);
 
 class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   final AudioController audioController;
-  bool hasUserAlreadyRegistered = false;
   late GarbageController _garbageController;
   late Timer timer;
   late Timer garbageTimer;
   double elapsedTime = 0;
+  bool hasUserAlreadyRegistered = false;
   bool isFirstTime = true;
   bool isSoundOn = false;
 
@@ -168,7 +168,7 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   }
 
   Future<void> executeGameOver() async {
-    await FlameAudio.play(AudioAssets.gameOver, volume: 0.5);
+    if (isSoundOn) await FlameAudio.play(AudioAssets.gameOver, volume: 0.5);
     overlays.add(AppConstants.gameOverDialog);
     pauseEngine();
   }

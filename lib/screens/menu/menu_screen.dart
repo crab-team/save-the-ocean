@@ -8,6 +8,7 @@ import 'package:save_the_ocean/screens/menu/widgets/username_text.dart';
 import 'package:save_the_ocean/shared/dialogs/welcome/welcome_dialog.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
+import 'package:save_the_ocean/shared/widgets/loading.dart';
 import 'package:save_the_ocean/shared/widgets/logo.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -46,7 +47,7 @@ class _MenuScreenState extends State<MenuScreen> {
           Consumer<UserController>(
             builder: (context, controller, child) {
               if (controller.currentState == UserControllerState.loading) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: Loading());
               }
 
               if (controller.currentState == UserControllerState.success) {

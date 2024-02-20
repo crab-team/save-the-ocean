@@ -11,7 +11,7 @@ class UsernameText extends StatelessWidget {
     return Consumer<UserController>(
       builder: (context, controller, child) {
         if (controller.currentState == UserControllerState.loading) {
-          return const CircularProgressIndicator();
+          return const SizedBox();
         }
 
         return AutoScaleText.small("Welcome ${controller.currentUser?.username ?? 'No user'}");

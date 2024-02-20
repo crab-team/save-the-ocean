@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:save_the_ocean/core/router.dart';
 import 'package:save_the_ocean/screens/ranking/ranking.dart';
-import 'package:save_the_ocean/screens/ranking/sync_button.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
 import 'package:save_the_ocean/shared/widgets/background_menu.dart';
 import 'package:save_the_ocean/shared/widgets/screen_container.dart';
@@ -23,25 +22,13 @@ class RankingScreen extends StatelessWidget {
                 children: [
                   const Ranking(),
                   const SizedBox(height: 12),
-                  _buildActions(context),
+                  TextButton(onPressed: () => AppRouter.back(), child: const AutoScaleText.body("Back")),
                 ],
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildActions(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        TextButton(onPressed: () => AppRouter.back(), child: const AutoScaleText.body("Back")),
-        const SizedBox(width: 100),
-        const SyncButton(),
-      ],
     );
   }
 }

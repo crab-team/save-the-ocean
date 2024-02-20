@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:save_the_ocean/page_transition.dart';
+import 'package:save_the_ocean/utils/page_transition.dart';
 import 'package:save_the_ocean/screens/game/game_screen.dart';
 import 'package:save_the_ocean/screens/introduction_screen.dart';
 import 'package:save_the_ocean/screens/menu/menu_screen.dart';

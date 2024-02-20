@@ -6,6 +6,7 @@ import 'package:save_the_ocean/controllers/ranking/ranking_controller.dart';
 import 'package:save_the_ocean/controllers/ranking/ranking_state.dart';
 import 'package:save_the_ocean/screens/ranking/ranking_card.dart';
 import 'package:save_the_ocean/shared/widgets/auto_scale_text.dart';
+import 'package:save_the_ocean/shared/widgets/loading.dart';
 
 class Ranking extends StatefulWidget {
   const Ranking({super.key});
@@ -48,7 +49,7 @@ class _RankingState extends State<Ranking> {
   Widget _rankingContent(RankingState state) {
     switch (state.status) {
       case PageStatus.loading:
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: Loading());
       case PageStatus.error:
         return const Center(child: Text('An error has ocurred'));
       case PageStatus.data:
