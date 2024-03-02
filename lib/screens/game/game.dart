@@ -205,30 +205,31 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
   @override
   KeyEventResult onKeyEvent(event, Set<LogicalKeyboardKey> keysPressed) {
     final isKeyUp = event is RawKeyUpEvent;
-    final isKeyA = event.logicalKey == LogicalKeyboardKey.keyA;
-    final isKeyD = event.logicalKey == LogicalKeyboardKey.keyD;
-    final isKeyK = event.logicalKey == LogicalKeyboardKey.keyK;
-    final isKeyL = event.logicalKey == LogicalKeyboardKey.keyL;
+    final isKeyArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
+    final isKeyArrowRight = event.logicalKey == LogicalKeyboardKey.arrowRight;
+    final isKeySpace = event.logicalKey == LogicalKeyboardKey.space;
+    final isKeyW = event.logicalKey == LogicalKeyboardKey.keyW;
+
     final isKeyEsc = event.logicalKey == LogicalKeyboardKey.escape;
     if (!event.repeat) {
-      if (isKeyA) {
+      if (isKeyArrowLeft) {
         robotPositionController.moveLeft();
       }
 
-      if (isKeyD) {
+      if (isKeyArrowRight) {
         robotPositionController.moveRight();
       }
 
-      if (isKeyA && isKeyUp || isKeyD && isKeyUp) {
+      if (isKeyArrowLeft && isKeyUp || isKeyArrowRight && isKeyUp) {
         robotPositionController.stop();
       }
     }
 
-    if (isKeyK && !isKeyUp) {
+    if (isKeySpace && !isKeyUp) {
       !robotDeployController.deploy ? robotDeployController.deployRobot() : robotDeployController.refoldRobot();
     }
 
-    if (isKeyL && !isKeyUp) {
+    if (isKeyW && !isKeyUp) {
       robotReleaseGarbageController.release();
     }
 
