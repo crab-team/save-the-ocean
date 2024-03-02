@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:save_the_ocean/constants/assets.dart';
 import 'package:save_the_ocean/controllers/users/user_controller.dart';
 import 'package:save_the_ocean/core/router.dart';
+import 'package:save_the_ocean/core/theme.dart';
 import 'package:save_the_ocean/screens/menu/widgets/sound_button.dart';
 import 'package:save_the_ocean/screens/menu/widgets/username_text.dart';
 import 'package:save_the_ocean/shared/dialogs/welcome/welcome_dialog.dart';
@@ -34,16 +35,6 @@ class _MenuScreenState extends State<MenuScreen> {
       body: Stack(
         children: [
           const BackgroundMenu(),
-          const Positioned(
-            top: 10,
-            left: 10,
-            child: UsernameText(),
-          ),
-          const Positioned(
-            top: 10,
-            right: 10,
-            child: SoundButton(),
-          ),
           Consumer<UserController>(
             builder: (context, controller, child) {
               if (controller.currentState == UserControllerState.loading) {
@@ -65,46 +56,54 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget _buildMenu(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width * 0.5;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Spacer(flex: 1),
-        SizedBox(
-          width: screenWidth,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Logo(),
-                Image.asset("assets/images/${ImageAssets.menuBottomLine}"),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: () => _goToScreen(context),
-                  child: const AutoScaleText.body('PLAY'),
-                ),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: () => AppRouter.goToRanking(),
-                  child: const AutoScaleText.body('RANKING'),
-                ),
-                const SizedBox(height: 24),
-                Image.asset("assets/images/${ImageAssets.menuLine}"),
-              ],
+    return Padding(
+      padding: kPaddingApp.copyWith(bottom: 0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              UsernameText(),
+              SoundButton(),
+            ],
+          ),
+          SizedBox(
+            width: screenWidth,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Logo(),
+                  Image.asset("assets/images/${ImageAssets.menuBottomLine}"),
+                  const SizedBox(height: 12),
+                  TextButton(
+                    onPressed: () => _goToScreen(context),
+                    child: const AutoScaleText.body('PLAY'),
+                  ),
+                  const SizedBox(height: 12),
+                  TextButton(
+                    onPressed: () => AppRouter.goToRanking(),
+                    child: const AutoScaleText.body('RANKING'),
+                  ),
+                  const SizedBox(height: 24),
+                  Image.asset("assets/images/${ImageAssets.menuLine}"),
+                ],
+              ),
             ),
           ),
-        ),
-        const Spacer(flex: 1),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(child: _buildMtcLogo(context)),
-            Expanded(child: _buildVersion(context)),
-          ],
-        ),
-      ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: _buildMtcLogo(context)),
+              Expanded(child: _buildVersion(context)),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
