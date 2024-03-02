@@ -13,6 +13,7 @@ class BackgroundMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.center,
       children: [
         Image.asset(
           'assets/images/${ImageAssets.backgroundFar}',

@@ -87,17 +87,6 @@ class MyGame extends StatelessWidget {
                 ButtonUserStartController(userController: userController),
           ),
           ChangeNotifierProvider(create: (context) => RankingController(getRanking: getRanking)),
-          // Set up audio.
-          // ProxyProvider2<SettingsController, AppLifecycleStateNotifier, AudioController>(
-          //   // Ensures that music starts immediately.
-          //   lazy: false,
-          //   create: (context) => AudioController(),
-          //   update: (context, settings, lifecycleNotifier, audio) {
-          //     audio!.attachDependencies(lifecycleNotifier, settings);
-          //     return audio;
-          //   },
-          //   dispose: (context, audio) => audio.dispose(),
-          // ),
         ],
         child: _buildResponsiveMaterial(
           context,
