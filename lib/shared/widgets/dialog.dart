@@ -36,7 +36,7 @@ class CustomDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AutoScaleText.subtitle(title),
+                  AutoScaleText.body(title),
                   const SizedBox(height: 12),
                   Transform.flip(
                     flipY: true,

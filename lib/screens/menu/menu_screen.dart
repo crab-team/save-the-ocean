@@ -54,10 +54,10 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Widget _buildMenu(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width * 0.5;
+    final screenWidth = MediaQuery.of(context).size.width * 0.4;
 
     return Padding(
-      padding: kPaddingApp.copyWith(bottom: 0),
+      padding: kPaddingApp,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,7 +83,6 @@ class _MenuScreenState extends State<MenuScreen> {
                     onPressed: () => _goToScreen(context),
                     child: const AutoScaleText.body('PLAY'),
                   ),
-                  const SizedBox(height: 12),
                   TextButton(
                     onPressed: () => AppRouter.goToRanking(),
                     child: const AutoScaleText.body('RANKING'),
@@ -112,7 +111,6 @@ class _MenuScreenState extends State<MenuScreen> {
       child: Image.asset(
         'assets/images/${ImageAssets.mtcLogoWhite}',
         width: 120,
-        height: 120,
       ),
     );
   }

@@ -7,7 +7,7 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       'assets/images/logo.png',
-      width: 350,
+      width: MediaQuery.of(context).size.width * 0.3,
     );
   }
 }

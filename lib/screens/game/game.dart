@@ -204,39 +204,45 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
 
   @override
   KeyEventResult onKeyEvent(event, Set<LogicalKeyboardKey> keysPressed) {
-    final isKeyUp = event is RawKeyUpEvent;
     final isKeyArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
     final isKeyArrowRight = event.logicalKey == LogicalKeyboardKey.arrowRight;
     final isKeySpace = event.logicalKey == LogicalKeyboardKey.space;
     final isKeyW = event.logicalKey == LogicalKeyboardKey.keyW;
-
     final isKeyEsc = event.logicalKey == LogicalKeyboardKey.escape;
-    if (!event.repeat) {
-      if (isKeyArrowLeft) {
-        robotPositionController.moveLeft();
-      }
 
-      if (isKeyArrowRight) {
-        robotPositionController.moveRight();
-      }
+    if (isKeyEsc && event is KeyDownEvent) {
+      togglePauseGame();
+      return KeyEventResult.handled;
+    }
 
-      if (isKeyArrowLeft && isKeyUp || isKeyArrowRight && isKeyUp) {
-        robotPositionController.stop();
+    if (event is! KeyDownEvent) {
+      robotPositionController.stop();
+
+      if (event is KeyRepeatEvent) {
+        return KeyEventResult.ignored;
       }
     }
 
-    if (isKeySpace && !isKeyUp) {
+    if (isKeyArrowLeft && event is KeyDownEvent) {
+      robotPositionController.moveLeft();
+      return KeyEventResult.handled;
+    }
+
+    if (isKeyArrowRight && event is KeyDownEvent) {
+      robotPositionController.moveRight();
+      return KeyEventResult.handled;
+    }
+
+    if (isKeyArrowLeft || isKeyArrowRight) {}
+
+    if (isKeySpace && event is KeyDownEvent) {
       !robotDeployController.deploy ? robotDeployController.deployRobot() : robotDeployController.refoldRobot();
     }
 
-    if (isKeyW && !isKeyUp) {
+    if (isKeyW && event is KeyDownEvent) {
       robotReleaseGarbageController.release();
     }
 
-    if (isKeyEsc && !isKeyUp) {
-      togglePauseGame();
-    }
-
-    return super.onKeyEvent(event, keysPressed);
+    return KeyEventResult.handled;
   }
 }

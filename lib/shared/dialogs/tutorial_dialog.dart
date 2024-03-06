@@ -38,11 +38,11 @@ class _TutorialDialogState extends State<TutorialDialog> {
       child: isTutorial1
           ? Image.asset(
               "assets/images/${ImageAssets.tutorial1}",
-              width: screenWidth * 0.5,
+              width: screenWidth * 0.4,
             )
           : Image.asset(
               "assets/images/${ImageAssets.tutorial2}",
-              width: screenWidth * 0.5,
+              width: screenWidth * 0.4,
             ),
     );
   }
