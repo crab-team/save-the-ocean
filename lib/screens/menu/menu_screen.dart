@@ -110,7 +110,7 @@ class _MenuScreenState extends State<MenuScreen> {
     return Center(
       child: Image.asset(
         'assets/images/${ImageAssets.mtcLogoWhite}',
-        width: 120,
+        width: 240,
       ),
     );
   }
