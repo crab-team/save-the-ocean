@@ -34,14 +34,16 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isFirstTime = context.read<UserController>().isFirstTime;
 
-    return GameWidget(
-      game: SaveTheOceanGame(audioController: context.read<AudioController>())..isFirstTime = isFirstTime,
-      overlayBuilderMap: {
-        AppConstants.pauseDialog: (BuildContext context, SaveTheOceanGame game) => PauseDialog(game: game),
-        AppConstants.gameOverDialog: (BuildContext context, SaveTheOceanGame game) => GameOverDialog(game: game),
-        AppConstants.tutorialDialog: (BuildContext context, SaveTheOceanGame game) => TutorialDialog(game: game),
-      },
-      backgroundBuilder: (BuildContext context) => const BackgroundMenu(withFilter: false),
+    return SafeArea(
+      child: GameWidget(
+        game: SaveTheOceanGame(audioController: context.read<AudioController>())..isFirstTime = isFirstTime,
+        overlayBuilderMap: {
+          AppConstants.pauseDialog: (BuildContext context, SaveTheOceanGame game) => PauseDialog(game: game),
+          AppConstants.gameOverDialog: (BuildContext context, SaveTheOceanGame game) => GameOverDialog(game: game),
+          AppConstants.tutorialDialog: (BuildContext context, SaveTheOceanGame game) => TutorialDialog(game: game),
+        },
+        backgroundBuilder: (BuildContext context) => const BackgroundMenu(withFilter: false),
+      ),
     );
   }
 }

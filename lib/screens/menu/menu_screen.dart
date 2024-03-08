@@ -110,7 +110,7 @@ class _MenuScreenState extends State<MenuScreen> {
     return Center(
       child: Image.asset(
         'assets/images/${ImageAssets.mtcLogoWhite}',
-        width: 240,
+        width: MediaQuery.of(context).size.width * 0.15,
       ),
     );
   }

@@ -204,18 +204,17 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
 
   @override
   KeyEventResult onKeyEvent(event, Set<LogicalKeyboardKey> keysPressed) {
-    final isKeyArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
-    final isKeyArrowRight = event.logicalKey == LogicalKeyboardKey.arrowRight;
-    final isKeySpace = event.logicalKey == LogicalKeyboardKey.space;
-    final isKeyW = event.logicalKey == LogicalKeyboardKey.keyW;
-    final isKeyEsc = event.logicalKey == LogicalKeyboardKey.escape;
+    final pressedMoveLeft = event.logicalKey == LogicalKeyboardKey.keyA;
+    final pressedMoveRight = event.logicalKey == LogicalKeyboardKey.keyD;
+    final pressedDeploy = event.logicalKey == LogicalKeyboardKey.keyK;
+    final pressedCatch = event.logicalKey == LogicalKeyboardKey.keyL;
+    final pressedPause = event.logicalKey == LogicalKeyboardKey.escape;
 
-    if (isKeyEsc && event is KeyDownEvent) {
+    if (pressedPause && event is KeyDownEvent) {
       togglePauseGame();
-      return KeyEventResult.handled;
     }
 
-    if (event is! KeyDownEvent) {
+    if (event is KeyUpEvent) {
       robotPositionController.stop();
 
       if (event is KeyRepeatEvent) {
@@ -223,23 +222,19 @@ class SaveTheOceanGame extends Forge2DGame with KeyboardEvents {
       }
     }
 
-    if (isKeyArrowLeft && event is KeyDownEvent) {
+    if (pressedMoveLeft && event is KeyDownEvent) {
       robotPositionController.moveLeft();
-      return KeyEventResult.handled;
     }
 
-    if (isKeyArrowRight && event is KeyDownEvent) {
+    if (pressedMoveRight && event is KeyDownEvent) {
       robotPositionController.moveRight();
-      return KeyEventResult.handled;
     }
 
-    if (isKeyArrowLeft || isKeyArrowRight) {}
-
-    if (isKeySpace && event is KeyDownEvent) {
+    if (pressedDeploy && event is KeyDownEvent) {
       !robotDeployController.deploy ? robotDeployController.deployRobot() : robotDeployController.refoldRobot();
     }
 
-    if (isKeyW && event is KeyDownEvent) {
+    if (pressedCatch && event is KeyDownEvent) {
       robotReleaseGarbageController.release();
     }
 
