@@ -65,8 +65,6 @@ class ArtboardNames {
 class AudioAssets {
   static const String music = 'save_the_ocean.mp3';
   static const String gameOver = 'sfx/game_over.mp3';
-  static const String deploy = 'sfx/deploy.mp3';
-  static const String garbageFloor = 'sfx/garbage_floor.wav';
   static const String reward = 'sfx/reward.wav';
   static const String batteryReward = 'sfx/battery_reward.wav';
 }

@@ -52,7 +52,6 @@ class _SplashScreenState extends State<SplashScreen> {
     await FlameAudio.audioCache.loadAll([
       AudioAssets.reward,
       AudioAssets.batteryReward,
-      AudioAssets.garbageFloor,
       AudioAssets.gameOver,
     ]);
   }
