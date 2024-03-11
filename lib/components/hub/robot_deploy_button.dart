@@ -1,37 +1,47 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:save_the_ocean/components/robot/robot.dart';
-import 'package:save_the_ocean/components/robot/robot_claw.dart';
+import 'package:save_the_ocean/constants/assets.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
+import 'package:save_the_ocean/screens/game/game_screen.dart';
+
+class RobotDeployButtonSprite extends SpriteComponent with HasGameRef<SaveTheOceanGame> {
+  final bool isPressed;
+
+  RobotDeployButtonSprite({this.isPressed = false})
+      : super(
+          size: Vector2(200, 200),
+        );
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    sprite = isPressed
+        ? Sprite(gameRef.images.fromCache(ImageAssets.buttonDeployPressed))
+        : Sprite(gameRef.images.fromCache(ImageAssets.buttonDeploy));
+  }
+}
 
 class RobotDeployButton extends HudButtonComponent {
-  final Robot robot;
-  final RobotClaw leftClaw;
-  final RobotClaw rightClaw;
-
-  RobotDeployButton({required this.robot, required this.leftClaw, required this.rightClaw})
+  RobotDeployButton()
       : super(
           button: CircleComponent(
-            radius: 50,
-            paint: BasicPalette.red.paint(),
+            radius: 100,
+            paint: BasicPalette.transparent.paint(),
+            children: [RobotDeployButtonSprite()],
           ),
           buttonDown: CircleComponent(
-            radius: 50,
-            paint: BasicPalette.darkRed.paint(),
+            radius: 80,
+            paint: BasicPalette.darkGreen.paint(),
+            children: [RobotDeployButtonSprite(isPressed: true)],
           ),
-          margin: const EdgeInsets.only(right: 48, bottom: 32),
-          onPressed: () {
-            robot.deploy();
-            leftClaw.deploy();
-            rightClaw.deploy();
-          },
         );
 
   @override
   Future<void> onLoad() {
-    debugMode = kDebugMode;
+    super.onPressed = () {
+      !robotDeployController.deploy ? robotDeployController.deployRobot() : robotDeployController.refoldRobot();
+    };
     return super.onLoad();
   }
 }

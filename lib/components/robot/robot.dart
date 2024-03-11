@@ -1,52 +1,37 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/foundation.dart';
-import 'package:save_the_ocean/components/robot/rive_robot.dart';
-import 'package:save_the_ocean/game.dart';
-import 'package:save_the_ocean/inputs/joystick.dart';
+import 'package:save_the_ocean/components/robot/robot_arm_component.dart';
+import 'package:save_the_ocean/components/robot/robot_claw.dart';
+import 'package:save_the_ocean/components/robot/robot_controller.dart';
+import 'package:save_the_ocean/screens/game/game.dart';
 
-class Robot extends BodyComponent {
-  final RiveRobot riveRobot;
-
-  Robot({required this.riveRobot});
-
-  @override
-  Body createBody() {
-    BodyDef bodyDef = BodyDef(
-      position: Vector2(worldSize.x / 2, 1.75),
-      type: BodyType.static,
-    );
-
-    return world.createBody(bodyDef);
-  }
+class Robot extends PositionComponent with HasGameRef<SaveTheOceanGame> {
+  late RobotController _robotController;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    debugMode = kDebugMode;
 
-    add(riveRobot);
+    final arm = RobotArmComponent();
+    final leftClaw = RobotClaw(isLeft: true);
+    final rightClaw = RobotClaw(isLeft: false);
+    add(leftClaw);
+    add(rightClaw);
+    add(arm);
+
+    _robotController = RobotController(leftRobotClaw: leftClaw, rightRobotClaw: rightClaw, robotArm: arm);
+
+    _robotController.moveInXAxis();
+    _robotController.deployListener(gameRef);
+    _robotController.releaseListener();
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-
-    bool joystickLeft = joystick.direction == JoystickDirection.left;
-    bool joystickRight = joystick.direction == JoystickDirection.right;
-
-    if (joystickLeft) {
-      position.x -= 0.2 * joystick.intensity;
-    }
-
-    if (joystickRight) {
-      position.x += 0.2 * joystick.intensity;
-    }
-  }
-
-  void deploy() {
-    riveRobot.deploy();
+    _robotController.bounds();
+    _robotController.openClaws();
+    _robotController.closeClaws();
   }
 }
