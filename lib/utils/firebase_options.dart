@@ -15,7 +15,6 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb, Tar
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    print('Platform: $defaultTargetPlatform');
     if (kIsWeb) {
       return web;
     }
@@ -64,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '93565432753',
     projectId: 'save-the-ocean-4672e',
     storageBucket: 'save-the-ocean-4672e.appspot.com',
-    iosBundleId: 'com.example.saveTheOcean',
+    iosBundleId: 'com.mtc.save_the_ocean',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,6 +72,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '93565432753',
     projectId: 'save-the-ocean-4672e',
     storageBucket: 'save-the-ocean-4672e.appspot.com',
-    iosBundleId: 'com.example.saveTheOcean.RunnerTests',
+    iosBundleId: 'com.mtc.save_the_ocean.RunnerTests',
   );
 }

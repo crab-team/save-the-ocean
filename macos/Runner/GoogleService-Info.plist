@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.saveTheOcean.RunnerTests</string>
+	<string>com.mtc.save_the_ocean.RunnerTests</string>
 	<key>PROJECT_ID</key>
 	<string>save-the-ocean-4672e</string>
 	<key>STORAGE_BUCKET</key>
