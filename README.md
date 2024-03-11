@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets//icon/icon.png" alt="Game icon" width="30%" />
+  <img src="./assets/icon/icon.png" alt="Game icon" width="30%" />
 </p> 
 
 <br>
